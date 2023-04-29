@@ -1,4 +1,8 @@
-# Remix Grunge Stack
+# Weather Gear
+
+Know how to gear up when cycling or running based on the weather.
+
+## Remix Grunge Stack
 
 ![The Remix Grunge Stack](https://repository-images.githubusercontent.com/463325363/edae4f5b-1a13-47ea-b90c-c05badc2a700)
 
