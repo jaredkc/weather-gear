@@ -27,6 +27,7 @@ export const action = async ({ request }: ActionArgs) => {
 
 export default function Index() {
   const actionData = useActionData<typeof action>();
+  const [loading, setLoading] = useState(false);
   const [usersLocation, setUsersLocation] =
     useState<GeolocationPosition | null>(null);
   const btnClasses =
@@ -34,8 +35,9 @@ export default function Index() {
 
   useEffect(() => {
     if (navigator.geolocation) {
+      setLoading(true);
       navigator.geolocation.getCurrentPosition(
-        setUsersLocation,
+        handleSetLocation,
         errorGetLocation
       );
     } else {
@@ -44,9 +46,15 @@ export default function Index() {
     }
   }, []);
 
+  function handleSetLocation(data: GeolocationPosition) {
+    setUsersLocation(data);
+    setLoading(false);
+  }
+
   function getLocation() {
+    setLoading(true);
     navigator.geolocation.getCurrentPosition(
-      setUsersLocation,
+      handleSetLocation,
       errorGetLocation
     );
   }
@@ -58,7 +66,8 @@ export default function Index() {
 
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-center gap-8">
-      {!usersLocation && <div>Getting location...</div>}
+      {loading ? <div>Loading...</div> : <div>Done</div>}
+
       {usersLocation && <DisplayGeolocationPosition position={usersLocation} />}
 
       {actionData && <pre>{JSON.stringify(actionData, null, 2)}</pre>}
