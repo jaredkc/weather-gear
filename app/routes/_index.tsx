@@ -1,141 +1,82 @@
-import type { V2_MetaFunction } from "@remix-run/node";
-import { Link } from "@remix-run/react";
+import type { ActionArgs, V2_MetaFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
+import { Form, useActionData } from "@remix-run/react";
+import { useEffect, useState } from "react";
+import invariant from "tiny-invariant";
+import { DisplayGeolocationPosition } from "~/components/DisplayGeolocationPosition";
 
-import { useOptionalUser } from "~/utils";
+// TODO: Add https://www.npmjs.com/package/openweathermap-ts
+// TODO: cookie users location, or redirect to /location?
 
-export const meta: V2_MetaFunction = () => [{ title: "Remix Notes" }];
+export const meta: V2_MetaFunction = () => [{ title: "Weather Gear" }];
+
+export const action = async ({ request }: ActionArgs) => {
+  const formData = await request.formData();
+  const lat = formData.get("lat");
+  const lon = formData.get("lon");
+
+  const openWeatherApiKey = process.env.OPEN_WEATHER_API_KEY;
+  invariant(openWeatherApiKey, "OPEN_WEATHER_API_KEY must be set");
+  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${openWeatherApiKey}`;
+
+  return fetch(url)
+    .then((response) => response.json())
+    .then((data) => json({ weather: data }))
+    .catch((error) => json({ error }));
+};
 
 export default function Index() {
-  const user = useOptionalUser();
-  return (
-    <main className="relative min-h-screen bg-white sm:flex sm:items-center sm:justify-center">
-      <div className="relative sm:pb-16 sm:pt-8">
-        <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-          <div className="relative shadow-xl sm:overflow-hidden sm:rounded-2xl">
-            <div className="absolute inset-0">
-              <img
-                className="h-full w-full object-cover"
-                src="https://user-images.githubusercontent.com/1500684/158276318-61064670-06c3-43f3-86e3-d624785b8ff7.jpg"
-                alt="Nirvana playing on stage with Kurt's jagstang guitar"
-              />
-              <div className="absolute inset-0 bg-[color:rgba(255,56,56,0.5)] mix-blend-multiply" />
-            </div>
-            <div className="relative px-4 pb-8 pt-16 sm:px-6 sm:pb-14 sm:pt-24 lg:px-8 lg:pb-20 lg:pt-32">
-              <h1 className="text-center text-6xl font-extrabold tracking-tight sm:text-8xl lg:text-9xl">
-                <span className="block uppercase text-red-500 drop-shadow-md">
-                  Grunge Stack
-                </span>
-              </h1>
-              <p className="mx-auto mt-6 max-w-lg text-center text-xl text-white sm:max-w-3xl">
-                Check the README.md file for instructions on how to get this
-                project deployed.
-              </p>
-              <div className="mx-auto mt-10 max-w-sm sm:flex sm:max-w-none sm:justify-center">
-                {user ? (
-                  <Link
-                    to="/notes"
-                    className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-red-700 shadow-sm hover:bg-red-50 sm:px-8"
-                  >
-                    View Notes for {user.email}
-                  </Link>
-                ) : (
-                  <div className="space-y-4 sm:mx-auto sm:inline-grid sm:grid-cols-2 sm:gap-5 sm:space-y-0">
-                    <Link
-                      to="/join"
-                      className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-red-700 shadow-sm hover:bg-red-50 sm:px-8"
-                    >
-                      Sign up
-                    </Link>
-                    <Link
-                      to="/login"
-                      className="flex items-center justify-center rounded-md bg-red-500 px-4 py-3 font-medium text-white hover:bg-red-600"
-                    >
-                      Log In
-                    </Link>
-                  </div>
-                )}
-              </div>
-              <a href="https://remix.run">
-                <img
-                  src="https://user-images.githubusercontent.com/1500684/158298926-e45dafff-3544-4b69-96d6-d3bcc33fc76a.svg"
-                  alt="Remix"
-                  className="mx-auto mt-16 w-full max-w-[12rem] md:max-w-[16rem]"
-                />
-              </a>
-            </div>
-          </div>
-        </div>
+  const actionData = useActionData<typeof action>();
+  const [usersLocation, setUsersLocation] =
+    useState<GeolocationPosition | null>(null);
+  const btnClasses =
+    "rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400";
 
-        <div className="mx-auto max-w-7xl px-4 py-2 sm:px-6 lg:px-8">
-          <div className="mt-6 flex flex-wrap justify-center gap-8">
-            {[
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157991167-651c8fc5-2f72-4afa-94d8-2520ecbc5ebc.svg",
-                alt: "AWS",
-                href: "https://aws.com",
-              },
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157991935-26c0d587-b866-49f5-af34-8f04be1c9df2.svg",
-                alt: "DynamoDB",
-                href: "https://aws.amazon.com/dynamodb/",
-              },
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157990874-31f015c3-2af7-4669-9d61-519e5ecfdea6.svg",
-                alt: "Architect",
-                href: "https://arc.codes",
-              },
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157764276-a516a239-e377-4a20-b44a-0ac7b65c8c14.svg",
-                alt: "Tailwind",
-                href: "https://tailwindcss.com",
-              },
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157764454-48ac8c71-a2a9-4b5e-b19c-edef8b8953d6.svg",
-                alt: "Cypress",
-                href: "https://www.cypress.io",
-              },
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157772386-75444196-0604-4340-af28-53b236faa182.svg",
-                alt: "MSW",
-                href: "https://mswjs.io",
-              },
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157772447-00fccdce-9d12-46a3-8bb4-fac612cdc949.svg",
-                alt: "Vitest",
-                href: "https://vitest.dev",
-              },
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157772662-92b0dd3a-453f-4d18-b8be-9fa6efde52cf.png",
-                alt: "Testing Library",
-                href: "https://testing-library.com",
-              },
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157772934-ce0a943d-e9d0-40f8-97f3-f464c0811643.svg",
-                alt: "Prettier",
-                href: "https://prettier.io",
-              },
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157772990-3968ff7c-b551-4c55-a25c-046a32709a8e.svg",
-                alt: "ESLint",
-                href: "https://eslint.org",
-              },
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157773063-20a0ed64-b9f8-4e0b-9d1e-0b65a3d4a6db.svg",
-                alt: "TypeScript",
-                href: "https://typescriptlang.org",
-              },
-            ].map((img) => (
-              <a
-                key={img.href}
-                href={img.href}
-                className="flex h-16 w-32 justify-center p-1 grayscale transition hover:grayscale-0 focus:grayscale-0"
-              >
-                <img alt={img.alt} src={img.src} className="object-contain" />
-              </a>
-            ))}
-          </div>
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        setUsersLocation,
+        errorGetLocation
+      );
+    } else {
+      // TODO: handle UI for location not supported
+      alert("Geolocation is not supported by this browser.");
+    }
+  }, []);
+
+  function getLocation() {
+    navigator.geolocation.getCurrentPosition(
+      setUsersLocation,
+      errorGetLocation
+    );
+  }
+
+  // TODO: Handle get location error, allow user to enter location or weather?
+  function errorGetLocation(data: GeolocationPositionError) {
+    alert(data.message);
+  }
+
+  return (
+    <main className="relative flex min-h-screen flex-col items-center justify-center gap-8">
+      {!usersLocation && <div>Getting location...</div>}
+      {usersLocation && <DisplayGeolocationPosition position={usersLocation} />}
+
+      {actionData && <pre>{JSON.stringify(actionData, null, 2)}</pre>}
+
+      {usersLocation && (
+        <div className="flex items-center justify-center gap-4">
+          <button className={btnClasses} onClick={getLocation}>
+            Get location
+          </button>
+          <Form method="post">
+            <input hidden name="lat" value={usersLocation.coords.latitude} />
+            <input hidden name="lon" value={usersLocation.coords.longitude} />
+            <button type="submit" className={btnClasses}>
+              Get weather
+            </button>
+          </Form>
         </div>
-      </div>
+      )}
     </main>
   );
 }
