@@ -69,3 +69,16 @@ export function useUser(): User {
 export function validateEmail(email: unknown): email is string {
   return typeof email === "string" && email.length > 3 && email.includes("@");
 }
+
+/**
+ * Open Weather Map Icons
+ * Resolutions: @2x, @4x
+ * https://openweathermap.org/weather-conditions#Icon-list
+ */
+type WeatherIcons = {
+  icon: string;
+  res: "" | "@2x" | "@4x";
+}
+export function getWeatherIcon({icon, res = '@2x'}: WeatherIcons): string {
+  return `https://openweathermap.org/img/wn/${icon}${res}.png`;
+}
