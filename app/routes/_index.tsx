@@ -17,7 +17,7 @@ export const action = async ({ request }: ActionArgs) => {
 
   const openWeatherApiKey = process.env.OPEN_WEATHER_API_KEY;
   invariant(openWeatherApiKey, "OPEN_WEATHER_API_KEY must be set");
-  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${openWeatherApiKey}`;
+  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${openWeatherApiKey}&units=imperial`;
 
   return fetch(url)
     .then((response) => response.json())
