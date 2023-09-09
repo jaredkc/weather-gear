@@ -78,8 +78,8 @@ export default function Index() {
             Get location
           </button>
           <Form method="post">
-            <input hidden name="lat" value={usersLocation.coords.latitude} />
-            <input hidden name="lon" value={usersLocation.coords.longitude} />
+            <input hidden name="lat" defaultValue={usersLocation.coords.latitude} />
+            <input hidden name="lon" defaultValue={usersLocation.coords.longitude} />
             <button type="submit" className={btnClasses}>
               Get weather
             </button>
