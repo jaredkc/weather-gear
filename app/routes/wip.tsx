@@ -1,8 +1,8 @@
-import type { V2_MetaFunction } from "@remix-run/node";
+import type { MetaFunction } from "@remix-run/node";
 import { testWeather } from "~/types/openmapweather";
 import { getWeatherIcon } from "~/utils";
 
-export const meta: V2_MetaFunction = () => [{ title: "Work-in-progress" }];
+export const meta: MetaFunction = () => [{ title: "Work-in-progress" }];
 
 export default function WIP() {
   const data = testWeather.weather;
