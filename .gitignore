@@ -1,8 +1,10 @@
 node_modules
 
-/server/index.js
-/server/index.js.map
 /public/build
+/server/index.mjs
+/server/index.mjs.map
+/server/metafile.*
+/server/version.txt
 preferences.arc
 sam.json
 sam.yaml
@@ -10,5 +12,3 @@ sam.yaml
 
 /cypress/screenshots
 /cypress/videos
-
-/app/styles/tailwind.css

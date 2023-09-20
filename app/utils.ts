@@ -41,7 +41,7 @@ export function useMatchesData(
     () => matchingRoutes.find((route) => route.id === id),
     [matchingRoutes, id]
   );
-  return route?.data;
+  return route?.data as Record<string, unknown>;
 }
 
 function isUser(user: any): user is User {
@@ -75,10 +75,9 @@ export function validateEmail(email: unknown): email is string {
  * Resolutions: @2x, @4x
  * https://openweathermap.org/weather-conditions#Icon-list
  */
-type WeatherIcons = {
-  icon: string;
-  res: "" | "@2x" | "@4x";
-}
-export function getWeatherIcon({icon, res = '@2x'}: WeatherIcons): string {
+export function getWeatherIcon(
+  icon: string,
+  res: "" | "@2x" | "@4x" = "@2x"
+): string {
   return `https://openweathermap.org/img/wn/${icon}${res}.png`;
 }

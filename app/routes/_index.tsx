@@ -1,4 +1,4 @@
-import type { ActionArgs, V2_MetaFunction } from "@remix-run/node";
+import type { ActionFunctionArgs, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, useActionData } from "@remix-run/react";
 import { useEffect, useState } from "react";
@@ -8,9 +8,9 @@ import { DisplayGeolocationPosition } from "~/components/DisplayGeolocationPosit
 // TODO: Add https://www.npmjs.com/package/openweathermap-ts
 // TODO: cookie users location, or redirect to /location?
 
-export const meta: V2_MetaFunction = () => [{ title: "Weather Gear" }];
+export const meta: MetaFunction = () => [{ title: "Weather Gear" }];
 
-export const action = async ({ request }: ActionArgs) => {
+export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
   const lat = formData.get("lat");
   const lon = formData.get("lon");
@@ -78,8 +78,8 @@ export default function Index() {
             Get location
           </button>
           <Form method="post">
-            <input hidden name="lat" value={usersLocation.coords.latitude} />
-            <input hidden name="lon" value={usersLocation.coords.longitude} />
+            <input hidden name="lat" defaultValue={usersLocation.coords.latitude} />
+            <input hidden name="lon" defaultValue={usersLocation.coords.longitude} />
             <button type="submit" className={btnClasses}>
               Get weather
             </button>
