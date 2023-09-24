@@ -2,9 +2,23 @@
 
 Know how to gear up when cycling or running based on the weather.
 
-## Remix Grunge Stack
+## Open Weather API
 
-![The Remix Grunge Stack](https://repository-images.githubusercontent.com/463325363/edae4f5b-1a13-47ea-b90c-c05badc2a700)
+- [Call 5 day / 3 hour forecast data](https://openweathermap.org/forecast5#5days):
+
+    `https://api.openweathermap.org/data/2.5/forecast?q={city name}&cnt=3&appid={API key}`
+
+- [Weather API Request by City Name](https://openweathermap.org/current#name):
+
+    `https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}`
+
+- API Request by Latitude and Longitude:
+
+    `https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}`
+
+- [Icons](https://openweathermap.org/weather-conditions)
+
+## Remix Grunge Stack
 
 Learn more about [Remix Stacks](https://remix.run/stacks).
 
