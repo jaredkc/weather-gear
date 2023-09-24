@@ -54,3 +54,11 @@ export interface Wind {
   deg: number;
   gust: number;
 }
+
+export interface OpenWeatherMap_Location {
+  name: string;
+  lat: number;
+  lon: number;
+  country: string;
+  state: string;
+}
