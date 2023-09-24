@@ -1,0 +1,28 @@
+.drawer {
+  position: relative;
+}
+
+.drawer > summary {
+  list-style: none;
+}
+
+.drawer > summary::-webkit-details-marker {
+  display: none;
+}
+
+.drawer--left .drawer__content {
+  left: 0;
+}
+
+.drawer--right .drawer__content {
+  right: 0;
+}
+
+.drawer__content {
+  background: rgba(255, 255, 255, 0.75);
+  max-width: calc(100vw - 4rem);
+  min-width: 300px;
+  padding: 1.5rem;
+  position: absolute;
+  top: calc(100% + 0.5rem);
+}
