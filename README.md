@@ -4,18 +4,15 @@ Know how to gear up when cycling or running based on the weather.
 
 ## Open Weather API
 
-- [Call 5 day / 3 hour forecast data](https://openweathermap.org/forecast5#5days):
-
-    `https://api.openweathermap.org/data/2.5/forecast?q={city name}&cnt=3&appid={API key}`
-
-- [Weather API Request by City Name](https://openweathermap.org/current#name):
-
-    `https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}`
-
-- API Request by Latitude and Longitude:
-
-    `https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}`
-
+- [Call 5 day / 3 hour forecast data](https://openweathermap.org/forecast5#5days)
+  - City query: `https://api.openweathermap.org/data/2.5/forecast?q={city name}&cnt=3&appid={API key}`
+  - Zip code: `https://api.openweathermap.org/data/2.5/forecast?zip={zip code}&cnt=3&appid={API key}`
+- [Weather API Request by City Name](https://openweathermap.org/current#name)
+  - City query: `https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}`
+- API Request by Latitude and Longitude
+  - `https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}`
+- [Geocoding API](https://openweathermap.org/api/geocoding-api)
+  - Reverse to get location from Lat/Lon: `http://api.openweathermap.org/geo/1.0/reverse?lat={lat}&lon={lon}&limit={limit}&appid={API key}`
 - [Icons](https://openweathermap.org/weather-conditions)
 
 ## Remix Grunge Stack
