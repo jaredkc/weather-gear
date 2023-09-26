@@ -1,6 +1,63 @@
-import type { OpenWeatherMap_Weather } from "./openweathermap-types";
+import type { Forecast, Weather } from "./openweathermap-types";
 
-export const testWeather: OpenWeatherMap_Weather = {
+export const testForecast: Forecast = {
+  cod: "200",
+  message: 0,
+  cnt: 3,
+  list: [
+    {
+      dt: 1695686400,
+      main: {
+        temp: 301.54,
+        feels_like: 300.09,
+        temp_min: 299.49,
+        temp_max: 301.54,
+        pressure: 1018,
+        sea_level: 1018,
+        grnd_level: 875,
+        humidity: 16,
+        temp_kf: 2.05,
+      },
+      weather: [
+        {
+          id: 800,
+          main: "Clear",
+          description: "clear sky",
+          icon: "01d",
+        },
+      ],
+      clouds: {
+        all: 0,
+      },
+      wind: {
+        speed: 2.7,
+        deg: 263,
+        gust: 4.3,
+      },
+      visibility: 10000,
+      pop: 0,
+      sys: {
+        pod: "d",
+      },
+      dt_txt: "2023-09-26 00:00:00",
+    },
+  ],
+  city: {
+    id: 5778755,
+    name: "Murray",
+    coord: {
+      lat: 40.673,
+      lon: -111.8604,
+    },
+    country: "US",
+    population: 46746,
+    timezone: -21600,
+    sunrise: 1695647862,
+    sunset: 1695691236,
+  },
+};
+
+export const testWeather: Weather = {
   coord: {
     lon: -111.8604,
     lat: 40.673,

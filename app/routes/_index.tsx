@@ -1,27 +1,33 @@
 import type { ActionFunctionArgs, MetaFunction } from "@remix-run/node";
-import { json } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
 import { Form, useActionData } from "@remix-run/react";
 import { useState } from "react";
-import invariant from "tiny-invariant";
 import { DisplayGeolocationPosition } from "~/components/DisplayGeolocationPosition";
 import IconLocation from "~/components/IconLocation";
-import { getWeatherByLatLon } from "~/openweathermap/openweathermap-utils";
+import { getLocation } from "~/openweathermap/openweathermap-utils";
 
-// TODO: Add https://www.npmjs.com/package/openweathermap-ts
 // TODO: cookie users location, or redirect to /location?
 
 export const meta: MetaFunction = () => [{ title: "Weather Gear" }];
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
-  const lat = formData.get('lat') as string;
-  const lon = formData.get('lon') as string;
+  const location = formData.get("location") as string;
+  const lat = formData.get("lat") as string;
+  const lon = formData.get("lon") as string;
 
-  invariant(lat && lon, "Missing lat or lon");
+  if (lat && lon) {
+    // const forecast = await getForecast({ lat, lon });
+    const findLocation = await getLocation({ lat, lon });
+    // TODO: account for empty array?
+    return redirect(`/cycling/${findLocation[0].name}`);
+  }
 
-  const weather = await getWeatherByLatLon(lat, lon);
-
-  return json({ weather });
+  if (location) {
+    // const forecast = await getForecast(location);
+    const findLocation = await getLocation(location);
+    return json(findLocation);
+  }
 };
 
 const btnClasses =
@@ -55,37 +61,35 @@ export default function Index() {
 
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-center gap-8">
-      <div className="flex items-center justify-center gap-4">
-        <Form method="post" className="flex gap-2">
-          {usersLocation?.coords?.latitude && (
-            <input
-              hidden
-              name="lat"
-              defaultValue={usersLocation.coords.latitude}
-            />
-          )}
-          {usersLocation?.coords?.longitude && (
-            <input
-              hidden
-              name="lon"
-              defaultValue={usersLocation.coords.longitude}
-            />
-          )}
+      <Form method="post" className="flex gap-2">
+        {usersLocation?.coords?.latitude && (
           <input
-            type="text"
-            name="location"
-            placeholder="Enter location"
-            className={inputClasses}
+            hidden
+            name="lat"
+            defaultValue={usersLocation.coords.latitude}
           />
-          <button type="submit" className={btnClasses}>
-            Get weather
-          </button>
-        </Form>
-        <button className={btnClasses} onClick={getLocation}>
-          <IconLocation />
-          Get location
+        )}
+        {usersLocation?.coords?.longitude && (
+          <input
+            hidden
+            name="lon"
+            defaultValue={usersLocation.coords.longitude}
+          />
+        )}
+        <input
+          type="text"
+          name="location"
+          placeholder="Enter location"
+          className={inputClasses}
+        />
+        <button type="submit" className={btnClasses}>
+          Search location
         </button>
-      </div>
+        <button type="button" className={btnClasses} onClick={getLocation}>
+          <IconLocation />
+          <span className="sr-only">Get location</span>
+        </button>
+      </Form>
 
       {loading && <div>Loading...</div>}
 
