@@ -17,10 +17,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const lon = formData.get("lon") as string;
 
   if (lat && lon) {
-    // const forecast = await getForecast({ lat, lon });
-    const findLocation = await getLocation({ lat, lon });
-    // TODO: account for empty array?
-    return redirect(`/cycling/${findLocation[0].name}`);
+    return redirect(`/cycling?lat=${lat}&lon=${lon}`);
   }
 
   if (location) {
