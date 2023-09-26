@@ -1,7 +1,7 @@
 import type { ActionFunctionArgs, MetaFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import { Form, useActionData } from "@remix-run/react";
-import { useState } from "react";
+import { Form, useActionData, useSubmit } from "@remix-run/react";
+import { useEffect, useRef, useState } from "react";
 import { DisplayGeolocationPosition } from "~/components/DisplayGeolocationPosition";
 import IconLocation from "~/components/IconLocation";
 import { getLocation } from "~/openweathermap/openweathermap-utils";
@@ -12,7 +12,7 @@ export const meta: MetaFunction = () => [{ title: "Weather Gear" }];
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
-  const location = formData.get("location") as string;
+  const query = formData.get("query") as string;
   const lat = formData.get("lat") as string;
   const lon = formData.get("lon") as string;
 
@@ -20,9 +20,9 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     return redirect(`/cycling?lat=${lat}&lon=${lon}`);
   }
 
-  if (location) {
-    // const forecast = await getForecast(location);
-    const findLocation = await getLocation(location);
+  if (query) {
+    console.log('getting locations');
+    const findLocation = await getLocation(query);
     return json(findLocation);
   }
 };
@@ -34,9 +34,19 @@ const inputClasses =
 
 export default function Index() {
   const actionData = useActionData<typeof action>();
+  const formRef = useRef<HTMLFormElement>(null);
+  const submit = useSubmit();
+
+  const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [usersLocation, setUsersLocation] =
     useState<GeolocationPosition | null>(null);
+
+  useEffect(() => {
+    if (query.length < 3) return;
+    const timeOutId = setTimeout(() => submit(formRef.current), 500);
+    return () => clearTimeout(timeOutId);
+  }, [query, submit]);
 
   function handleSetLocation(data: GeolocationPosition) {
     setUsersLocation(data);
@@ -58,7 +68,7 @@ export default function Index() {
 
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-center gap-8">
-      <Form method="post" className="flex gap-2">
+      <Form method="post" ref={formRef} className="flex gap-2">
         {usersLocation?.coords?.latitude && (
           <input
             hidden
@@ -75,8 +85,10 @@ export default function Index() {
         )}
         <input
           type="text"
-          name="location"
+          name="query"
           placeholder="Enter location"
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
           className={inputClasses}
         />
         <button type="submit" className={btnClasses}>
