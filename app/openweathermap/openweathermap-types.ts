@@ -90,7 +90,6 @@ export interface Wind {
 
 export interface WeatherLocation {
   name: string;
-  local_names: object;
   lat: number;
   lon: number;
   country: string;
