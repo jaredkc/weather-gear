@@ -1,5 +1,4 @@
-import IconLocation from "./IconLocation";
-import IconMenu from "./IconMenu";
+import { IconLocation, IconMenu } from "./icons";
 
 const summaryClasses =
   "flex items-center justify-center w-10 h-10 rounded-full bg-white/75";
