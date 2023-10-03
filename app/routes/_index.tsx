@@ -20,12 +20,19 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     return redirect(`/cycling?lat=${lat}&lon=${lon}`);
   }
 
-  const findLocation = await getLocation(query);
-  return json(findLocation);
+  const locationSearch = await getLocation(query);
+
+  if (locationSearch.location) {
+    return redirect(
+      `/cycling?lat=${locationSearch.location.lat}&lon=${locationSearch.location.lon}`,
+    );
+  }
+
+  return json(locationSearch);
 };
 
 export default function Index() {
-  const locations = useActionData<typeof action>();
+  const locationSearch = useActionData<typeof action>();
   const formRef = useRef<HTMLFormElement>(null);
   const submit = useSubmit();
 
@@ -112,7 +119,9 @@ export default function Index() {
 
       {loading && <div>Loading...</div>}
 
-      {locations && <ListLocations locations={locations} />}
+      {locationSearch?.locations && (
+        <ListLocations locations={locationSearch.locations} />
+      )}
     </main>
   );
 }
@@ -121,6 +130,7 @@ function ListLocations({ locations }: { locations: WeatherLocation[] }) {
   return (
     <>
       <ul className="border-t border-gray-300">
+        {locations.length === 0 && <li className="py-2">No locations found</li>}
         {locations.map((location) => (
           <li key={location.name} className="border-b border-gray-300">
             <Link
