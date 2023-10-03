@@ -117,7 +117,7 @@ function GeoLocation() {
     <button
       type="button"
       className={`w-10 flex justify-center items-center${
-        loading ? " opacity-50 cursor-not-allowed" : ""
+        loading ? " loading" : ""
       }`}
       onClick={getLocation}
     >
