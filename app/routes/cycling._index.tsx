@@ -5,8 +5,8 @@ import {
 } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
-import Header from "~/components/Header";
 import { getForecast } from "~/openweathermap/openweathermap-utils";
+import { getWeatherIcon } from "~/utils";
 
 export const meta: MetaFunction = () => [{ title: "Work-in-progress" }];
 
@@ -20,17 +20,21 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 
   const forecast = await getForecast({ lat, lon });
 
-  return json({ lat, lon, forecast });
+  return json(forecast);
 };
 
 export default function WIP() {
-  const data = useLoaderData<typeof loader>();
+  const forecast = useLoaderData<typeof loader>();
+  const weather = forecast.list[0].weather[0];
+  const iconUrl = getWeatherIcon(weather.icon, "@4x");
 
   return (
-    <main className="relative flex min-h-screen flex-col items-center justify-between bg-blue-100 gap-8">
-      <Header />
-      <h1>Weather for: {data.forecast.city.name}</h1>
-      {data.forecast && <pre>{JSON.stringify(data.forecast, null, 2)}</pre>}
-    </main>
+    <div className="flex flex-col items-center gap-12 h-screen justify-center">
+      <h1 className="text-2xl">{forecast.city.name}</h1>
+      <div className="w-28 h-28 rounded-full bg-white flex items-center justify-center">
+        <img src={iconUrl} alt={weather.description} width={100} height={100} />
+      </div>
+      <p className="capitalize">{weather.description}</p>
+    </div>
   );
 }

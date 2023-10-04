@@ -43,7 +43,7 @@ export default function Index() {
   }, [query, submit]);
 
   return (
-    <main className="relative flex min-h-screen flex-col items-center gap-8 w-full p-4 md:p-8 bg-blue-100">
+    <main className="relative flex flex-col items-center gap-8 p-4 md:p-8">
       <div className="flex gap-2">
         <Form method="post" ref={formRef}>
           <div className="flex border rounded-full bg-white">
@@ -54,11 +54,11 @@ export default function Index() {
               autoFocus={true}
               value={query}
               onChange={(event) => setQuery(event.target.value)}
-              className="px-4 py-2 focus:border-blue-500 focus:ring-blue-500 bg-transparent flex-1 outline-none"
+              className="px-4 py-2 flex-1 rounded-full"
             />
             <button
               type="submit"
-              className="w-12 flex justify-center items-center"
+              className="w-10 flex justify-center items-center rounded-full"
             >
               <IconSearch />
               <span className="sr-only">Search</span>
@@ -116,7 +116,7 @@ function GeoLocation() {
   return (
     <button
       type="button"
-      className={`w-10 flex justify-center items-center${
+      className={`w-10 flex justify-center items-center rounded-full${
         loading ? " loading" : ""
       }`}
       onClick={getLocation}
