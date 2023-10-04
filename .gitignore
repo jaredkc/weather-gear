@@ -1,6 +1,8 @@
 node_modules
 
 /public/build
+/server/index.js
+/server/index.js.map
 /server/index.mjs
 /server/index.mjs.map
 /server/metafile.*

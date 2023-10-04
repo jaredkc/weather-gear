@@ -11,10 +11,12 @@ import {
 } from "@remix-run/react";
 
 import { getUser } from "~/session.server";
-import stylesheet from "~/tailwind.css";
+import twStyles from "~/styles/tailwind.css";
+import appStyles from "~/styles/app.css";
 
 export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: stylesheet },
+  { rel: "stylesheet", href: twStyles },
+  { rel: "stylesheet", href: appStyles },
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
 ];
 
@@ -32,7 +34,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="h-full">
+      <body className="h-full bg-blue-50">
         <Outlet />
         <ScrollRestoration />
         <Scripts />
