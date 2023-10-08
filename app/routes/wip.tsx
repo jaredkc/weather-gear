@@ -1,3 +1,6 @@
+// This is page template used to flush things out.
+// It is not used in production and can be modified or deleted as needed
+
 import type { MetaFunction } from "@remix-run/node";
 import Header from "~/components/Header";
 import { testWeather } from "~/openweathermap/openweathermap-test-data";
