@@ -23,7 +23,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 
   const forecast = await getForecast({ lat, lon });
 
-  const { feels_like } = forecast.list[0].main;
+  const { feels_like } = forecast.current;
   const gear = gearForTemp(cyclingGear, feels_like);
 
   return json({ forecast, gear });
@@ -31,26 +31,24 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 
 export default function CyclingIndex() {
   const { forecast, gear } = useLoaderData<typeof loader>();
-  const { temp, feels_like } = forecast.list[0].main;
-  const { wind } = forecast.list[0];
-  const weather = forecast.list[0].weather[0];
-  const iconUrl = getWeatherIcon(weather.icon, "@4x");
+  const { temp, feels_like, wind_speed, weather } = forecast.current;
+  const iconUrl = getWeatherIcon(weather[0].icon, "@4x");
 
   return (
     <div className="py-12 max-w-xl mx-auto flex flex-col gap-8 text-center">
-      <h1 className="text-2xl">{forecast.city.name}</h1>
+      <h1 className="text-2xl">{forecast.timezone}</h1>
       <div className="w-28 h-28 rounded-full bg-white flex items-center justify-center mx-auto">
-        <img src={iconUrl} alt={weather.description} width={100} height={100} />
+        <img src={iconUrl} alt={weather[0].description} width={100} height={100} />
       </div>
       <dl className="grid grid-cols-2 w-48 text-left mx-auto gap-2">
         <dt className="opacity-75">Conditions:</dt>
-        <dd className="font-semibold capitalize">{weather.description}</dd>
+        <dd className="font-semibold capitalize">{weather[0].description}</dd>
         <dt className="opacity-75">Temp:</dt>
         <dd className="font-semibold">{temp}</dd>
         <dt className="opacity-75">Feels like:</dt>
         <dd className="font-semibold">{feels_like}</dd>
         <dt className="opacity-75">Wind:</dt>
-        <dd className="font-semibold">{wind.speed}</dd>
+        <dd className="font-semibold">{wind_speed}</dd>
       </dl>
       <GearList gear={gear} />
     </div>
