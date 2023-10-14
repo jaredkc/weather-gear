@@ -5,6 +5,7 @@ import {
 } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
+import { AppFrame } from "~/components/AppFrame";
 import { GearList } from "~/components/GearList";
 import { cyclingGear } from "~/gear/cyclingGear";
 import { gearForTemp } from "~/gear/gear";
@@ -23,7 +24,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 
   const forecast = await getForecast({ lat, lon });
 
-  const { feels_like } = forecast.list[0].main;
+  const { feels_like } = forecast.current;
   const gear = gearForTemp(cyclingGear, feels_like);
 
   return json({ forecast, gear });
@@ -31,28 +32,37 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 
 export default function CyclingIndex() {
   const { forecast, gear } = useLoaderData<typeof loader>();
-  const { temp, feels_like } = forecast.list[0].main;
-  const { wind } = forecast.list[0];
-  const weather = forecast.list[0].weather[0];
-  const iconUrl = getWeatherIcon(weather.icon, "@4x");
+  const { temp, feels_like, wind_speed, weather } = forecast.current;
+  const iconUrl = getWeatherIcon(weather[0].icon, "@4x");
+  const humanDate = new Date(forecast.current.dt * 1000).toLocaleString();
 
   return (
-    <div className="py-12 max-w-xl mx-auto flex flex-col gap-8 text-center">
-      <h1 className="text-2xl">{forecast.city.name}</h1>
-      <div className="w-28 h-28 rounded-full bg-white flex items-center justify-center mx-auto">
-        <img src={iconUrl} alt={weather.description} width={100} height={100} />
+    <AppFrame>
+      <div className="flex flex-col max-w-xl gap-8 mx-auto text-center">
+        <div>
+          <h1 className="text-2xl">{forecast.timezone}</h1>
+          <p>{humanDate}</p>
+        </div>
+        <div className="flex items-center justify-center mx-auto bg-white rounded-full w-28 h-28">
+          <img
+            src={iconUrl}
+            alt={weather[0].description}
+            width={100}
+            height={100}
+          />
+        </div>
+        <dl className="grid w-48 grid-cols-2 gap-2 mx-auto text-left">
+          <dt className="opacity-75">Conditions:</dt>
+          <dd className="font-semibold capitalize">{weather[0].description}</dd>
+          <dt className="opacity-75">Temp:</dt>
+          <dd className="font-semibold">{temp}</dd>
+          <dt className="opacity-75">Feels like:</dt>
+          <dd className="font-semibold">{feels_like}</dd>
+          <dt className="opacity-75">Wind:</dt>
+          <dd className="font-semibold">{wind_speed}</dd>
+        </dl>
+        <GearList gear={gear} />
       </div>
-      <dl className="grid grid-cols-2 w-48 text-left mx-auto gap-2">
-        <dt className="opacity-75">Conditions:</dt>
-        <dd className="font-semibold capitalize">{weather.description}</dd>
-        <dt className="opacity-75">Temp:</dt>
-        <dd className="font-semibold">{temp}</dd>
-        <dt className="opacity-75">Feels like:</dt>
-        <dd className="font-semibold">{feels_like}</dd>
-        <dt className="opacity-75">Wind:</dt>
-        <dd className="font-semibold">{wind.speed}</dd>
-      </dl>
-      <GearList gear={gear} />
-    </div>
+    </AppFrame>
   );
 }

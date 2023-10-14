@@ -1,10 +1,6 @@
 import invariant from "tiny-invariant";
-import type {
-  Coord,
-  WeatherLocation,
-  Weather,
-  Forecast,
-} from "./openweathermap-types";
+import type { Coord, WeatherLocation, Weather } from "./openweathermap-types";
+import type { Forecast } from "./openweathermap-types-onecall";
 
 const openWeatherApiKey = process.env.OPEN_WEATHER_API_KEY;
 const openWeatherApiUrl = "https://api.openweathermap.org/";
@@ -53,17 +49,11 @@ export const getLocation = async (
   return structuredResponse;
 };
 
-export const getForecast = async (
-  location: Coord | string,
-): Promise<Forecast> => {
-  let url = `${openWeatherApiUrl}data/2.5/forecast?appid=${openWeatherApiKey}&units=imperial&cnt=3`;
-  if (typeof location === "object") {
-    url = `${url}&lat=${location.lat}&lon=${location.lon}`;
-  } else if (/^\d{5}$/.test(location)) {
-    url = `${url}&zip=${location}`;
-  } else {
-    url = `${url}&q=${location}`;
-  }
+export const getForecast = async (location: Coord): Promise<Forecast> => {
+  // Version 2.5, free
+  // let url = `${openWeatherApiUrl}data/2.5/forecast?appid=${openWeatherApiKey}&units=imperial&cnt=3`;
+  // Version 3.0, 1,000 calls per day for free, $0.15 after that
+  let url = `${openWeatherApiUrl}/data/3.0/onecall?&lat=${location.lat}&lon=${location.lon}&appid=${openWeatherApiKey}&units=imperial`;
 
   const response = await fetch(url);
   const data = await response.json();
