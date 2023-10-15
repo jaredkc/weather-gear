@@ -15,7 +15,7 @@ export const meta: MetaFunction = () => [{ title: "Weather Gear - " }];
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   const temp = 65;
-  const gear = gearForTemp(cyclingGear, 38);
+  const gear = gearForTemp(cyclingGear, temp);
 
   return json({ temp, gear });
 };
