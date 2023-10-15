@@ -38,7 +38,7 @@ export default function CyclingIndex() {
 
   return (
     <AppFrame>
-      <div className="flex flex-col max-w-xl gap-8 mx-auto text-center">
+      <div className="flex flex-col gap-8 mx-auto text-center">
         <div>
           <h1 className="text-2xl">{forecast.timezone}</h1>
           <p>{humanDate}</p>
