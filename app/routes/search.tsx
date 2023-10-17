@@ -80,6 +80,7 @@ function ListLocations({ locations }: { locations: WeatherLocation[] }) {
           <Link
             to={`/cycling?lat=${location.lat}&lon=${location.lon}`}
             className="block py-2"
+            unstable_viewTransition
           >
             {location.name} <span className="opacity-50">{location.state}</span>
           </Link>
