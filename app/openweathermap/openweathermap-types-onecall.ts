@@ -7,9 +7,10 @@ export interface Forecast {
   timezone: string
   timezone_offset: number
   current: Current
-  minutely: Minutely[]
   hourly: Hourly[]
-  daily: Daily[]
+  // Exlucding for now
+  // minutely: Minutely[]
+  // daily: Daily[]
 }
 
 export interface Current {

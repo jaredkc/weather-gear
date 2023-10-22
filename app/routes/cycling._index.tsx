@@ -9,7 +9,10 @@ import { AppFrame } from "~/components/AppFrame";
 import { GearList } from "~/components/GearList";
 import { cyclingGear } from "~/gear/cyclingGear";
 import { gearForTemp } from "~/gear/gear";
-import { getForecast } from "~/openweathermap/openweathermap-utils";
+import {
+  getForecast,
+  getLocation,
+} from "~/openweathermap/openweathermap-utils";
 import { getWeatherIcon } from "~/utils";
 
 export const meta: MetaFunction = () => [{ title: "Work-in-progress" }];
@@ -23,15 +26,19 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   invariant(lon, "Logitude not found");
 
   const forecast = await getForecast({ lat, lon });
-
+  const { locations } = await getLocation({ lat, lon });
   const { feels_like } = forecast.current;
   const gear = gearForTemp(cyclingGear, feels_like);
 
-  return json({ forecast, gear });
+  return json({
+    forecast,
+    gear,
+    location: locations ? locations[0].name : "Unknown location name",
+  });
 };
 
 export default function CyclingIndex() {
-  const { forecast, gear } = useLoaderData<typeof loader>();
+  const { forecast, gear, location } = useLoaderData<typeof loader>();
   const { temp, feels_like, wind_speed, weather } = forecast.current;
   const iconUrl = getWeatherIcon(weather[0].icon, "@4x");
   const humanDate = new Date(forecast.current.dt * 1000).toLocaleString();
@@ -40,7 +47,7 @@ export default function CyclingIndex() {
     <AppFrame>
       <div className="flex flex-col gap-8 mx-auto text-center">
         <div>
-          <h1 className="text-2xl">{forecast.timezone}</h1>
+          <h1 className="text-2xl">{location}</h1>
           <p>{humanDate}</p>
         </div>
         <div className="flex items-center justify-center mx-auto bg-white rounded-full w-28 h-28">

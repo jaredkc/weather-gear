@@ -8,13 +8,12 @@ invariant(openWeatherApiKey, "OPEN_WEATHER_API_KEY must be set");
 
 interface WeatherGearLocation {
   type: "latlon" | "zip" | "query";
-  location: WeatherLocation | null;
   locations: WeatherLocation[] | null;
 }
 
 /**
- * Get location data from query, zip or lat/lon
- * If not results are found, an empty array is returned
+ * Get location data from query, zip or lat/lon.
+ * [Geocoding API](https://openweathermap.org/api/geocoding-api)
  */
 export const getLocation = async (
   location: Coord | string,
@@ -22,7 +21,6 @@ export const getLocation = async (
   const limit = 10;
   const structuredResponse: WeatherGearLocation = {
     type: "latlon",
-    location: null,
     locations: null,
   };
   let url = `${openWeatherApiUrl}geo/1.0/`;
@@ -41,19 +39,29 @@ export const getLocation = async (
   const response = await fetch(url);
   const data = await response.json();
 
-  if (structuredResponse.type === "query") {
-    structuredResponse.locations = data;
-  } else {
-    structuredResponse.location = data;
-  }
+  structuredResponse.locations = data;
+
   return structuredResponse;
 };
 
+/**
+ * Get forecast from one call api. Excluding minutely, daily and alerts.
+ * [One Call API 3.0](https://openweathermap.org/api/one-call-3)
+ * Version 3.0, 1,000 calls per day for free, $0.15 after that.
+ */
 export const getForecast = async (location: Coord): Promise<Forecast> => {
-  // Version 2.5, free
-  // let url = `${openWeatherApiUrl}data/2.5/forecast?appid=${openWeatherApiKey}&units=imperial&cnt=3`;
-  // Version 3.0, 1,000 calls per day for free, $0.15 after that
-  let url = `${openWeatherApiUrl}/data/3.0/onecall?&lat=${location.lat}&lon=${location.lon}&appid=${openWeatherApiKey}&units=imperial`;
+  let url = `${openWeatherApiUrl}/data/3.0/onecall?&lat=${location.lat}&lon=${location.lon}&exclude=minutely,daily,alerts&appid=${openWeatherApiKey}&units=imperial`;
+
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+};
+
+/**
+ * Version 2.5, free
+ */
+export const getForecast2 = async (location: Coord): Promise<Forecast> => {
+  let url = `${openWeatherApiUrl}data/2.5/forecast?appid=${openWeatherApiKey}&units=imperial&cnt=3`;
 
   const response = await fetch(url);
   const data = await response.json();
