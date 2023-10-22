@@ -6,9 +6,9 @@ interface Props {
 
 export const GearList = ({ gear }: Props) => {
   return (
-    <ul className="list-disc w-48 mx-auto text-left">
+    <ul className="text-left border-t border-slate-300">
       {gear.map((item) => (
-        <li key={item.id} className="py-1">
+        <li key={item.id} className="py-2 border-b border-slate-300">
           {item.name}
         </li>
       ))}

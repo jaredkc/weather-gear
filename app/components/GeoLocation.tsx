@@ -8,8 +8,9 @@ export default function GeoLocation() {
 
   function handleSuccess(data: GeolocationPosition) {
     const { latitude, longitude } = data.coords;
-    navigate(`/cycling?lat=${latitude}&lon=${longitude}`);
-    // setLoading(false);
+    navigate(`/cycling?lat=${latitude}&lon=${longitude}`, {
+      unstable_viewTransition: true,
+    });
   }
 
   function handleError(data: GeolocationPositionError) {
