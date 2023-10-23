@@ -94,5 +94,6 @@ export interface WeatherLocation {
   lat: number;
   lon: number;
   country: string;
-  state: string;
+  local_names?: object;
+  state?: string;
 }
