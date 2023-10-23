@@ -1,5 +1,5 @@
 import invariant from "tiny-invariant";
-import type { Coord, WeatherLocation, Weather } from "./openweathermap-types";
+import type { Coord, WeatherLocation } from "./openweathermap-types";
 import type { Forecast } from "./openweathermap-types-onecall";
 
 const openWeatherApiKey = process.env.OPEN_WEATHER_API_KEY;
@@ -62,9 +62,11 @@ export const getForecast = async (location: Coord): Promise<Forecast> => {
   return data;
 };
 
+
 /**
- * Version 2.5, free
+ * API calls to Version 2.5, which is free. Not currently using.
  */
+/*
 export const getForecast2 = async (location: Coord): Promise<Forecast> => {
   let url = `${openWeatherApiUrl}data/2.5/forecast?appid=${openWeatherApiKey}&units=imperial&cnt=3`;
 
@@ -79,3 +81,4 @@ export const getWeather = async (location: Coord): Promise<Weather> => {
   const data = await response.json();
   return data;
 };
+*/
