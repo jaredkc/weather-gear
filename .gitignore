@@ -14,3 +14,5 @@ sam.yaml
 
 /cypress/screenshots
 /cypress/videos
+
+/temp/*
