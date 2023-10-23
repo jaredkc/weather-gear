@@ -8,6 +8,7 @@ invariant(openWeatherApiKey, "OPEN_WEATHER_API_KEY must be set");
 
 interface WeatherGearLocation {
   type: "latlon" | "zip" | "query";
+  location: WeatherLocation | null;
   locations: WeatherLocation[] | null;
 }
 
@@ -21,6 +22,7 @@ export const getLocation = async (
   const limit = 10;
   const structuredResponse: WeatherGearLocation = {
     type: "latlon",
+    location: null,
     locations: null,
   };
   let url = `${openWeatherApiUrl}geo/1.0/`;
@@ -39,8 +41,11 @@ export const getLocation = async (
   const response = await fetch(url);
   const data = await response.json();
 
-  structuredResponse.locations = data;
-
+  if (structuredResponse.type === "query") {
+    structuredResponse.locations = data;
+  } else {
+    structuredResponse.location = data;
+  }
   return structuredResponse;
 };
 
