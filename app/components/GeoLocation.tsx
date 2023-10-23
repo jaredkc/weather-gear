@@ -8,6 +8,7 @@ export default function GeoLocation() {
 
   function handleSuccess(data: GeolocationPosition) {
     const { latitude, longitude } = data.coords;
+    setLoading(false);
     navigate(`/cycling?lat=${latitude}&lon=${longitude}`, {
       unstable_viewTransition: true,
     });
@@ -18,7 +19,7 @@ export default function GeoLocation() {
     setLoading(false);
   }
 
-  function getLocation() {
+  function deviceLocation() {
     setLoading(true);
     navigator.geolocation.getCurrentPosition(handleSuccess, handleError);
   }
@@ -29,7 +30,7 @@ export default function GeoLocation() {
       className={`w-10 flex justify-center items-center${
         loading ? " loading" : ""
       }`}
-      onClick={getLocation}
+      onClick={deviceLocation}
     >
       <IconLocation />
       <span className="sr-only">Use location from your device</span>
