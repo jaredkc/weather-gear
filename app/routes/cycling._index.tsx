@@ -11,7 +11,7 @@ import { cyclingGear } from "~/gear/cyclingGear";
 import { gearForTemp } from "~/gear/gear";
 import {
   getForecast,
-  getLocation,
+  coordLocations,
 } from "~/openweathermap/openweathermap-utils";
 import { getWeatherIcon } from "~/utils";
 
@@ -26,7 +26,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   invariant(lon, "Logitude not found");
 
   const forecast = await getForecast({ lat, lon });
-  const { locations } = await getLocation({ lat, lon });
+  const locations = await coordLocations({ lat, lon });
   const { feels_like } = forecast.current;
   const gear = gearForTemp(cyclingGear, feels_like);
 

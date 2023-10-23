@@ -4,49 +4,46 @@ import type { Forecast } from "./openweathermap-types-onecall";
 
 const openWeatherApiKey = process.env.OPEN_WEATHER_API_KEY;
 const openWeatherApiUrl = "https://api.openweathermap.org/";
+const openWeatherApiUrlGeo = `${openWeatherApiUrl}geo/1.0/`;
 invariant(openWeatherApiKey, "OPEN_WEATHER_API_KEY must be set");
 
-interface WeatherGearLocation {
-  type: "latlon" | "zip" | "query";
-  location: WeatherLocation | null;
-  locations: WeatherLocation[] | null;
-}
-
 /**
- * Get location data from query, zip or lat/lon.
+ * Get location data from query or zip.
+ * Zip queries return a single location, while queries return an array of locations.
+ * Making sure we always return an array of locations for consistency in data an UX.
+ *
  * [Geocoding API](https://openweathermap.org/api/geocoding-api)
  */
-export const getLocation = async (
-  location: Coord | string,
-): Promise<WeatherGearLocation> => {
+export const getLocations = async (
+  location: string,
+): Promise<WeatherLocation[]> => {
   const limit = 10;
-  const structuredResponse: WeatherGearLocation = {
-    type: "latlon",
-    location: null,
-    locations: null,
-  };
-  let url = `${openWeatherApiUrl}geo/1.0/`;
+  let queryType = "query";
+  let url = openWeatherApiUrlGeo;
 
-  if (typeof location === "object") {
-    url = `${url}/reverse?lat=${location.lat}&lon=${location.lon}&limit=${limit}&appid=${openWeatherApiKey}`;
-    structuredResponse.type = "latlon";
-  } else if (/^\d{5}$/.test(location)) {
-    url = `${url}/zip?zip=${location}&limit=${limit}&appid=${openWeatherApiKey}`;
-    structuredResponse.type = "zip";
+  if (/^\d{5}$/.test(location)) {
+    url = `${url}zip?zip=${location}&limit=${limit}&appid=${openWeatherApiKey}`;
+    queryType = "zip";
   } else {
-    url = `${url}/direct?q=${location}&limit=${limit}&appid=${openWeatherApiKey}`;
-    structuredResponse.type = "query";
+    url = `${url}direct?q=${location}&limit=${limit}&appid=${openWeatherApiKey}`;
   }
 
   const response = await fetch(url);
   const data = await response.json();
 
-  if (structuredResponse.type === "query") {
-    structuredResponse.locations = data;
-  } else {
-    structuredResponse.location = data;
-  }
-  return structuredResponse;
+  return queryType === "zip" ? [data] : data;
+};
+
+/**
+ * Get location data from coordinates
+ * So we can display a city name, which is not returned from the forecast api.
+ */
+export const coordLocations = async (
+  location: Coord,
+): Promise<WeatherLocation[]> => {
+  const url = `${openWeatherApiUrlGeo}reverse?lat=${location.lat}&lon=${location.lon}&limit=3&appid=${openWeatherApiKey}`;
+  const response = await fetch(url);
+  return await response.json();
 };
 
 /**
@@ -61,7 +58,6 @@ export const getForecast = async (location: Coord): Promise<Forecast> => {
   const data = await response.json();
   return data;
 };
-
 
 /**
  * API calls to Version 2.5, which is free. Not currently using.
