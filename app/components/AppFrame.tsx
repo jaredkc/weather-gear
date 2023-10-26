@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import { NavLink } from "@remix-run/react";
 import GeoLocation from "./GeoLocation";
 
 type Props = {
@@ -11,11 +11,13 @@ export const AppFrame = ({ children }: Props) => {
       <header className="fixed bottom-0 flex items-center justify-between w-full p-4 text-white bg-slate-800 md:top-0 md:bottom-auto">
         <ul className="flex items-center justify-around w-full gap-4">
           <li>
-            <Link to="/" unstable_viewTransition>Home</Link>
+            <NavLink to="/" unstable_viewTransition>Home</NavLink>
           </li>
-          <li className="opacity-50">Locations</li>
+          <li className="opacity-50">
+            <s>Locations</s>
+          </li>
           <li>
-            <Link to="/search" unstable_viewTransition>Search</Link>
+            <NavLink to="/search" unstable_viewTransition>Search</NavLink>
           </li>
           <li>
             <GeoLocation />

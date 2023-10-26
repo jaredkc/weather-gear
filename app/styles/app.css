@@ -28,6 +28,13 @@
 }
 
 /* --------------------
+  NavLink
+-------------------- */
+a.active {
+  @apply text-blue-100 underline underline-offset-2;
+}
+
+/* --------------------
   Loading indicator
 -------------------- */
 .loading {
