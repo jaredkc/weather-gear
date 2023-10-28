@@ -18,30 +18,21 @@ import { getWeatherIcon } from "~/utils";
 export const meta: MetaFunction = () => [{ title: "Weather Gear - " }];
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
-  const temp = 65;
-  const gear = gearForTemp(cyclingGear, temp);
   const forecast = sampleOneCall;
-
-  return json({ forecast, gear, temp });
+  return json({ forecast });
 };
 
 export default function Index() {
-  const { forecast, gear, temp } = useLoaderData<typeof loader>();
+  const { forecast } = useLoaderData<typeof loader>();
+  const gear = gearForTemp(cyclingGear, Math.round(forecast.hourly[0].temp));
   const forecastEightHours = forecast.hourly.slice(0, 8);
 
-  const [tempValue, setTempValue] = useState(temp);
   const [gearList, setGearList] = useState(gear);
   const [activeHour, setActiveHour] = useState(0);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = parseInt(event.target.value);
-    setTempValue(newValue);
-    setGearList(gearForTemp(cyclingGear, newValue));
-  };
-
   const handleActiveHour = (temp: number, index: number) => {
-    setTempValue(Math.round(temp));
     setActiveHour(index);
+    setGearList(gearForTemp(cyclingGear, Math.round(temp)));
   }
 
   return (
@@ -63,20 +54,6 @@ export default function Index() {
         </div>
       </div>
       <div className="mt-12">
-        <div className="text-center text-5xl">{tempValue}°F</div>
-
-        <div className="my-8">
-          <input
-            type="range"
-            min={0}
-            max={100}
-            step={1}
-            value={tempValue}
-            onChange={handleChange}
-            className="w-full"
-          />
-        </div>
-
         <GearList gear={gearList} />
       </div>
     </AppFrame>
