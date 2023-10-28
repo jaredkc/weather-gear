@@ -37,7 +37,7 @@ export default function Search() {
         <Form
           method="post"
           ref={formRef}
-          className="flex w-full bg-white border rounded-full"
+          className="flex w-full bg-white border rounded-lg"
         >
           <input
             type="text"
@@ -46,11 +46,11 @@ export default function Search() {
             autoFocus={true}
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            className="flex-1 px-4 py-2 rounded-full"
+            className="flex-1 px-4 py-2 rounded-lg"
           />
           <button
             type="submit"
-            className="flex items-center justify-center w-10 rounded-full"
+            className="flex items-center justify-center w-10 rounded-lg"
           >
             <IconSearch />
             <span className="sr-only">Search</span>
