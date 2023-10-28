@@ -2,7 +2,7 @@ import { useNavigate } from "@remix-run/react";
 import { useState } from "react";
 import { IconLocation } from "./icons";
 
-export default function GeoLocation() {
+export const GeoLocation = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
@@ -36,4 +36,4 @@ export default function GeoLocation() {
       <span className="sr-only">Use location from your device</span>
     </button>
   );
-}
+};

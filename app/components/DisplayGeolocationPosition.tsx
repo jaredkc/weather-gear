@@ -1,4 +1,6 @@
-type Props = { position: GeolocationPosition };
+type Props = {
+  position: GeolocationPosition;
+};
 
 export const DisplayGeolocationPosition = ({ position }: Props) => {
   return (
