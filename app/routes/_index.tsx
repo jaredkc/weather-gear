@@ -3,51 +3,29 @@ import {
   type LoaderFunctionArgs,
   type MetaFunction,
 } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
-import { useState } from "react";
+import { Link, useLoaderData } from "@remix-run/react";
 
 import { AppFrame } from "~/components/AppFrame";
-import { GearList } from "~/components/GearList";
-import { cyclingGear } from "~/gear/cyclingGear";
-import { gearForTemp } from "~/gear/gear";
+import { LocationCard } from "~/components/LocationCard";
+import { sampleOneCall } from "~/openweathermap/data/sample-onecall";
 
 export const meta: MetaFunction = () => [{ title: "Weather Gear - " }];
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
-  const temp = 65;
-  const gear = gearForTemp(cyclingGear, temp);
-
-  return json({ temp, gear });
+  const forecast = sampleOneCall;
+  return json({ forecast });
 };
 
 export default function Index() {
-  const { temp, gear } = useLoaderData<typeof loader>();
-  const [sliderValue, setSliderValue] = useState(temp);
-  const [gearList, setGearList] = useState(gear);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = parseInt(event.target.value);
-    setSliderValue(newValue);
-    setGearList(gearForTemp(cyclingGear, newValue));
-  };
+  const { forecast } = useLoaderData<typeof loader>();
 
   return (
     <AppFrame>
-      <div className="text-center text-5xl">{sliderValue}°F</div>
-
-      <div className="my-8">
-        <input
-          type="range"
-          min={0}
-          max={100}
-          step={1}
-          value={sliderValue}
-          onChange={handleChange}
-          className="w-full"
-        />
+      <div className="flex flex-col gap-4">
+        <Link to="cycling?lat=40.6727607&lon=-111.860115">
+          <LocationCard location="Millcreek" current={forecast.current} />
+        </Link>
       </div>
-
-      <GearList gear={gearList} />
     </AppFrame>
   );
 }
