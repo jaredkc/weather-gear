@@ -8,7 +8,9 @@ import clsx from "clsx";
 import { useState } from "react";
 
 import { AppFrame } from "~/components/AppFrame";
+import { Card } from "~/components/Cards";
 import { GearList } from "~/components/GearList";
+import { WeatherIcon } from "~/components/WeatherIcon";
 import { cyclingGear } from "~/gear/cyclingGear";
 import { gearForTemp } from "~/gear/gear";
 import { sampleOneCall } from "~/openweathermap/data/sample-onecall";
@@ -33,28 +35,43 @@ export default function Index() {
   const handleActiveHour = (temp: number, index: number) => {
     setActiveHour(index);
     setGearList(gearForTemp(cyclingGear, Math.round(temp)));
-  }
+  };
 
   return (
     <AppFrame>
-      <div className="rounded bg-slate-400 border">
-        <div className="overflow-x-auto flex">
-          {forecastEightHours.map((hour, index) => (
-            <button
-              key={index}
-              onClick={() => handleActiveHour(hour.temp, index)}
-              className={clsx(
-                "py-4 px-2 flex-none first:ml-4 last:mr-4",
-                index === activeHour && "bg-slate-300",
-              )}
-            >
-              <HourlyList {...hour} />
-            </button>
-          ))}
-        </div>
-      </div>
-      <div className="mt-12">
-        <GearList gear={gearList} />
+      <div className="flex flex-col gap-4">
+        <Card>
+          <div className="flex gap-4 justify-between items-center py-2 px-4">
+            <div>
+              <h2>Salt Lake City, Ut</h2>
+              <p>H:00° : L:00</p>
+            </div>
+            <div>
+              <WeatherIcon weather={forecast.current.weather[0]} size={80} />
+            </div>
+          </div>
+        </Card>
+
+        <Card>
+          <div className="overflow-x-auto flex">
+            {forecastEightHours.map((hour, index) => (
+              <button
+                key={index}
+                onClick={() => handleActiveHour(hour.temp, index)}
+                className={clsx(
+                  "py-4 px-2 flex-none",
+                  index === activeHour && "bg-slate-200",
+                )}
+              >
+                <HourlyList {...hour} />
+              </button>
+            ))}
+          </div>
+        </Card>
+
+        <Card>
+          <GearList gear={gearList} />
+        </Card>
       </div>
     </AppFrame>
   );
