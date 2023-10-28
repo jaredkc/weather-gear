@@ -15,9 +15,6 @@ export const AppFrame = ({ children }: Props) => {
               Home
             </NavLink>
           </li>
-          <li className="opacity-50">
-            <s>Locations</s>
-          </li>
           <li>
             <NavLink to="/search" unstable_viewTransition>
               Search
