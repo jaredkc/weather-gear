@@ -8,7 +8,7 @@ import clsx from "clsx";
 import { useState } from "react";
 
 import { AppFrame } from "~/components/AppFrame";
-import { Card } from "~/components/Cards";
+import { Card } from "~/components/Card";
 import { GearList } from "~/components/GearList";
 import { WeatherIcon } from "~/components/WeatherIcon";
 import { cyclingGear } from "~/gear/cyclingGear";
