@@ -1,8 +1,10 @@
 import type { Forecast } from "../openweathermap-types-onecall";
 
 /**
- * Sample data response from the One Call API
+ * Sample data response from the One Call API:
  * https://api.openweathermap.org/data/3.0/onecall?&lat=40.6727&lon=-111.8605&exclude=minutely,daily,alerts&units=imperial&appid=${APPID}
+ *
+ * Docs: https://openweathermap.org/api/one-call-api
  */
 export const sampleOneCall: Forecast = {
   lat: 40.6727,
