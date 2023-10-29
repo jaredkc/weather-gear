@@ -1,4 +1,4 @@
-import type { Weather } from "~/openweathermap/openweathermap-types-onecall";
+import type { Weather } from "~/openweathermap/openweathermap-types";
 import { getWeatherIcon } from "~/utils";
 
 type Props = {

@@ -12,7 +12,7 @@ import { cyclingGear } from "~/gear/cyclingGear";
 import { gearForTemp } from "~/gear/gear";
 import { sampleOneCall } from "~/openweathermap/data/sample-onecall";
 
-export const meta: MetaFunction = () => [{ title: "Weather Gear - " }];
+export const meta: MetaFunction = () => [{ title: "Manually set your weather - WeatherGear.app" }];
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   const temp = 65;

@@ -1,6 +1,5 @@
 import invariant from "tiny-invariant";
-import type { Coord, WeatherLocation } from "./openweathermap-types";
-import type { Forecast } from "./openweathermap-types-onecall";
+import type { Coord, Forecast, WeatherLocation } from "./openweathermap-types";
 
 const openWeatherApiKey = process.env.OPEN_WEATHER_API_KEY;
 const openWeatherApiUrl = "https://api.openweathermap.org/";
@@ -37,6 +36,8 @@ export const getLocations = async (
 /**
  * Get location data from coordinates
  * So we can display a city name, which is not returned from the forecast api.
+ *
+ * Example: https://api.openweathermap.org/geo/1.0/reverse?lat=40.7596&lon=-111.8868&limit=3&appid=${openWeatherApiKey}
  */
 export const coordLocations = async (
   location: Coord,
@@ -52,29 +53,9 @@ export const coordLocations = async (
  * Version 3.0, 1,000 calls per day for free, $0.15 after that.
  */
 export const getForecast = async (location: Coord): Promise<Forecast> => {
-  let url = `${openWeatherApiUrl}/data/3.0/onecall?&lat=${location.lat}&lon=${location.lon}&exclude=minutely,daily,alerts&appid=${openWeatherApiKey}&units=imperial`;
+  let url = `${openWeatherApiUrl}/data/3.0/onecall?&lat=${location.lat}&lon=${location.lon}&exclude=current,minutely,alerts&appid=${openWeatherApiKey}&units=imperial`;
 
   const response = await fetch(url);
   const data = await response.json();
   return data;
 };
-
-/**
- * API calls to Version 2.5, which is free. Not currently using.
- */
-/*
-export const getForecast2 = async (location: Coord): Promise<Forecast> => {
-  let url = `${openWeatherApiUrl}data/2.5/forecast?appid=${openWeatherApiKey}&units=imperial&cnt=3`;
-
-  const response = await fetch(url);
-  const data = await response.json();
-  return data;
-};
-
-export const getWeather = async (location: Coord): Promise<Weather> => {
-  const url = `${openWeatherApiUrl}data/2.5/weather?lat=${location.lat}&lon=${location.lon}&units=imperial&appid=${openWeatherApiKey}`;
-  const response = await fetch(url);
-  const data = await response.json();
-  return data;
-};
-*/
