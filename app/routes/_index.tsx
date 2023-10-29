@@ -23,7 +23,7 @@ export default function Index() {
     <AppFrame>
       <div className="flex flex-col gap-4">
         <Link to="cycling?lat=40.6727607&lon=-111.860115">
-          <LocationCard location="Millcreek" current={forecast.current} />
+          <LocationCard location="Millcreek" daily={forecast.daily[0]} />
         </Link>
       </div>
     </AppFrame>
