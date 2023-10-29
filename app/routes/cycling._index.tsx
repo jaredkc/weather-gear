@@ -20,7 +20,7 @@ import {
 } from "~/openweathermap/openweathermap-utils";
 import { getWeatherIcon } from "~/utils";
 
-export const meta: MetaFunction = () => [{ title: "Work-in-progress" }];
+export const meta: MetaFunction = () => [{ title: "Cycling Gear - WeatherGear.app" }];
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);

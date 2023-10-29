@@ -9,7 +9,7 @@ import { AppFrame } from "~/components/AppFrame";
 import { LocationCard } from "~/components/LocationCard";
 import { sampleOneCall } from "~/openweathermap/data/sample-onecall";
 
-export const meta: MetaFunction = () => [{ title: "Weather Gear - " }];
+export const meta: MetaFunction = () => [{ title: "WeatherGear.app" }];
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   const forecast = sampleOneCall;

@@ -7,7 +7,7 @@ import { getLocations } from "~/openweathermap/openweathermap-utils";
 import { IconSearch } from "~/components/icons";
 import { AppFrame } from "~/components/AppFrame";
 
-export const meta: MetaFunction = () => [{ title: "Weather Gear - " }];
+export const meta: MetaFunction = () => [{ title: "Find location(s) - WeatherGear.app" }];
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
