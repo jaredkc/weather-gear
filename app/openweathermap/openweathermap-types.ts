@@ -120,6 +120,15 @@ export interface Alert {
   tags: any[]
 }
 
+/**
+ * [Geocoding API](https://openweathermap.org/api/geocoding-api)
+ * - name Name of the found location
+ * - local_names (not used at this time)
+ * - lat Geographical coordinates of the found location (latitude)
+ * - lon Geographical coordinates of the found location (longitude)
+ * - country Country of the found location
+ * - state (where available) State of the found location
+ */
 export interface WeatherLocation {
   name: string;
   lat: number;

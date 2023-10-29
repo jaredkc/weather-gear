@@ -36,6 +36,8 @@ export const getLocations = async (
 /**
  * Get location data from coordinates
  * So we can display a city name, which is not returned from the forecast api.
+ *
+ * Example: https://api.openweathermap.org/geo/1.0/reverse?lat=40.7596&lon=-111.8868&limit=3&appid=${openWeatherApiKey}
  */
 export const coordLocations = async (
   location: Coord,
