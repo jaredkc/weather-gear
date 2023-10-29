@@ -1,4 +1,4 @@
-import type { Current } from "~/openweathermap/openweathermap-types-onecall";
+import type { Current } from "~/openweathermap/openweathermap-types";
 import { Card } from "./Card";
 import { WeatherIcon } from "./WeatherIcon";
 

@@ -13,7 +13,7 @@ import { GearList } from "~/components/GearList";
 import { LocationCard } from "~/components/LocationCard";
 import { cyclingGear } from "~/gear/cyclingGear";
 import { gearForTemp } from "~/gear/gear";
-import type { Hourly } from "~/openweathermap/openweathermap-types-onecall";
+import type { Hourly } from "~/openweathermap/openweathermap-types";
 import {
   coordLocations,
   getForecast,
