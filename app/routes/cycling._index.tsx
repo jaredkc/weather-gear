@@ -34,8 +34,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 
   const forecast = await getForecast({ lat, lon });
   const locations = await coordLocations({ lat, lon });
-  const { feels_like } = forecast.hourly[0];
-  const gear = gearForTemp(cyclingGear, feels_like);
+  const gear = gearForTemp(cyclingGear, forecast.hourly[0].feels_like);
 
   return json({
     forecast,
@@ -46,7 +45,6 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 
 export default function CyclingIndex() {
   const { forecast, gear, location } = useLoaderData<typeof loader>();
-  const forecastEightHours = forecast.hourly.slice(0, 8);
   const { temp, feels_like, wind_speed, weather } = forecast.hourly[0];
 
   const [gearList, setGearList] = useState(gear);
@@ -64,7 +62,7 @@ export default function CyclingIndex() {
 
         <Card>
           <div className="overflow-x-auto flex">
-            {forecastEightHours.map((hour, index) => (
+            {forecast.hourly.map((hour, index) => (
               <button
                 key={index}
                 onClick={() => handleActiveHour(hour.temp, index)}

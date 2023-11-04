@@ -48,7 +48,9 @@ export const coordLocations = async (
 };
 
 /**
- * Get forecast from one call api. Excluding minutely, daily and alerts.
+ * Get forecast from one call api. Excluding current, minutely, alerts.
+ * Trimming to 8 hourly and 1 daily forecasts.
+ *
  * [One Call API 3.0](https://openweathermap.org/api/one-call-3)
  * Version 3.0, 1,000 calls per day for free, $0.15 after that.
  */
@@ -57,5 +59,9 @@ export const getForecast = async (location: Coord): Promise<Forecast> => {
 
   const response = await fetch(url);
   const data = await response.json();
+
+  data.hourly = data.hourly.slice(0, 8);
+  data.daily = data.daily.slice(0, 1);
+
   return data;
 };
