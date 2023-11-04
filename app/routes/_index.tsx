@@ -13,6 +13,7 @@ import {
 } from "@remix-run/react";
 import { useEffect, useRef, useState } from "react";
 import { AppFrame } from "~/components/AppFrame";
+import { GeoLocation } from "~/components/GeoLocation";
 import { LocationCard } from "~/components/LocationCard";
 import { IconSearch } from "~/components/icons";
 import { sampleOneCall } from "~/openweathermap/data/sample-onecall";
@@ -55,28 +56,31 @@ export default function Index() {
           <LocationCard location="Millcreek" daily={forecast.daily[0]} />
         </Link>
 
-        <Form
-          method="post"
-          ref={formRef}
-          className="flex w-full bg-white border rounded-lg"
-        >
-          <input
-            type="text"
-            name="query"
-            placeholder="Search city or zip"
-            autoFocus={true}
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            className="flex-1 px-4 py-2 rounded-lg"
-          />
-          <button
-            type="submit"
-            className="flex items-center justify-center w-10 rounded-lg"
+        <div className="flex gap-2">
+          <Form
+            method="post"
+            ref={formRef}
+            className="flex w-full bg-white border rounded-lg"
           >
-            <IconSearch />
-            <span className="sr-only">Search</span>
-          </button>
-        </Form>
+            <input
+              type="text"
+              name="query"
+              placeholder="Search city or zip"
+              autoFocus={true}
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              className="flex-1 px-4 py-2 rounded-lg"
+            />
+            <button
+              type="submit"
+              className="flex items-center justify-center w-10 rounded-lg"
+            >
+              <IconSearch />
+              <span className="sr-only">Search</span>
+            </button>
+          </Form>
+          <GeoLocation />
+        </div>
 
         {locationSearch && <ListLocations locations={locationSearch} />}
       </div>

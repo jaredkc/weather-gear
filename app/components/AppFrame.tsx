@@ -1,5 +1,4 @@
 import { NavLink } from "@remix-run/react";
-import { GeoLocation } from "./GeoLocation";
 
 type Props = {
   children: React.ReactNode;
@@ -12,11 +11,8 @@ export const AppFrame = ({ children }: Props) => {
         <ul className="flex items-center justify-around w-full gap-4">
           <li>
             <NavLink to="/" unstable_viewTransition>
-              Home
+              Weather Gear App
             </NavLink>
-          </li>
-          <li>
-            <GeoLocation />
           </li>
         </ul>
       </header>
