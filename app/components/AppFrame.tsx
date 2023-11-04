@@ -16,11 +16,6 @@ export const AppFrame = ({ children }: Props) => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/search" unstable_viewTransition>
-              Search
-            </NavLink>
-          </li>
-          <li>
             <GeoLocation />
           </li>
         </ul>
