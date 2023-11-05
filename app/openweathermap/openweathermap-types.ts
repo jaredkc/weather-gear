@@ -95,6 +95,7 @@ export interface Daily {
   clouds: number;
   pop: number;
   rain?: number;
+  snow?: number;
   uvi: number;
 }
 
