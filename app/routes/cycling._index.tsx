@@ -45,7 +45,6 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 
 export default function CyclingIndex() {
   const { forecast, gear, location } = useLoaderData<typeof loader>();
-  const { temp, feels_like, wind_speed, weather } = forecast.hourly[0];
 
   const [gearList, setGearList] = useState(gear);
   const [activeHour, setActiveHour] = useState(0);
@@ -61,7 +60,7 @@ export default function CyclingIndex() {
         <LocationCard location={location} daily={forecast.daily[0]} />
 
         <Card>
-          <div className="overflow-x-auto flex">
+          <div className="flex overflow-x-auto">
             {forecast.hourly.map((hour, index) => (
               <button
                 key={index}
@@ -77,20 +76,6 @@ export default function CyclingIndex() {
           </div>
         </Card>
 
-        <div className="flex flex-col gap-8 mx-auto text-center">
-          <dl className="grid w-48 grid-cols-2 gap-2 mx-auto text-left">
-            <dt className="opacity-75">Conditions:</dt>
-            <dd className="font-semibold capitalize">
-              {weather[0].description}
-            </dd>
-            <dt className="opacity-75">Temp:</dt>
-            <dd className="font-semibold">{temp}</dd>
-            <dt className="opacity-75">Feels like:</dt>
-            <dd className="font-semibold">{feels_like}</dd>
-            <dt className="opacity-75">Wind:</dt>
-            <dd className="font-semibold">{wind_speed}</dd>
-          </dl>
-        </div>
         <Card>
           <GearList gear={gearList} />
         </Card>
