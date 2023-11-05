@@ -65,7 +65,7 @@ export default function CyclingIndex() {
                 key={index}
                 onClick={() => handleActiveHour(hour.temp, index)}
                 className={clsx(
-                  "py-4 px-2 flex-none",
+                  "flex-none px-2 py-4 cursor-pointer",
                   index === activeHour && "bg-slate-200",
                 )}
               >
