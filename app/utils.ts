@@ -81,3 +81,24 @@ export function getWeatherIcon(
 ): string {
   return `https://openweathermap.org/img/wn/${icon}${res}.png`;
 }
+
+/**
+ * Handlize a string ("Park City" -> "park-city")
+ * "Millcreek Township" -> "millcreek-township"
+ */
+export function slugify(str: string): string {
+  return str
+    .toLowerCase()
+    .replace(/ /g, "-")
+    .replace(/[^a-z0-9-]/g, "");
+}
+
+/**
+ * Slug to Title ("park-city" -> "Park City")
+ */
+export function slugToTitle(slug: string): string {
+  return slug
+    .split("-")
+    .map((word) => word[0].toUpperCase() + word.slice(1))
+    .join(" ");
+}

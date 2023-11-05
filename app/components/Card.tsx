@@ -4,7 +4,7 @@ type Props = {
 
 export const Card = ({ children }: Props) => {
   return (
-    <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+    <div className="overflow-hidden bg-white rounded-lg shadow-lg text-slate-700">
       {children}
     </div>
   );

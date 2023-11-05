@@ -26,7 +26,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 export default function App() {
   return (
-    <html lang="en" className="h-full">
+    <html lang="en" className="h-full bg-slate-900">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -34,7 +34,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="h-full bg-blue-50">
+      <body className="h-full text-slate-300 bg-gradient-to-b from-slate-800 to-slate-900">
         <Outlet />
         <ScrollRestoration />
         <Scripts />

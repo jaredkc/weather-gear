@@ -1,6 +1,7 @@
 import { createCookieSessionStorage, redirect } from "@remix-run/node";
 import invariant from "tiny-invariant";
 
+import type { UserLocation } from "~/models/user-location.server";
 import type { User } from "~/models/user.server";
 import { getUserById } from "~/models/user.server";
 
@@ -18,6 +19,7 @@ export const sessionStorage = createCookieSessionStorage({
 });
 
 const USER_SESSION_KEY = "userId";
+const LOCATIONS_SESSION_KEY = "locations";
 
 export async function getSession(request: Request) {
   const cookie = request.headers.get("Cookie");
@@ -25,7 +27,7 @@ export async function getSession(request: Request) {
 }
 
 export async function getUserId(
-  request: Request
+  request: Request,
 ): Promise<User["id"] | undefined> {
   const session = await getSession(request);
   const userId = session.get(USER_SESSION_KEY);
@@ -44,7 +46,7 @@ export async function getUser(request: Request) {
 
 export async function requireUserId(
   request: Request,
-  redirectTo: string = new URL(request.url).pathname
+  redirectTo: string = new URL(request.url).pathname,
 ) {
   const userId = await getUserId(request);
   if (!userId) {
@@ -94,4 +96,34 @@ export async function logout(request: Request) {
       "Set-Cookie": await sessionStorage.destroySession(session),
     },
   });
+}
+
+export async function setLocationsSession({
+  request,
+  locations,
+  redirectTo,
+}: {
+  request: Request;
+  locations: UserLocation[];
+  redirectTo: string;
+}) {
+  const session = await getSession(request);
+  const locationsLimit = locations.slice(0, 5);
+  session.set(LOCATIONS_SESSION_KEY, locationsLimit);
+  return redirect(redirectTo, {
+    headers: {
+      "Set-Cookie": await sessionStorage.commitSession(session, {
+        // TODO: 1 day for testing, will need to be longer
+        maxAge: 60 * 60 * 24 * 1, // 1 day
+      }),
+    },
+  });
+}
+
+export async function getLocations(
+  request: Request,
+): Promise<UserLocation[] | undefined> {
+  const session = await getSession(request);
+  const userId = session.get(LOCATIONS_SESSION_KEY);
+  return userId;
 }
