@@ -67,7 +67,6 @@ export default function Index() {
               type="text"
               name="query"
               placeholder="Search city or zip"
-              autoFocus={true}
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               className="flex-1 px-4 py-2 rounded-lg"
