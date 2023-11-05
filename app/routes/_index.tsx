@@ -19,6 +19,7 @@ import { IconSearch } from "~/components/icons";
 import { sampleOneCall } from "~/openweathermap/data/sample-onecall";
 import type { WeatherLocation } from "~/openweathermap/openweathermap-types";
 import { getLocations } from "~/openweathermap/openweathermap-utils";
+import { slugify } from "~/utils";
 
 export const meta: MetaFunction = () => [{ title: "WeatherGear.app" }];
 
@@ -52,7 +53,7 @@ export default function Index() {
   return (
     <AppFrame>
       <div className="flex flex-col gap-4">
-        <Link to="cycling?lat=40.6727607&lon=-111.860115">
+        <Link to={`cycling/${slugify('Millcreek')}?lat=40.6727607&lon=-111.860115`}>
           <LocationCard location="Millcreek" daily={forecast.daily[0]} />
         </Link>
 
@@ -60,7 +61,7 @@ export default function Index() {
           <Form
             method="post"
             ref={formRef}
-            className="flex w-full bg-white border rounded-lg"
+            className="flex w-full bg-white border rounded-lg text-slate-700"
           >
             <input
               type="text"
@@ -95,7 +96,7 @@ function ListLocations({ locations }: { locations: WeatherLocation[] }) {
       {locations.map((location, index) => (
         <li key={index} className="border-b border-gray-300">
           <Link
-            to={`/cycling?lat=${location.lat}&lon=${location.lon}`}
+            to={`/cycling/${slugify(location.name)}?lat=${location.lat}&lon=${location.lon}`}
             className="block py-2"
             unstable_viewTransition
           >

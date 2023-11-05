@@ -1,6 +1,7 @@
 import type { Daily } from "~/openweathermap/openweathermap-types";
 import { Card } from "./Card";
 import { WeatherIcon } from "./WeatherIcon";
+import { slugToTitle } from "~/utils";
 
 type Props = {
   location: string;
@@ -12,7 +13,7 @@ export const LocationCard = ({ location, daily }: Props) => {
     <Card>
       <div className="flex gap-4 justify-between items-center px-4">
         <div className="py-2">
-          <h2>{location}</h2>
+          <h2>{slugToTitle(location)}</h2>
           <p className="text-sm flex gap-2">
             <span>H:{Math.round(daily.temp.max)}°</span>
             <span className="opacity-50">&middot;</span>

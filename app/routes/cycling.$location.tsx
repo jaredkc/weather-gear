@@ -14,10 +14,7 @@ import { HourlyList } from "~/components/HourlyList";
 import { LocationCard } from "~/components/LocationCard";
 import { cyclingGear } from "~/gear/cyclingGear";
 import { gearForTemp } from "~/gear/gear";
-import {
-  coordLocations,
-  getForecast,
-} from "~/openweathermap/openweathermap-utils";
+import { getForecast } from "~/openweathermap/openweathermap-utils";
 
 export const meta: MetaFunction = () => [
   { title: "Gear to wear cycling - WeatherGear.app" },
@@ -25,21 +22,18 @@ export const meta: MetaFunction = () => [
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
+  const location = params.location;
   const lat = url.searchParams.get("lat");
   const lon = url.searchParams.get("lon");
 
+  invariant(location, "Location not found");
   invariant(lat, "Latitude not found");
   invariant(lon, "Logitude not found");
 
   const forecast = await getForecast({ lat, lon });
-  const locations = await coordLocations({ lat, lon });
   const gear = gearForTemp(cyclingGear, forecast.hourly[0].feels_like);
 
-  return json({
-    forecast,
-    gear,
-    location: locations ? locations[0].name : "Unknown location name",
-  });
+  return json({ forecast, gear, location });
 };
 
 export default function CyclingIndex() {

@@ -34,7 +34,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="h-full text-slate-700 bg-gradient-to-b from-slate-800 to-slate-900">
+      <body className="h-full text-slate-300 bg-gradient-to-b from-slate-800 to-slate-900">
         <Outlet />
         <ScrollRestoration />
         <Scripts />
