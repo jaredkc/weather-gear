@@ -98,7 +98,7 @@ export async function logout(request: Request) {
   });
 }
 
-export async function createLocationsSession({
+export async function setLocationsSession({
   request,
   locations,
   redirectTo,
@@ -108,7 +108,8 @@ export async function createLocationsSession({
   redirectTo: string;
 }) {
   const session = await getSession(request);
-  session.set(LOCATIONS_SESSION_KEY, locations);
+  const locationsLimit = locations.slice(0, 5);
+  session.set(LOCATIONS_SESSION_KEY, locationsLimit);
   return redirect(redirectTo, {
     headers: {
       "Set-Cookie": await sessionStorage.commitSession(session, {

@@ -41,6 +41,9 @@ export interface Current {
   snow?: { "1h": number };
 }
 
+/**
+ * List of available [weather conditions](https://openweathermap.org/weather-conditions)
+ */
 export interface Weather {
   id: number;
   main: string;
@@ -112,12 +115,12 @@ export interface FeelsLike {
 }
 
 export interface Alert {
-  sender_name: string
-  event: string
-  start: number
-  end: number
-  description: string
-  tags: any[]
+  sender_name: string;
+  event: string;
+  start: number;
+  end: number;
+  description: string;
+  tags: any[];
 }
 
 /**
