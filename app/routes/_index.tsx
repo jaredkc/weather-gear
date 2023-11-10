@@ -53,8 +53,14 @@ export default function Index() {
   return (
     <AppFrame>
       <div className="flex flex-col gap-4">
-        <Link to={`cycling/${slugify('Millcreek')}?lat=40.6727607&lon=-111.860115`}>
-          <LocationCard location="Millcreek" daily={forecast.daily[0]} />
+        <Link
+          to={`cycling/${slugify("Millcreek")}?lat=40.6727607&lon=-111.860115`}
+        >
+          <LocationCard
+            location="Millcreek"
+            timezone={forecast.timezone}
+            daily={forecast.daily[0]}
+          />
         </Link>
 
         <div className="flex gap-2">
@@ -92,14 +98,14 @@ function ListLocations({ locations }: { locations: WeatherLocation[] }) {
   return (
     <ul className="border-t border-gray-300">
       {locations.length === 0 && <li className="py-2">No locations found</li>}
-      {locations.map((location, index) => (
+      {locations.map(({ name, lat, lon, state }, index) => (
         <li key={index} className="border-b border-gray-300">
           <Link
-            to={`/cycling/${slugify(location.name)}?lat=${location.lat}&lon=${location.lon}`}
+            to={`/cycling/${slugify(name)}?lat=${lat}&lon=${lon}`}
             className="block py-2"
             unstable_viewTransition
           >
-            {location.name} <span className="opacity-50">{location.state}</span>
+            {name} <span className="opacity-50">{state}</span>
           </Link>
         </li>
       ))}
