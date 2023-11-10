@@ -44,7 +44,7 @@ export default function CyclingIndex() {
 
   const handleActiveHour = (temp: number, index: number) => {
     setActiveHour(index);
-    setGearList(gearForTemp(cyclingGear, Math.round(temp)));
+    setGearList(gearForTemp(cyclingGear, temp));
   };
 
   return (

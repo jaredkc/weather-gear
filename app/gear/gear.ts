@@ -26,6 +26,7 @@ export interface GearTip {
  * - max_temp is greater than or equal to the temperature
  */
 export function gearForTemp(gear: Gear[], temp: number): Gear[] {
+  temp = Math.round(temp);
   return gear.filter((item) => {
     return item.min_temp <= temp && item.max_temp >= temp;
   });
