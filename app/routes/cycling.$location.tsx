@@ -50,7 +50,11 @@ export default function CyclingIndex() {
   return (
     <AppFrame>
       <div className="flex flex-col gap-4">
-        <LocationCard location={location} daily={forecast.daily[0]} />
+        <LocationCard
+          location={location}
+          timezone={forecast.timezone}
+          daily={forecast.daily[0]}
+        />
 
         <Card>
           <div className="flex overflow-x-auto">
@@ -63,7 +67,7 @@ export default function CyclingIndex() {
                   index === activeHour && "bg-slate-200",
                 )}
               >
-                <HourlyList {...hour} />
+                <HourlyList hour={hour} timezone={forecast.timezone} />
               </button>
             ))}
           </div>

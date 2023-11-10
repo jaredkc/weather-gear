@@ -1,7 +1,12 @@
 import type { Hourly } from "~/openweathermap/openweathermap-types";
 import { getWeatherIcon } from "~/utils";
 
-export const HourlyList = (hour: Hourly) => {
+type Props = {
+  hour: Hourly;
+  timezone: string;
+};
+
+export const HourlyList = ({ hour, timezone }: Props) => {
   const { dt, temp, weather } = hour;
   const iconUrl = getWeatherIcon(weather[0].icon);
 
@@ -9,6 +14,7 @@ export const HourlyList = (hour: Hourly) => {
     return new Date(dt * 1000).toLocaleTimeString("en-US", {
       hour: "numeric",
       hour12: true,
+      timeZone: timezone,
     });
   };
 

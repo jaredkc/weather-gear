@@ -5,10 +5,11 @@ import { slugToTitle } from "~/utils";
 
 type Props = {
   location: string;
+  timezone: string;
   daily: Daily;
 };
 
-export const LocationCard = ({ location, daily }: Props) => {
+export const LocationCard = ({ location, timezone, daily }: Props) => {
   return (
     <Card>
       <div className="flex gap-4 justify-between items-center px-4">
@@ -22,7 +23,9 @@ export const LocationCard = ({ location, daily }: Props) => {
             <span>W:{Math.round(daily.wind_speed)}mph</span>
           </p>
           <p className="text-xs opacity-50 mt-1">
-            {new Date(daily.dt * 1000).toLocaleString()}
+            {new Date(daily.dt * 1000).toLocaleDateString("en-US", {
+              timeZone: timezone,
+            })}
           </p>
         </div>
         <div>
