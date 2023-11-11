@@ -14,7 +14,13 @@ import { HourlyList } from "~/components/HourlyList";
 import { LocationCard } from "~/components/LocationCard";
 import { cyclingGear } from "~/gear/cyclingGear";
 import { gearForTemp } from "~/gear/gear";
-import { getForecast } from "~/openweathermap/openweathermap-utils";
+import {
+  forecastToUserLocation,
+  updateUserLocations,
+  type UserLocation,
+} from "~/models/user-location.server";
+import { getForecast } from "~/openweathermap/openweathermap-utils.server";
+import { commitSession, getSession } from "~/session.server";
 
 export const meta: MetaFunction = () => [
   { title: "Gear to wear cycling - WeatherGear.app" },
@@ -33,11 +39,25 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   const forecast = await getForecast({ lat, lon });
   const gear = gearForTemp(cyclingGear, forecast.hourly[0].feels_like);
 
-  return json({ forecast, gear, location });
+  // Update the users session with this new location
+  const session = await getSession(request);
+  const locations: UserLocation[] = session.get("locations") || [];
+  const userLocation = forecastToUserLocation(location, forecast);
+  const updatedLocations = updateUserLocations(locations, userLocation);
+  session.set("locations", updatedLocations);
+
+  return json(
+    { forecast, gear, userLocation },
+    {
+      headers: {
+        "Set-Cookie": await commitSession(session),
+      },
+    },
+  );
 };
 
 export default function CyclingIndex() {
-  const { forecast, gear, location } = useLoaderData<typeof loader>();
+  const { forecast, gear, userLocation } = useLoaderData<typeof loader>();
 
   const [gearList, setGearList] = useState(gear);
   const [activeHour, setActiveHour] = useState(0);
@@ -50,11 +70,7 @@ export default function CyclingIndex() {
   return (
     <AppFrame>
       <div className="flex flex-col gap-4">
-        <LocationCard
-          location={location}
-          timezone={forecast.timezone}
-          daily={forecast.daily[0]}
-        />
+        <LocationCard location={userLocation} />
 
         <Card>
           <div className="flex overflow-x-auto">

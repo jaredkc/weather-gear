@@ -13,7 +13,7 @@ invariant(openWeatherApiKey, "OPEN_WEATHER_API_KEY must be set");
  *
  * [Geocoding API](https://openweathermap.org/api/geocoding-api)
  */
-export const getLocations = async (
+export const searchLocations = async (
   location: string,
 ): Promise<WeatherLocation[]> => {
   const limit = 10;
