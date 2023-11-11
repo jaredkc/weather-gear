@@ -18,7 +18,7 @@ import { LocationCard } from "~/components/LocationCard";
 import { IconSearch } from "~/components/icons";
 import { sampleOneCall } from "~/openweathermap/data/sample-onecall";
 import type { WeatherLocation } from "~/openweathermap/openweathermap-types";
-import { getLocations } from "~/openweathermap/openweathermap-utils";
+import { searchLocations } from "~/openweathermap/openweathermap-utils";
 import { slugify } from "~/utils";
 
 export const meta: MetaFunction = () => [{ title: "WeatherGear.app" }];
@@ -32,7 +32,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
   const query = formData.get("query") as string;
 
-  const locationSearch = await getLocations(query);
+  const locationSearch = await searchLocations(query);
+  console.log(locationSearch);
   return json(locationSearch);
 };
 
