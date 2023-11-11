@@ -3,6 +3,7 @@ import type {
   Temp,
   Weather,
 } from "~/openweathermap/openweathermap-types";
+import { slugToTitle } from "~/utils";
 
 /**
  * UserLocation is a subset of the OpenWeatherMap API response
@@ -11,10 +12,11 @@ import type {
 export type UserLocation = {
   id: string;
   name: string;
+  dt: number;
   lat: number;
   lon: number;
-  dt: number;
   temp: Temp;
+  timezone: string;
   weather: Weather;
 };
 
@@ -27,14 +29,31 @@ export function forecastToUserLocation(
 ): UserLocation {
   const daily = forecast.daily[0];
   return {
-    id: `${forecast.lat}${forecast.lon}`,
-    name: name,
+    id: `${forecast.lat}_${forecast.lon}`,
+    name: slugToTitle(name),
+    dt: daily.dt,
     lat: forecast.lat,
     lon: forecast.lon,
-    dt: daily.dt,
     temp: daily.temp,
+    timezone: forecast.timezone,
     weather: daily.weather[0],
   };
+}
+
+/**
+ * Add or update a UserLocation in the locations array,
+ * limit the results to 5 locations for cookie storage
+ */
+export function updateUserLocations(
+  locations: UserLocation[],
+  location: UserLocation,
+): UserLocation[] {
+  const locationIndex = locations.findIndex((l) => l.id === location.id);
+  locationIndex !== -1
+    ? (locations[locationIndex] = location)
+    : locations.unshift(location);
+
+    return locations.slice(0, 5);
 }
 
 /**
@@ -50,11 +69,34 @@ export function isRecent(userLocation: UserLocation): boolean {
  */
 export const sampleLocations: UserLocation[] = [
   {
-    id: "1",
+    id: "40.6727_-111.8605",
+    dt: 1699208212,
+    name: "Millcreek",
+    lat: 40.6727,
+    lon: -111.8605,
+    timezone: "America/Denver",
+    temp: {
+      day: 57.74,
+      min: 55.13,
+      max: 63.16,
+      night: 57.58,
+      eve: 58.01,
+      morn: 55.13,
+    },
+    weather: {
+      id: 803,
+      main: "Clouds",
+      description: "broken clouds",
+      icon: "04d",
+    },
+  },
+  {
+    id: "51.5074_0.1278",
     dt: 1698606000,
     name: "London",
     lat: 51.5074,
     lon: 0.1278,
+    timezone: "Europe/London",
     temp: {
       day: 37.54,
       min: 30.63,

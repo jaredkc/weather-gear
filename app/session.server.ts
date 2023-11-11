@@ -26,6 +26,16 @@ export async function getSession(request: Request) {
   return sessionStorage.getSession(cookie);
 }
 
+export const { commitSession, destroySession } = sessionStorage;
+
+export async function getUsersLocations(
+  request: Request,
+): Promise<UserLocation[] | undefined> {
+  const session = await getSession(request);
+  const userId = session.get(LOCATIONS_SESSION_KEY);
+  return userId;
+}
+
 export async function getUserId(
   request: Request,
 ): Promise<User["id"] | undefined> {
@@ -96,34 +106,4 @@ export async function logout(request: Request) {
       "Set-Cookie": await sessionStorage.destroySession(session),
     },
   });
-}
-
-export async function setLocationsSession({
-  request,
-  locations,
-  redirectTo,
-}: {
-  request: Request;
-  locations: UserLocation[];
-  redirectTo: string;
-}) {
-  const session = await getSession(request);
-  const locationsLimit = locations.slice(0, 5);
-  session.set(LOCATIONS_SESSION_KEY, locationsLimit);
-  return redirect(redirectTo, {
-    headers: {
-      "Set-Cookie": await sessionStorage.commitSession(session, {
-        // TODO: 1 day for testing, will need to be longer
-        maxAge: 60 * 60 * 24 * 1, // 1 day
-      }),
-    },
-  });
-}
-
-export async function getLocations(
-  request: Request,
-): Promise<UserLocation[] | undefined> {
-  const session = await getSession(request);
-  const userId = session.get(LOCATIONS_SESSION_KEY);
-  return userId;
 }

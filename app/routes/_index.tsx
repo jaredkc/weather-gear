@@ -16,29 +16,28 @@ import { AppFrame } from "~/components/AppFrame";
 import { GeoLocation } from "~/components/GeoLocation";
 import { LocationCard } from "~/components/LocationCard";
 import { IconSearch } from "~/components/icons";
-import { sampleOneCall } from "~/openweathermap/data/sample-onecall";
+import type { UserLocation } from "~/models/user-location.server";
 import type { WeatherLocation } from "~/openweathermap/openweathermap-types";
 import { searchLocations } from "~/openweathermap/openweathermap-utils";
+import { getUsersLocations } from "~/session.server";
 import { slugify } from "~/utils";
 
 export const meta: MetaFunction = () => [{ title: "WeatherGear.app" }];
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
-  const forecast = sampleOneCall;
-  return json({ forecast });
+  const usersLocations = await getUsersLocations(request);
+  return json({ usersLocations });
 };
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
   const query = formData.get("query") as string;
-
   const locationSearch = await searchLocations(query);
-  console.log(locationSearch);
   return json(locationSearch);
 };
 
 export default function Index() {
-  const { forecast } = useLoaderData<typeof loader>();
+  const { usersLocations } = useLoaderData<typeof loader>();
   const locationSearch = useActionData<typeof action>();
   const formRef = useRef<HTMLFormElement>(null);
   const submit = useSubmit();
@@ -54,15 +53,7 @@ export default function Index() {
   return (
     <AppFrame>
       <div className="flex flex-col gap-4">
-        <Link
-          to={`cycling/${slugify("Millcreek")}?lat=40.6727607&lon=-111.860115`}
-        >
-          <LocationCard
-            location="Millcreek"
-            timezone={forecast.timezone}
-            daily={forecast.daily[0]}
-          />
-        </Link>
+        {usersLocations && <ListLocationCards locations={usersLocations} />}
 
         <div className="flex gap-2">
           <Form
@@ -89,13 +80,28 @@ export default function Index() {
           <GeoLocation />
         </div>
 
-        {locationSearch && <ListLocations locations={locationSearch} />}
+        {locationSearch && <ListSearchLocations locations={locationSearch} />}
       </div>
     </AppFrame>
   );
 }
 
-function ListLocations({ locations }: { locations: WeatherLocation[] }) {
+function ListLocationCards({ locations }: { locations: UserLocation[] }) {
+  return (
+    <>
+      {locations.map(({ name, lat, lon }, index) => (
+        <Link
+          to={`cycling/${slugify(name)}?lat=${lat}&lon=${lon}}`}
+          key={index}
+        >
+          <LocationCard location={locations[index]} />
+        </Link>
+      ))}
+    </>
+  );
+}
+
+function ListSearchLocations({ locations }: { locations: WeatherLocation[] }) {
   return (
     <ul className="border-t border-gray-300">
       {locations.length === 0 && <li className="py-2">No locations found</li>}
