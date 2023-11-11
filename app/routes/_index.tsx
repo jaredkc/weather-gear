@@ -18,7 +18,7 @@ import { LocationCard } from "~/components/LocationCard";
 import { IconSearch } from "~/components/icons";
 import type { UserLocation } from "~/models/user-location.server";
 import type { WeatherLocation } from "~/openweathermap/openweathermap-types";
-import { searchLocations } from "~/openweathermap/openweathermap-utils";
+import { searchLocations } from "~/openweathermap/openweathermap-utils.server";
 import { getUsersLocations } from "~/session.server";
 import { slugify } from "~/utils";
 

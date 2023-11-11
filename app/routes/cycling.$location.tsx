@@ -19,7 +19,7 @@ import {
   updateUserLocations,
   type UserLocation,
 } from "~/models/user-location.server";
-import { getForecast } from "~/openweathermap/openweathermap-utils";
+import { getForecast } from "~/openweathermap/openweathermap-utils.server";
 import { commitSession, getSession } from "~/session.server";
 
 export const meta: MetaFunction = () => [
