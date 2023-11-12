@@ -8,7 +8,7 @@ import { useState } from "react";
 
 import { AppFrame } from "~/components/AppFrame";
 import { GearList } from "~/components/GearList";
-import { cyclingGear } from "~/gear/cyclingGear";
+import { cyclingGear } from "~/gear/cycling-gear";
 import { gearForTemp } from "~/gear/gear";
 import { sampleOneCall } from "~/openweathermap/data/sample-onecall";
 

@@ -12,7 +12,7 @@ import { Card } from "~/components/Card";
 import { GearList } from "~/components/GearList";
 import { HourlyList } from "~/components/HourlyList";
 import { LocationCard } from "~/components/LocationCard";
-import { cyclingGear } from "~/gear/cyclingGear";
+import { cyclingGear } from "~/gear/cycling-gear";
 import { gearForTemp } from "~/gear/gear";
 import {
   forecastToUserLocation,
