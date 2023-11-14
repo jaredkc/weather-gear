@@ -50,7 +50,9 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     { forecast, gear, userLocation },
     {
       headers: {
-        "Set-Cookie": await commitSession(session),
+        "Set-Cookie": await commitSession(session, {
+          maxAge: 60 * 60 * 24 * 30, // 30 days
+        }),
       },
     },
   );
