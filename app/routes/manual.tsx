@@ -5,14 +5,15 @@ import {
 } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { useState } from "react";
-
 import { AppFrame } from "~/components/AppFrame";
+import { Card } from "~/components/Card";
 import { GearList } from "~/components/GearList";
-import { cyclingGear } from "~/gear/cycling-gear";
-import { gearForTemp } from "~/gear/gear";
+import { cyclingGear, gearForTemp, runningGear } from "~/gear";
 import { sampleOneCall } from "~/openweathermap/data/sample-onecall";
 
-export const meta: MetaFunction = () => [{ title: "Manually set your weather - WeatherGear.app" }];
+export const meta: MetaFunction = () => [
+  { title: "Manually set your weather - WeatherGear.app" },
+];
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   const temp = 65;
@@ -26,18 +27,35 @@ export default function Index() {
   const { gear, temp } = useLoaderData<typeof loader>();
 
   const [tempValue, setTempValue] = useState(temp);
+  const [selectValue, setSelectValue] = useState("cycling");
   const [gearList, setGearList] = useState(gear);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleRange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseInt(event.target.value);
     setTempValue(newValue);
-    setGearList(gearForTemp(cyclingGear, newValue));
+    setGearList(
+      gearForTemp(
+        selectValue === "cycling" ? cyclingGear : runningGear,
+        newValue,
+      ),
+    );
+  };
+
+  const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const newValue = event.target.value;
+    setSelectValue(newValue);
+    setGearList(
+      gearForTemp(
+        newValue === "cycling" ? cyclingGear : runningGear,
+        tempValue,
+      ),
+    );
   };
 
   return (
     <AppFrame>
-      <div className="mt-12">
-        <div className="text-center text-5xl">{tempValue}°F</div>
+      <div className="my-8">
+        <div className="text-5xl text-center">{tempValue}°F</div>
 
         <div className="my-8">
           <input
@@ -46,12 +64,23 @@ export default function Index() {
             max={100}
             step={1}
             value={tempValue}
-            onChange={handleChange}
+            onChange={handleRange}
             className="w-full"
           />
         </div>
 
-        <GearList gear={gearList} />
+        <select
+          className="w-full px-4 py-2 mb-4 bg-white rounded-lg shadow-lg text-slate-700"
+          onChange={handleSelect}
+          value={selectValue}
+        >
+          <option value="cycling">Cycling</option>
+          <option value="running">Running</option>
+        </select>
+
+        <Card>
+          <GearList gear={gearList} />
+        </Card>
       </div>
     </AppFrame>
   );

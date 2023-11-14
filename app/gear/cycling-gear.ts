@@ -1,4 +1,4 @@
-import type { GearTip, Gear } from "./gear";
+import type { GearTip, Gear } from ".";
 
 export const cyclingGear: Gear[] = [
   {
