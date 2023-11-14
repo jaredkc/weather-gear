@@ -1,4 +1,4 @@
-import type { Gear } from "~/gear/gear";
+import type { Gear } from "~/gear";
 
 interface Props {
   gear: Gear[];

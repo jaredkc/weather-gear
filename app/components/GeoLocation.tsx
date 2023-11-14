@@ -11,7 +11,6 @@ export const GeoLocation = () => {
     navigate(`/cycling?lat=${latitude}&lon=${longitude}`, {
       unstable_viewTransition: true,
     });
-    setLoading(false);
   }
 
   function handleError(data: GeolocationPositionError) {

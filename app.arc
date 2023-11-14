@@ -3,11 +3,11 @@ weather-gear-ad92
 
 @aws
 runtime nodejs18.x
+timeout 15
 # concurrency 1
 # memory 1152
 # profile default
 # region us-west-1
-# timeout 30
 
 @http
 /*

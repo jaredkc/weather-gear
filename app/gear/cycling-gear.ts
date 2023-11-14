@@ -1,4 +1,4 @@
-import type { GearTip, Gear } from "./gear";
+import type { GearTip, Gear } from ".";
 
 export const cyclingGear: Gear[] = [
   {
@@ -76,7 +76,7 @@ export const cyclingGear: Gear[] = [
   {
     id: 1696794841343,
     sort: 10,
-    name: "Vest",
+    name: "Windproof Vest",
     description: "",
     min_temp: 40,
     max_temp: 64,

@@ -12,8 +12,7 @@ import { Card } from "~/components/Card";
 import { GearList } from "~/components/GearList";
 import { HourlyList } from "~/components/HourlyList";
 import { LocationCard } from "~/components/LocationCard";
-import { cyclingGear } from "~/gear/cyclingGear";
-import { gearForTemp } from "~/gear/gear";
+import { cyclingGear, gearForTemp } from "~/gear";
 import {
   forecastToUserLocation,
   updateUserLocations,
@@ -50,7 +49,9 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     { forecast, gear, userLocation },
     {
       headers: {
-        "Set-Cookie": await commitSession(session),
+        "Set-Cookie": await commitSession(session, {
+          maxAge: 60 * 60 * 24 * 30, // 30 days
+        }),
       },
     },
   );
