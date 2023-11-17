@@ -91,7 +91,7 @@ function ListLocationCards({ locations }: { locations: UserLocation[] }) {
     <>
       {locations.map(({ name, lat, lon }, index) => (
         <Link
-          to={`cycling/${slugify(name)}?lat=${lat}&lon=${lon}}`}
+          to={`cycling/${slugify(name)}?lat=${lat}&lon=${lon}`}
           key={index}
         >
           <LocationCard location={locations[index]} />
