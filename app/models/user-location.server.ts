@@ -48,11 +48,14 @@ export function updateUserLocations(
   locations: UserLocation[],
   location: UserLocation,
 ): UserLocation[] {
+  // Update or add location
   const locationIndex = locations.findIndex((l) => l.id === location.id);
   locationIndex !== -1
     ? (locations[locationIndex] = location)
     : locations.unshift(location);
-
+    // Sort by dt (date/time)
+    locations = locations.sort((a, b) => b.dt - a.dt);
+    // Limit to 5 locations
     return locations.slice(0, 5);
 }
 
