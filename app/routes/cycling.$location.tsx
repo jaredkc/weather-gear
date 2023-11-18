@@ -74,14 +74,14 @@ export default function CyclingIndex() {
         <LocationCard location={userLocation} />
 
         <Card>
-          <div className="flex overflow-x-auto">
+          <div className="flex overflow-x-auto snap-x">
             {forecast.hourly.map((hour, index) => (
               <button
                 key={index}
                 onClick={() => handleActiveHour(hour.temp, index)}
                 className={clsx(
-                  "flex-none px-2 py-4 cursor-pointer",
-                  index === activeHour && "bg-slate-200",
+                  "flex-none cursor-pointer snap-start relative border-white rounded-lg border-4",
+                  index === activeHour && "bg-slate-200 border-slate-300",
                 )}
               >
                 <HourlyList hour={hour} timezone={forecast.timezone} />
