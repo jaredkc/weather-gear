@@ -69,7 +69,7 @@ export default function CyclingIndex() {
   };
 
   return (
-    <AppFrame>
+    <AppFrame showBack>
       <div className="flex flex-col gap-4">
         <LocationCard location={userLocation} />
 
