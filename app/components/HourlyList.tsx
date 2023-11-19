@@ -31,12 +31,16 @@ export const HourlyList = ({ hour, timezone }: Props) => {
       />
       <div className="flex items-center justify-center gap-2">
         <div className="flex items-center gap-0">
-          <IconTemperature className="text-sky-700 -ml-0.5" />
+          <span className="text-sky-700 -ml-0.5">
+            <IconTemperature />
+          </span>
           {Math.round(temp)}°
         </div>
         <div className="flex items-center gap-1">
           {Math.round(wind_speed)}
-          <IconWind className="text-sky-700" />
+          <span className="text-sky-700">
+            <IconWind />
+          </span>
         </div>
       </div>
     </div>
