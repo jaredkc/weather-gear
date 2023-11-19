@@ -19,6 +19,9 @@ import appStyles from "~/styles/app.css";
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: twStyles },
   { rel: "stylesheet", href: appStyles },
+  { rel: "preconnect", href: "https://fonts.googleapis.com" },
+  { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+  { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&family=Roboto:wght@300;400&display=swap" },
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
 ];
 
