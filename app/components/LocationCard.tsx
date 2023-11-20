@@ -5,15 +5,16 @@ import type { UserLocation } from "~/models/user-location.server";
 
 type Props = {
   location: UserLocation;
+  highlight?: boolean;
 };
 
-export const LocationCard = ({ location }: Props) => {
+export const LocationCard = ({ location, highlight }: Props) => {
   const { name, dt, temp, timezone, weather } = location;
   return (
-    <Card>
+    <Card highlight={highlight}>
       <div className="flex gap-4 justify-between items-center px-4">
         <div className="py-2">
-          <h2>{slugToTitle(name)}</h2>
+          <h2 className="text-2xl font-light">{slugToTitle(name)}</h2>
           <p className="text-sm flex gap-2">
             <span>H:{Math.round(temp.max)}°</span>
             <span className="opacity-50">&middot;</span>

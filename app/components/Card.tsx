@@ -1,11 +1,17 @@
 type Props = {
   children: React.ReactNode;
+  highlight?: boolean;
 };
 
-export const Card = ({ children }: Props) => {
+export const Card = ({ children, highlight }: Props) => {
   return (
-    <div className="overflow-hidden bg-white rounded-lg shadow-lg text-slate-700">
-      {children}
+    <div className="relative">
+      {highlight && (
+        <div className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-cyan-400 via-70% to-transparent opacity-50" />
+      )}
+      <div className="overflow-hidden bg-slate-900 bg-opacity-50 rounded-lg text-slate-200 border border-slate-800">
+        {children}
+      </div>
     </div>
   );
 };

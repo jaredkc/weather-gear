@@ -52,7 +52,7 @@ export default function Index() {
 
   return (
     <AppFrame>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-2">
         {usersLocations && <ListLocationCards locations={usersLocations} />}
 
         <div className="flex gap-2">
@@ -90,11 +90,11 @@ function ListLocationCards({ locations }: { locations: UserLocation[] }) {
   return (
     <>
       {locations.map(({ name, lat, lon }, index) => (
-        <Link
-          to={`cycling/${slugify(name)}?lat=${lat}&lon=${lon}`}
-          key={index}
-        >
-          <LocationCard location={locations[index]} />
+        <Link to={`cycling/${slugify(name)}?lat=${lat}&lon=${lon}`} key={index}>
+          <LocationCard
+            location={locations[index]}
+            highlight={index === 0}
+          />
         </Link>
       ))}
     </>
