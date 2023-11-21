@@ -6,55 +6,26 @@ import {
 import { useLoaderData } from "@remix-run/react";
 import clsx from "clsx";
 import { useState } from "react";
-import invariant from "tiny-invariant";
 import { AppFrame } from "~/components/AppFrame";
 import { Card } from "~/components/Card";
 import { GearList } from "~/components/GearList";
 import { HourlyList } from "~/components/HourlyList";
 import { LocationCard } from "~/components/LocationCard";
 import { cyclingGear, gearForTemp } from "~/gear";
-import {
-  forecastToUserLocation,
-  updateUserLocations,
-  type UserLocation,
-} from "~/models/user-location.server";
-import { getForecast } from "~/openweathermap/openweathermap-utils.server";
-import { commitSession, getSession } from "~/session.server";
+import { forecastToUserLocation } from "~/models/user-location.server";
+import { sampleGeocoding } from "~/openweathermap/data/sample-geocoding";
+import { sampleOneCall } from "~/openweathermap/data/sample-onecall";
 
-export const meta: MetaFunction = () => [
-  { title: "Gear to wear cycling - WeatherGear.app" },
-];
+export const meta: MetaFunction = () => [{ title: "Work in progress screen" }];
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
-  const url = new URL(request.url);
-  const location = params.location;
-  const lat = url.searchParams.get("lat");
-  const lon = url.searchParams.get("lon");
+  const forecast = sampleOneCall;
+  const location = sampleGeocoding;
 
-  invariant(location, "Location not found");
-  invariant(lat, "Latitude not found");
-  invariant(lon, "Logitude not found");
+  const gear = gearForTemp(cyclingGear, forecast.hourly[0].temp);
+  const userLocation = forecastToUserLocation(location[0].name, forecast);
 
-  const forecast = await getForecast({ lat, lon });
-  const gear = gearForTemp(cyclingGear, forecast.hourly[0].feels_like);
-
-  // Update the users session with this new location
-  const session = await getSession(request);
-  const locations: UserLocation[] = session.get("locations") || [];
-  const userLocation = forecastToUserLocation(location, forecast);
-  const updatedLocations = updateUserLocations(locations, userLocation);
-  session.set("locations", updatedLocations);
-
-  return json(
-    { forecast, gear, userLocation },
-    {
-      headers: {
-        "Set-Cookie": await commitSession(session, {
-          maxAge: 60 * 60 * 24 * 30, // 30 days
-        }),
-      },
-    },
-  );
+  return json({ forecast, gear, userLocation });
 };
 
 export default function CyclingIndex() {
@@ -69,9 +40,9 @@ export default function CyclingIndex() {
   };
 
   return (
-    <AppFrame showBack>
+    <AppFrame>
       <div className="flex flex-col gap-2">
-        <LocationCard location={userLocation} highlight />
+        <LocationCard location={userLocation} />
 
         <Card>
           <div className="flex overflow-x-auto snap-x">

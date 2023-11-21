@@ -29,16 +29,16 @@ export const HourlyList = ({ hour, timezone }: Props) => {
         height={64}
         className="inline-block"
       />
-      <div className="flex items-center justify-center gap-2">
-        <div className="flex items-center gap-0">
-          <span className="text-sky-700 -ml-0.5">
+      <div className="flex items-center justify-center gap-3">
+        <div className="flex items-center gap-1">
+          <span className="text-cyan-400">
             <IconTemperature />
           </span>
           {Math.round(temp)}°
         </div>
         <div className="flex items-center gap-1">
           {Math.round(wind_speed)}
-          <span className="text-sky-700">
+          <span className="text-cyan-400">
             <IconWind />
           </span>
         </div>

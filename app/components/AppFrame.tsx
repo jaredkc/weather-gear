@@ -14,13 +14,14 @@ export const AppFrame = ({ children, navItems, showBack }: Props) => {
       <div className="flex flex-col max-w-sm mx-auto min-h-[100svh]">
         <header className="flex items-center justify-between h-20 text-white">
           {showBack ? (
-            <Link to="/" className="flex items-center gap-1">
+            <Link
+              to="/"
+              className="flex items-center gap-1 text-slate-300 hover:text-white"
+            >
               <span className="-ml-2 rotate-180 text-cyan-400">
                 <IconChevron />
               </span>
-              <span className="text-xs tracking-widest uppercase text-slate-300">
-                back
-              </span>
+              <span className="text-xs tracking-widest uppercase">back</span>
             </Link>
           ) : (
             <WeatherGearLogo />
@@ -30,7 +31,7 @@ export const AppFrame = ({ children, navItems, showBack }: Props) => {
         <main className="grow">{children}</main>
         <footer className="flex items-center justify-between py-8 text-xs text-slate-500">
           <span>&nbsp;</span>
-          <span>2022.11.19</span>
+          <span>Last App Update: 2023.11.20</span>
           <span>&nbsp;</span>
         </footer>
       </div>
