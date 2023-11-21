@@ -30,7 +30,7 @@ export const AppFrame = ({ children, navItems, showBack }: Props) => {
         <main className="grow">{children}</main>
         <footer className="flex items-center justify-between py-8 text-xs text-slate-500">
           <span>&nbsp;</span>
-          <span>Last App Update: 2023.11.19</span>
+          <span>Last App Update: 2023.11.20</span>
           <span>&nbsp;</span>
         </footer>
       </div>
