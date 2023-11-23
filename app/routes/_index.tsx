@@ -13,6 +13,7 @@ import {
 } from "@remix-run/react";
 import { useEffect, useRef, useState } from "react";
 import { AppFrame } from "~/components/AppFrame";
+import { Card } from "~/components/Card";
 import { GeoLocation } from "~/components/GeoLocation";
 import { LocationCard } from "~/components/LocationCard";
 import { IconSearch } from "~/components/icons";
@@ -55,32 +56,33 @@ export default function Index() {
       <div className="flex flex-col gap-2">
         {usersLocations && <ListLocationCards locations={usersLocations} />}
 
-        <div className="flex gap-2">
-          <Form
-            method="post"
-            ref={formRef}
-            className="flex w-full bg-white border rounded-lg text-slate-700"
-          >
-            <input
-              type="text"
-              name="query"
-              placeholder="Search city or zip"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              className="flex-1 px-4 py-2 rounded-lg"
-            />
-            <button
-              type="submit"
-              className="flex items-center justify-center w-10 rounded-lg"
+        <Card>
+          <div className="flex flex-row-reverse gap-2 p-1">
+            <GeoLocation />
+            <Form
+              method="post"
+              ref={formRef}
+              className="flex w-full rounded-lg"
             >
-              <IconSearch />
-              <span className="sr-only">Search</span>
-            </button>
-          </Form>
-          <GeoLocation />
-        </div>
-
-        {locationSearch && <ListSearchLocations locations={locationSearch} />}
+              <button
+                type="submit"
+                className="flex items-center justify-center w-10 rounded-sm opacity-75 focus:opacity-100 hover:opacity-100 transition-opacity transition-fast"
+              >
+                <IconSearch />
+                <span className="sr-only">Search</span>
+              </button>
+              <input
+                type="text"
+                name="query"
+                placeholder="Search city or zip"
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                className="flex-1 pr-4 py-2 rounded-lg bg-transparent focus:outline-none"
+              />
+            </Form>
+          </div>
+          {locationSearch && <ListSearchLocations locations={locationSearch} />}
+        </Card>
       </div>
     </AppFrame>
   );
@@ -91,10 +93,7 @@ function ListLocationCards({ locations }: { locations: UserLocation[] }) {
     <>
       {locations.map(({ name, lat, lon }, index) => (
         <Link to={`cycling/${slugify(name)}?lat=${lat}&lon=${lon}`} key={index}>
-          <LocationCard
-            location={locations[index]}
-            highlight={index === 0}
-          />
+          <LocationCard location={locations[index]} highlight={index === 0} />
         </Link>
       ))}
     </>
@@ -103,16 +102,20 @@ function ListLocationCards({ locations }: { locations: UserLocation[] }) {
 
 function ListSearchLocations({ locations }: { locations: WeatherLocation[] }) {
   return (
-    <ul className="border-t border-gray-300">
-      {locations.length === 0 && <li className="py-2">No locations found</li>}
+    <ul className="pb-3 text-sm">
+      {locations.length === 0 && (
+        <li className="py-2 px-4 opacity-75">No locations found</li>
+      )}
       {locations.map(({ name, lat, lon, state }, index) => (
-        <li key={index} className="border-b border-gray-300">
+        <li key={index}>
           <Link
             to={`/cycling/${slugify(name)}?lat=${lat}&lon=${lon}`}
-            className="block py-2"
+            className="block py-2 px-4"
             unstable_viewTransition
           >
-            {name} <span className="opacity-50">{state}</span>
+            {name}
+            <span className="opacity-50 px-1">&middot;</span>
+            <span className="opacity-75">{state}</span>
           </Link>
         </li>
       ))}

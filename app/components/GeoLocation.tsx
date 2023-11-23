@@ -26,7 +26,7 @@ export const GeoLocation = () => {
   return (
     <button
       type="button"
-      className={`flex items-center justify-center w-10 bg-white border rounded-lg cursor-pointer text-slate-700 shrink-0${
+      className={`flex items-center justify-center w-10 rounded-sm cursor-pointer shrink-0 opacity-75 focus:opacity-100 hover:opacity-100 transition-opacity transition-fast${
         loading ? " loading" : ""
       }`}
       onClick={deviceLocation}
