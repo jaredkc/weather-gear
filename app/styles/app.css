@@ -56,8 +56,8 @@ a.active {
 
 .loading::after {
   animation: loading-spin 1s infinite linear;
-  border-color: rgba(26, 115, 232, 0.2);
-  border-bottom-color: rgba(26, 115, 232, 1);
+  border-color: rgba(34, 211, 238, 0.2);
+  border-bottom-color: rgba(34, 211, 238, 1);
   border-radius: 50%;
   border-style: solid;
   border-width: 4px;
