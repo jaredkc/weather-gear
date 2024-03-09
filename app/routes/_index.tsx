@@ -109,7 +109,7 @@ function ListSearchLocations({ locations }: { locations: WeatherLocation[] }) {
       {locations.map(({ name, lat, lon, state }, index) => (
         <li key={index}>
           <Link
-            to={`/cycling/${slugify(name)}?lat=${lat}&lon=${lon}`}
+            to={`/cycling/${slugify(name)}?lat=${lat.toFixed(4)}&lon=${lon.toFixed(4)}`}
             className="block py-2 px-4"
             unstable_viewTransition
           >
