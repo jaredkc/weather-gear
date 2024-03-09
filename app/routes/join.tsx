@@ -9,7 +9,7 @@ import { safeRedirect, validateEmail } from "~/utils";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const userId = await getUserId(request);
-  if (userId) return redirect("/grunge");
+  if (userId) return redirect("/notes");
   return json({});
 };
 
@@ -17,7 +17,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
   const email = formData.get("email");
   const password = formData.get("password");
-  const redirectTo = safeRedirect(formData.get("redirectTo"), "/grunge");
+  const redirectTo = safeRedirect(formData.get("redirectTo"), "/notes");
 
   if (!validateEmail(email)) {
     return json(
