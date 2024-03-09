@@ -67,6 +67,14 @@ Not a fan of bits of the stack? Fork it, change it, and use `npx create-remix --
 
 This starts your app in development mode, rebuilding assets on file changes.
 
+### Upgrade Remix
+
+A CLI utility to update/list all of your Remix dependencies together.
+
+```sh
+npx upgrade-remix
+```
+
 ### Relevant code:
 
 This is a pretty simple note-taking app, but it's a good example of how you can build a full stack app with Architect and Remix. The main functionality is creating users, logging in and out, and creating and deleting notes.

@@ -8,7 +8,7 @@ export const GeoLocation = () => {
 
   function handleSuccess(data: GeolocationPosition) {
     const { latitude, longitude } = data.coords;
-    navigate(`/cycling?lat=${latitude}&lon=${longitude}`, {
+    navigate(`/cycling?lat=${latitude.toFixed(4)}&lon=${longitude.toFixed(4)}`, {
       unstable_viewTransition: true,
     });
   }
