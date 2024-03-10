@@ -48,23 +48,28 @@ export function updateUserLocations(
   locations: UserLocation[],
   location: UserLocation,
 ): UserLocation[] {
+  // Remove any locations that are not in the last 2 weeks
+  locations = locations.filter((l) => withinDays(7, l));
   // Update or add location
   const locationIndex = locations.findIndex((l) => l.id === location.id);
   locationIndex !== -1
     ? (locations[locationIndex] = location)
     : locations.unshift(location);
-    // Sort by dt (date/time)
-    locations = locations.sort((a, b) => b.dt - a.dt);
-    // Limit to 5 locations
-    return locations.slice(0, 5);
+  // Sort by dt (date/time)
+  locations = locations.sort((a, b) => b.dt - a.dt);
+  // Limit to 5 locations
+  return locations.slice(0, 5);
 }
 
 /**
- * Check if UserLocation date/time is in the last 3 hours
+ * Check if UserLocation date/time is withing the last time period
  */
-export function isRecent(userLocation: UserLocation): boolean {
+export function withinDays(
+  days: number,
+  userLocation: UserLocation,
+): boolean {
   const now = Math.floor(Date.now() / 1000);
-  return now - userLocation.dt < 60 * 60 * 3;
+  return now - userLocation.dt < 60 * 60 * days;
 }
 
 /**
