@@ -1,5 +1,10 @@
 import invariant from "tiny-invariant";
-import type { Coord, Forecast, WeatherLocation } from "./openweathermap-types";
+import type {
+  Coord,
+  Forecast,
+  OpenWeatherError,
+  WeatherLocation,
+} from "./openweathermap-types";
 
 const openWeatherApiKey = process.env.OPEN_WEATHER_API_KEY;
 const openWeatherApiUrl = "https://api.openweathermap.org/";
@@ -15,7 +20,7 @@ invariant(openWeatherApiKey, "OPEN_WEATHER_API_KEY must be set");
  */
 export const searchLocations = async (
   location: string,
-): Promise<WeatherLocation[]> => {
+): Promise<WeatherLocation[] | OpenWeatherError> => {
   const limit = 10;
   let queryType = "query";
   let url = openWeatherApiUrlGeo;
@@ -41,7 +46,7 @@ export const searchLocations = async (
  */
 export const coordLocations = async (
   location: Coord,
-): Promise<WeatherLocation[]> => {
+): Promise<WeatherLocation[] | OpenWeatherError> => {
   const url = `${openWeatherApiUrlGeo}reverse?lat=${location.lat}&lon=${location.lon}&limit=3&appid=${openWeatherApiKey}`;
   const response = await fetch(url);
   return await response.json();
@@ -54,7 +59,9 @@ export const coordLocations = async (
  * [One Call API 3.0](https://openweathermap.org/api/one-call-3)
  * Version 3.0, 1,000 calls per day for free, $0.15 after that.
  */
-export const getForecast = async (location: Coord): Promise<Forecast> => {
+export const getForecast = async (
+  location: Coord,
+): Promise<Forecast | OpenWeatherError> => {
   let url = `${openWeatherApiUrl}/data/3.0/onecall?&lat=${location.lat}&lon=${location.lon}&exclude=current,minutely,alerts&appid=${openWeatherApiKey}&units=imperial`;
 
   const response = await fetch(url);

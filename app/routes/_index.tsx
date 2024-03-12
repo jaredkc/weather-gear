@@ -34,6 +34,10 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
   const query = formData.get("query") as string;
   const locationSearch = await searchLocations(query);
+
+  // TODO: handle this error better
+  if ("cod" in locationSearch) throw new Error(locationSearch.message);
+
   return json(locationSearch);
 };
 

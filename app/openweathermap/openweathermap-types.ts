@@ -146,3 +146,15 @@ export interface Coord {
   lon: number | string;
   lat: number | string;
 }
+
+/**
+ * [API errors](https://openweathermap.org/api/one-call-3#errors)
+ * - cod Code of error
+ * - message Description of error
+ * - parameters List of request parameters names that are related to this particular error
+ */
+export interface OpenWeatherError {
+  cod: number;
+  message: string;
+  parameters?: string[];
+}
