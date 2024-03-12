@@ -1,5 +1,9 @@
 import { cssBundleHref } from "@remix-run/css-bundle";
-import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
+import type {
+  ErrorResponse,
+  LinksFunction,
+  LoaderFunctionArgs,
+} from "@remix-run/node";
 import { json } from "@remix-run/node";
 import {
   Links,
@@ -8,6 +12,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  isRouteErrorResponse,
   useRouteError,
 } from "@remix-run/react";
 import bg1 from "./assets/bg-gradient-1.png";
@@ -21,8 +26,15 @@ export const links: LinksFunction = () => [
   { rel: "stylesheet", href: twStyles },
   { rel: "stylesheet", href: appStyles },
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
-  { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-  { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&family=Roboto:wght@300;400&display=swap" },
+  {
+    rel: "preconnect",
+    href: "https://fonts.gstatic.com",
+    crossOrigin: "anonymous",
+  },
+  {
+    rel: "stylesheet",
+    href: "https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&family=Roboto:wght@300;400&display=swap",
+  },
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
 ];
 
@@ -68,7 +80,18 @@ export default function App() {
 
 export function ErrorBoundary() {
   const error = useRouteError();
-  console.error(error);
+
+  let errorContent = <h1>Unknown Error</h1>;
+
+  if (isRouteErrorResponse(error)) {
+    errorContent = ShowErrorResponse(error);
+  }
+
+  if (error instanceof Error) {
+    errorContent = ShowError(error);
+    console.log(error.stack);
+  }
+
   return (
     <html className="h-full bg-slate-900">
       <head>
@@ -77,9 +100,8 @@ export function ErrorBoundary() {
         <Links />
       </head>
       <body className="h-full text-slate-300">
-        <div className="flex flex-col mx-auto min-h-[100svh] text-center justify-center gap-2">
-          <h1 className="text-3xl font-light">Oh snap!</h1>
-          <p>Something went wrong.</p>
+        <div className="flex flex-col mx-auto min-h-[100svh] text-center justify-center max-w-96">
+          {errorContent}
         </div>
         <div className="overflow-hidden">
           <img
@@ -100,5 +122,25 @@ export function ErrorBoundary() {
         <Scripts />
       </body>
     </html>
+  );
+}
+
+function ShowErrorResponse(error: ErrorResponse) {
+  return (
+    <div>
+      <h1 className="text-3xl font-light mb-4">
+        {error.status} {error.statusText}
+      </h1>
+      <p>{error.data}</p>
+    </div>
+  );
+}
+
+function ShowError(error: Error) {
+  return (
+    <div>
+      <h1 className="text-3xl font-light mb-4">Oh Snap!</h1>
+      <p>{error.message}</p>
+    </div>
   );
 }

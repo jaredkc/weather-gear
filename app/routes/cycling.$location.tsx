@@ -36,6 +36,9 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   invariant(lon, "Logitude not found");
 
   const forecast = await getForecast({ lat, lon });
+
+  if ("cod" in forecast) throw new Error(forecast.message);
+
   const gear = gearForTemp(cyclingGear, forecast.hourly[0].feels_like);
 
   // Update the users session with this new location

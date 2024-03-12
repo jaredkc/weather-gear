@@ -12,6 +12,9 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   invariant(lon, "Logitude not found");
 
   const locations = await coordLocations({ lat, lon });
+
+  if ("cod" in locations) throw new Error(locations.message);
+
   const locationName = slugify(locations[0].name);
 
   return redirect(`/cycling/${locationName}?lat=${lat}&lon=${lon}`);
