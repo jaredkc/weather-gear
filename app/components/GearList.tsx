@@ -14,7 +14,6 @@ export const GearList = ({ gear }: Props) => {
             {item.min_temp}°-{item.max_temp}°
           </span>
         </li>
-
       ))}
     </ul>
   );

@@ -39,7 +39,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 
   if ("cod" in forecast) throw new Error(forecast.message);
 
-  const gear = gearForTemp(cyclingGear, forecast.hourly[0].feels_like);
+  const gear = gearForTemp(cyclingGear, forecast.hourly[0].temp);
 
   // Update the users session with this new location
   const session = await getSession(request);
