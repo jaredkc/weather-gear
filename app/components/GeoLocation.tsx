@@ -30,6 +30,7 @@ export const GeoLocation = () => {
         loading ? " loading" : ""
       }`}
       onClick={deviceLocation}
+      data-component="GeoLocation"
     >
       <IconLocation />
       <span className="sr-only">Use location from your device</span>

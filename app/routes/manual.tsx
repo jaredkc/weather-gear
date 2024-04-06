@@ -53,35 +53,33 @@ export default function Index() {
   };
 
   return (
-    <AppFrame>
+    <AppFrame showBack>
+      <div className="text-7xl text-center heading">{tempValue}°</div>
+
       <div className="my-8">
-        <div className="text-5xl text-center">{tempValue}°F</div>
-
-        <div className="my-8">
-          <input
-            type="range"
-            min={0}
-            max={100}
-            step={1}
-            value={tempValue}
-            onChange={handleRange}
-            className="w-full"
-          />
-        </div>
-
-        <select
-          className="w-full px-4 py-2 mb-4 bg-white rounded-lg shadow-lg text-slate-700"
-          onChange={handleSelect}
-          value={selectValue}
-        >
-          <option value="cycling">Cycling</option>
-          <option value="running">Running</option>
-        </select>
-
-        <Card>
-          <GearList gear={gearList} />
-        </Card>
+        <input
+          type="range"
+          min={0}
+          max={100}
+          step={1}
+          value={tempValue}
+          onChange={handleRange}
+          className="w-full"
+        />
       </div>
+
+      <select
+        className="w-full px-4 py-2 mb-4 bg-white rounded-lg shadow-lg text-slate-700"
+        onChange={handleSelect}
+        value={selectValue}
+      >
+        <option value="cycling">Cycling</option>
+        <option value="running">Running</option>
+      </select>
+
+      <Card>
+        <GearList gear={gearList} />
+      </Card>
     </AppFrame>
   );
 }
