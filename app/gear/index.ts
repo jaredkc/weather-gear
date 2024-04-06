@@ -97,71 +97,30 @@ const cyclingGearItems = [
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const runningGearItems = [
   // Head
-  "Earmuffs, Fleece Headband Or Hat (0-39)",
-  "Light Headband (26-39)",
-  "Balaclava, Neck Gaiter Or Scarf (0-30)",
+  "Headband (26-39)",
+  "Balaclava/Neck Gaiter (0-25)",
+  "Beanie (0-25)",
   // Body
-  "Short-Sleeve Shirt (50-59)",
-  "Light Long-Sleeve Shirt (36-59)",
+  "Short-Sleeve Shirt (60-120)",
+  "Long-Sleeve Shirt (36-59)",
   "Light Base Layer (36-45)",
+  "Thermal Base Layer (0-35)",
   "Windproof Vest (31-40)",
   "Insulated Vest (0-39)",
   // Hands
-  "Gloves (0-39)",
+  "Gloves (21-39)",
+  "Thermal Gloves (0-20)",
   // Legs
-  "Running Shorts (40-59)",
-  "Light Running Pants/Tights (31-39)",
-  "Fleece-Lined Tights (0-39)",
+  "Running Shorts (40-120)",
+  "Pants/Tights (21-39)",
+  "Thermal Tights (0-20)",
   // Feet
-  "Light Socks (39-59)",
-  "Wool Socks (0-39)",
-  "Waterproof Running Shoes (0-30)",
+  "Light Socks (39-120)",
+  "Mid-weight Socks (26-39)",
+  "Wool Socks (0-25)",
 ];
-
-/*
-46-50
-- Long-sleeve Shirt
-- Shorts
-- Light-weight Socks
-
-41-45
-- Hat
-- Base Layer
-- Long-sleeve Shirt
-- Longer shorts or capris
-- Light-weight Socks
-
-36-40
-- Headband
-- Base Layer
-- Long-sleeve Shirt
-- Windproof Vest
-- Light Running Pants/Capris
-- Gloves
-
-31-35
-- Headband
-- Long Sleeve Base Layer
-
-26-30
-
-21-25
-- Beanie
-- Tights
-- Thermal Long Sleeve Base Layer
-- Gloves
-- Mid-weight Socks
-
-0-20
-- Beanie
-- Neck Gaiter
-- Thermal Long Sleeve Base Layer
-- Windproof Jacket
-- Thermal Tights
-- Thermal Gloves
-- Winter or Wool Socks
-*/
 
 // To run the createGearList function, uncomment the following lines.
 // Then run `npx tsx index.ts` in the terminal.
 // console.log(createGearList(cyclingGearItems));
+// console.log(createGearList(runningGearItems));
