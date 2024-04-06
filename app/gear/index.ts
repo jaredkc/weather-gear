@@ -5,8 +5,8 @@
 // - [What to wear in different temperatures](https://www.pactimo.com/blogs/cycling-people-places-things/cycling-clothing-what-to-wear)
 // - [Winter running gear](https://tinamuir.com/winter-running-what-to-wear-at-every-temperature/)
 
-export { cyclingGear } from './cycling-gear';
-export { runningGear } from './running-gear';
+export { cyclingGear } from "./cycling-gear";
+export { runningGear } from "./running-gear";
 
 export interface Gear {
   id: number;
@@ -72,7 +72,7 @@ const cyclingGearItems = [
   "Thermal Jacket (0-32)",
   "Thermal Long Sleeve Base Layer (0-39)",
   "Long Sleeve Jersery (33-39)",
-  "Base Layer (40-64)",
+  "Short Sleeve Base Layer (40-64)",
   "Arm Warmers (40-64)",
   "Windproof Vest (40-64)",
   "Short Sleeve Jersey (40-120)",
@@ -83,8 +83,9 @@ const cyclingGearItems = [
   "Short Finger Gloves (51-120)",
   // Legs
   "Thermal Tights (0-39)",
-  "Bib Shorts (40-120)",
-  "Knee Warmers (40-55)",
+  "Bib Knickers (40-60)",
+  "Bib Shorts (60-120)",
+  "Knee Warmers (50-68)",
   // Feet
   "Winter or Wool Socks (0-32)",
   "Mid-weight Socks (33-64)",
@@ -116,6 +117,7 @@ const runningGearItems = [
   "Wool Socks (0-39)",
   "Waterproof Running Shoes (0-30)",
 ];
+
 /*
 46-50
 - Long-sleeve Shirt
@@ -159,3 +161,7 @@ const runningGearItems = [
 - Thermal Gloves
 - Winter or Wool Socks
 */
+
+// To run the createGearList function, uncomment the following lines.
+// Then run `npx tsx index.ts` in the terminal.
+// console.log(createGearList(cyclingGearItems));
