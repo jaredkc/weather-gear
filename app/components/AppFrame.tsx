@@ -10,7 +10,7 @@ type Props = {
 
 export const AppFrame = ({ children, navItems, showBack }: Props) => {
   return (
-    <div className="px-4">
+    <div className="px-4" data-component="AppFrame">
       <div className="flex flex-col max-w-sm mx-auto min-h-[100svh]">
         <header className="flex items-center justify-between h-20 text-white">
           {showBack ? (

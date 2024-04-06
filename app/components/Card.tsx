@@ -5,7 +5,7 @@ type Props = {
 
 export const Card = ({ children, highlight }: Props) => {
   return (
-    <div className="relative">
+    <div className="relative" data-component="Card">
       {highlight && (
         <div className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-cyan-400 via-70% to-transparent opacity-50" />
       )}

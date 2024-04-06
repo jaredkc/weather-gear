@@ -4,7 +4,7 @@ type Props = {
 
 export const DisplayGeolocationPosition = ({ position }: Props) => {
   return (
-    <dl>
+    <dl data-component="DisplayGeolocationPosition">
       <dt className="font-bold">Coords</dt>
       <dd className="pl-4">
         <ul>

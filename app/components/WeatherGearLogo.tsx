@@ -4,7 +4,7 @@ interface Props extends React.SVGProps<SVGSVGElement> {}
 
 export function WeatherGearLogo( props: Props) {
   return (
-    <div className="w-36">
+    <div className="w-36" data-component="WeatherGearLogo">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 21" width="200" height="21">
         <path fill="currentColor" d="m6.2,18.7L2,2.29h4.15l2.1,11.16h.19l2.67-11.16h3.21l2.68,11.16h.19l2.07-11.16h4.15l-4.19,16.41h-3.66l-2.78-10.51h-.14l-2.79,10.51h-3.65Z"/>
         <path fill="currentColor" d="m39.02,18.7h-10.95V2.29h10.95v3.14h-7.06v3.57h6.63v2.89h-6.63v3.68h7.06v3.14Z"/>
