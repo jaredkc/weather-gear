@@ -26,15 +26,22 @@ export const links: LinksFunction = () => [
   {
     rel: "alternate icon",
     type: "image/png",
-    href: "/favicons/favicon-32x32.png",
+    href: "/_static/favicons/favicon-32x32.png",
   },
-  { rel: "apple-touch-icon", href: "/favicons/apple-touch-icon.png" },
+  {
+    rel: "apple-touch-icon",
+    href: "/_static/favicons/apple-touch-icon.png",
+  },
+  {
+    rel: "icon",
+    type: "image/svg+xml",
+    href: "/_static/favicons/favicon.svg",
+  },
   {
     rel: "manifest",
-    href: "/site.webmanifest",
+    href: "/_static/site.webmanifest",
     crossOrigin: "use-credentials",
   },
-  { rel: "icon", type: "image/svg+xml", href: "/favicons/favicon.svg" },
   { rel: "stylesheet", href: twStyles },
   { rel: "stylesheet", href: appStyles },
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
