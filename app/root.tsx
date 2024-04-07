@@ -23,6 +23,18 @@ import twStyles from "~/styles/tailwind.css";
 import appStyles from "~/styles/app.css";
 
 export const links: LinksFunction = () => [
+  {
+    rel: "alternate icon",
+    type: "image/png",
+    href: "/favicons/favicon-32x32.png",
+  },
+  { rel: "apple-touch-icon", href: "/favicons/apple-touch-icon.png" },
+  {
+    rel: "manifest",
+    href: "/site.webmanifest",
+    crossOrigin: "use-credentials",
+  },
+  { rel: "icon", type: "image/svg+xml", href: "/favicons/favicon.svg" },
   { rel: "stylesheet", href: twStyles },
   { rel: "stylesheet", href: appStyles },
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
