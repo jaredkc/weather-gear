@@ -33,11 +33,6 @@ export const links: LinksFunction = () => [
     href: "/_static/favicons/apple-touch-icon.png",
   },
   {
-    rel: "icon",
-    type: "image/svg+xml",
-    href: "/_static/favicons/favicon.svg",
-  },
-  {
     rel: "manifest",
     href: "/_static/site.webmanifest",
     crossOrigin: "use-credentials",
