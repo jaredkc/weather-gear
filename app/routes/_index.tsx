@@ -108,13 +108,13 @@ function ListSearchLocations({ locations }: { locations: WeatherLocation[] }) {
   return (
     <ul className="pb-3 text-sm">
       {locations.length === 0 && (
-        <li className="py-2 px-4 opacity-75">No locations found</li>
+        <li className="py-3 px-4 opacity-75">No locations found</li>
       )}
       {locations.map(({ name, lat, lon, state }, index) => (
         <li key={index}>
           <Link
             to={`/cycling/${slugify(name)}?lat=${lat.toFixed(4)}&lon=${lon.toFixed(4)}`}
-            className="block py-2 px-4"
+            className="block py-3 px-4"
             unstable_viewTransition
           >
             {name}

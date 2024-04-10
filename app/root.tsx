@@ -15,8 +15,6 @@ import {
   isRouteErrorResponse,
   useRouteError,
 } from "@remix-run/react";
-import bg1 from "./assets/bg-gradient-1.png";
-import bg2 from "./assets/bg-gradient-2.png";
 
 import { getUser } from "~/session.server";
 import twStyles from "~/styles/tailwind.css";
@@ -66,18 +64,18 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="h-full text-slate-300">
+      <body className="h-full text-slate-300 font-light">
         <Outlet />
         <div className="overflow-hidden">
           <img
-            src={bg1}
+            src="/_static/bg-gradient-1.png"
             className="fixed top-0 -translate-x-1/2 left-1/2 -z-10"
             width="800"
             height="380"
             alt=""
           />
           <img
-            src={bg2}
+            src="/_static/bg-gradient-2.png"
             className="fixed -translate-x-1/3 top-16 left-1/3 -z-10"
             width="625"
             height="565"
@@ -119,14 +117,14 @@ export function ErrorBoundary() {
         </div>
         <div className="overflow-hidden">
           <img
-            src={bg1}
+            src="/_static/bg-gradient-1.png"
             className="fixed top-0 -translate-x-1/2 left-1/2 -z-10"
             width="800"
             height="380"
             alt=""
           />
           <img
-            src={bg2}
+            src="/_static/bg-gradient-2.png"
             className="fixed -translate-x-1/3 top-16 left-1/3 -z-10"
             width="625"
             height="565"
@@ -142,7 +140,7 @@ export function ErrorBoundary() {
 function ShowErrorResponse(error: ErrorResponse) {
   return (
     <div>
-      <h1 className="text-3xl font-light mb-4">
+      <h1 className="text-3xl mb-4">
         {error.status} {error.statusText}
       </h1>
       <p>{error.data}</p>
@@ -153,7 +151,7 @@ function ShowErrorResponse(error: ErrorResponse) {
 function ShowError(error: Error) {
   return (
     <div>
-      <h1 className="text-3xl font-light mb-4">Oh Snap!</h1>
+      <h1 className="text-3xl mb-4">Oh Snap!</h1>
       <p>{error.message}</p>
     </div>
   );

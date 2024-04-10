@@ -14,9 +14,9 @@ export const LocationCard = ({ location, highlight }: Props) => {
   return (
     <div data-component="LocationCard">
       <Card highlight={highlight}>
-        <div className="flex gap-4 justify-between items-center px-4">
-          <div className="py-2">
-            <h2 className="text-2xl font-light">{slugToTitle(name)}</h2>
+        <div className="flex gap-4 justify-between items-center px-4 py-2">
+          <div className="flex flex-col gap-1">
+            <h2 className="text-2xl">{slugToTitle(name)}</h2>
             <p className="text-sm flex gap-2">
               <span className="text-cyan-400">
                 <IconTemperature />

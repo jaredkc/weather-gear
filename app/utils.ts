@@ -71,15 +71,13 @@ export function validateEmail(email: unknown): email is string {
 }
 
 /**
- * Open Weather Map Icons
- * Resolutions: @2x, @4x
+ * Custom Weather Icons
+ *
+ * Designed to align with the OpenWeatherMap icons
  * https://openweathermap.org/weather-conditions#Icon-list
  */
-export function getWeatherIcon(
-  icon: string,
-  res: "" | "@2x" | "@4x" = "@2x"
-): string {
-  return `https://openweathermap.org/img/wn/${icon}${res}.png`;
+export function getWeatherIcon(icon: string): string {
+  return `/_static/weather-icons/${icon}.svg`;
 }
 
 /**
