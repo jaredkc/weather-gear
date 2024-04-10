@@ -20,7 +20,7 @@ export const HourlyList = ({ hour, timezone }: Props) => {
   };
 
   return (
-    <div className="px-2 py-3 text-xs text-center" data-component="HourlyList">
+    <div className="px-2 py-3 text-sm text-center" data-component="HourlyList">
       <div>{convertTime(dt)}</div>
       <img
         src={iconUrl}
