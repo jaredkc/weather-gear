@@ -4,11 +4,13 @@ import { getWeatherIcon } from "~/utils";
 type Props = {
   weather: Weather;
   size: number;
-}
+};
 
 export const WeatherIcon = ({ weather, size }: Props) => {
-  const iconUrl = getWeatherIcon(weather.icon, "@4x");
+  const iconUrl = getWeatherIcon(weather.icon);
   return (
-    <img src={iconUrl} alt={weather.description} width={size} height={size} />
+    <div>
+      <img src={iconUrl} alt={weather.description} width={size} height={size} />
+    </div>
   );
 };
