@@ -9,7 +9,6 @@ import { AppFrame } from "~/components/AppFrame";
 import { Card } from "~/components/Card";
 import { GearList } from "~/components/GearList";
 import { cyclingGear, gearForTemp, runningGear } from "~/gear";
-import { sampleOneCall } from "~/openweathermap/data/sample-onecall";
 
 export const meta: MetaFunction = () => [
   { title: "Manually set your weather - WeatherGear.app" },
@@ -18,9 +17,8 @@ export const meta: MetaFunction = () => [
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   const temp = 65;
   const gear = gearForTemp(cyclingGear, temp);
-  const forecast = sampleOneCall;
 
-  return json({ forecast, gear, temp });
+  return json({ gear, temp });
 };
 
 export default function Index() {
