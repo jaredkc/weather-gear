@@ -21,7 +21,10 @@ export const HourlyList = ({ hour, timezone }: Props) => {
 
   return (
     <div className="px-2 py-3 text-sm text-center" data-component="HourlyList">
-      <div>{convertTime(dt)}</div>
+      <div>
+        <span className="sr-only">What to wear at </span>
+        {convertTime(dt)}
+      </div>
       <img
         src={iconUrl}
         alt={weather[0].description}

@@ -2,7 +2,6 @@ import {
   json,
   type ActionFunctionArgs,
   type LoaderFunctionArgs,
-  type MetaFunction,
 } from "@remix-run/node";
 import {
   Form,
@@ -22,8 +21,6 @@ import type { WeatherLocation } from "~/openweathermap/openweathermap-types";
 import { searchLocations } from "~/openweathermap/openweathermap-utils.server";
 import { getUsersLocations } from "~/session.server";
 import { slugify } from "~/utils";
-
-export const meta: MetaFunction = () => [{ title: "WeatherGear.app" }];
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   const usersLocations = await getUsersLocations(request);
@@ -58,7 +55,11 @@ export default function Index() {
   return (
     <AppFrame>
       <div className="flex flex-col gap-2">
-        {usersLocations && <ListLocationCards locations={usersLocations} />}
+        {usersLocations ? (
+          <ListLocationCards locations={usersLocations} />
+        ) : (
+          <GettingStarted />
+        )}
 
         <Card>
           <div className="flex flex-row-reverse gap-2 p-1">
@@ -70,6 +71,7 @@ export default function Index() {
             >
               <button
                 type="submit"
+                title="Search city or zip code"
                 className="flex items-center justify-center w-10 rounded-sm opacity-75 focus:opacity-100 hover:opacity-100 transition-opacity transition-fast"
               >
                 <IconSearch />
@@ -92,6 +94,46 @@ export default function Index() {
   );
 }
 
+function GettingStarted() {
+  return (
+    <Card>
+      <div className="p-4">
+        <div className="flex justify-between">
+          <h2>
+            <span className="text-sm uppercase tracking-widest">
+              What to wear while
+            </span>
+            <span className="text-3xl block leading-8">
+              Cycling{" "}
+              <s className="relative">
+                <span className="opacity-25">&amp; Running</span>
+                <span className="absolute bottom-0 left-0 -mb-1 text-center right-0 text-xs text-slate-300">
+                  coming soon
+                </span>
+              </s>
+            </span>
+          </h2>
+          <div>
+            <img
+              src="/_static/weather-icons/02d.svg"
+              alt=""
+              width="120"
+              height="120"
+              className="inline-block -mt-12 -mb-4"
+            />
+          </div>
+        </div>
+        <p className="mt-4">
+          Know what to wear for the current weather conditions. Search for a
+          location to get started.
+        </p>
+        <p className="text-sm mt-3">
+          This is a work-in-progress, be sure to check back for updates.
+        </p>
+      </div>
+    </Card>
+  );
+}
 function ListLocationCards({ locations }: { locations: UserLocation[] }) {
   return (
     <>
@@ -113,7 +155,9 @@ function ListSearchLocations({ locations }: { locations: WeatherLocation[] }) {
       {locations.map(({ name, lat, lon, state }, index) => (
         <li key={index}>
           <Link
-            to={`/cycling/${slugify(name)}?lat=${lat.toFixed(4)}&lon=${lon.toFixed(4)}`}
+            to={`/cycling/${slugify(name)}?lat=${lat.toFixed(
+              4,
+            )}&lon=${lon.toFixed(4)}`}
             className="block py-3 px-4"
             unstable_viewTransition
           >
