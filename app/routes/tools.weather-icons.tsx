@@ -1,10 +1,11 @@
 import { type MetaFunction } from "@remix-run/node";
+import { AppFrame } from "~/components/AppFrame";
 
 export const meta: MetaFunction = () => [{ title: "Static Weather Icons" }];
 
 export default function WeatherIcons() {
   return (
-    <div className="p-8 max-w-2xl mx-auto">
+    <AppFrame showBack>
       <h1 className="text-2xl text-center">Weather Icons</h1>
 
       <div className="mt-12 grid grid-cols-2 gap-4 text-center">
@@ -34,8 +35,7 @@ export default function WeatherIcons() {
 
         <div><img src="/_static/weather-icons/50d.svg" alt="" width="120" height="120" className="inline-block" /></div>
         <div><img src="/_static/weather-icons/50n.svg" alt="" width="120" height="120" className="inline-block" /></div>
-
-     </div>
-    </div>
+      </div>
+    </AppFrame>
   );
 }
