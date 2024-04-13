@@ -3,6 +3,7 @@ import type {
   ErrorResponse,
   LinksFunction,
   LoaderFunctionArgs,
+  MetaFunction,
 } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import {
@@ -49,6 +50,21 @@ export const links: LinksFunction = () => [
   },
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
 ];
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "WeatherGear.app - What to wear while cycling and running" },
+    {
+      name: "description",
+      content:
+        "Know what to wear while cycling and running for the current weather conditions",
+    },
+    {
+      name: "theme-color",
+      content: "#0f172a",
+    }
+  ];
+};
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   return json({ user: await getUser(request) });

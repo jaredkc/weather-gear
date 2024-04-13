@@ -21,8 +21,13 @@ import {
 import { getForecast } from "~/openweathermap/openweathermap-utils.server";
 import { commitSession, getSession } from "~/session.server";
 
-export const meta: MetaFunction = () => [
-  { title: "Gear to wear cycling - WeatherGear.app" },
+export const meta: MetaFunction<typeof loader> = ({ data }) => [
+  // TODO: better fallbacks for when data is undefined
+  {
+    title: `What to wear cycling in ${data?.userLocation.name} when it's
+            ${Math.round(data?.forecast.hourly[0].temp || 72)}º
+            - WeatherGear.app`,
+  },
 ];
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
