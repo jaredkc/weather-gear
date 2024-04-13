@@ -49,7 +49,9 @@ export function updateUserLocations(
   location: UserLocation,
 ): UserLocation[] {
   // Remove any locations that are not in the last 2 weeks
-  locations = locations.filter((l) => withinDays(7, l));
+  // TODO: this is not working as expected, server-side date issue?
+  // locations = locations.filter((l) => withinDays(7, l));
+
   // Update or add location
   const locationIndex = locations.findIndex((l) => l.id === location.id);
   locationIndex !== -1
@@ -62,7 +64,7 @@ export function updateUserLocations(
 }
 
 /**
- * Check if UserLocation date/time is withing the last time period
+ * Check if UserLocation date/time is within the last time period
  */
 export function withinDays(
   days: number,
