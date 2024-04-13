@@ -56,7 +56,7 @@ export default function Index() {
     <AppFrame>
       <div className="flex flex-col gap-2">
         {usersLocations ? (
-          <ListLocationCards locations={usersLocations} />
+          <ListLocationCards sport="cycling" locations={usersLocations} />
         ) : (
           <GettingStarted />
         )}
@@ -134,11 +134,21 @@ function GettingStarted() {
     </Card>
   );
 }
-function ListLocationCards({ locations }: { locations: UserLocation[] }) {
+
+function ListLocationCards({
+  sport,
+  locations,
+}: {
+  sport: "cycling" | "running";
+  locations: UserLocation[];
+}) {
   return (
     <>
       {locations.map(({ name, lat, lon }, index) => (
-        <Link to={`cycling/${slugify(name)}?lat=${lat}&lon=${lon}`} key={index}>
+        <Link
+          to={`${sport}/${slugify(name)}?lat=${lat}&lon=${lon}`}
+          key={index}
+        >
           <LocationCard location={locations[index]} highlight={index === 0} />
         </Link>
       ))}
