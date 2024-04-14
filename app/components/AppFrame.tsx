@@ -34,31 +34,24 @@ export const AppFrame = ({ children, navItems, showBack }: Props) => {
         <main className="grow">{children}</main>
         <footer className="flex items-center justify-between py-8 text-xs text-slate-500">
           <span>A work-in-progress by Jared Cornwall</span>
-          <span>Updated 04.12.2024</span>
+          <span>Updated 04.13.2024</span>
         </footer>
       </div>
-      {navigation.state !== 'idle' && <Loading />}
+      {navigation.state !== "idle" && <Loading />}
     </div>
   );
 };
 
 function Loading() {
   const [width, setWidth] = useState(0);
-  const [duration, setDuration] = useState('3000ms');
 
   useEffect(() => {
-    setWidth(0.5);
-    const timer1 = setTimeout(() => {
-      setWidth(0.6);
-      setDuration('1000ms');
-    }, 3000);
-    const timer2 = setTimeout(() => {
-      setWidth(0.7);
-      setDuration('2000ms');
-    }, 4000);
-    const timer3 = setTimeout(() => setWidth(0.8), 6000);
-    const timer4 = setTimeout(() => setWidth(0.9), 8000);
-    const timer5 = setTimeout(() => setWidth(0.99), 10000);
+    setWidth(0.2);
+    const timer1 = setTimeout(() => setWidth(0.4), 500);
+    const timer2 = setTimeout(() => setWidth(0.6), 1000);
+    const timer3 = setTimeout(() => setWidth(0.8), 3000);
+    const timer4 = setTimeout(() => setWidth(0.9), 6000);
+    const timer5 = setTimeout(() => setWidth(0.99), 9000);
 
     return () => {
       clearTimeout(timer1);
@@ -71,8 +64,8 @@ function Loading() {
 
   return (
     <div
-      className="fixed top-0 left-0 w-full h-0.5 origin-left linear bg-gradient-to-r from-cyan-400 to-indigo-400"
-      style={{ transform: `scaleX(${width})`, animationDuration: duration }}
+      className="fixed top-0 left-0 w-full h-0.5 origin-left transition duration-300 bg-gradient-to-r from-cyan-400 to-indigo-400"
+      style={{ transform: `scaleX(${width})` }}
     >
       <span className="sr-only">Loading...</span>
     </div>
