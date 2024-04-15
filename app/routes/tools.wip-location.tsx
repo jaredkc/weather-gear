@@ -16,7 +16,7 @@ import { forecastToUserLocation } from "~/models/user-location.server";
 import { sampleGeocoding } from "~/openweathermap/data/sample-geocoding";
 import { sampleOneCall } from "~/openweathermap/data/sample-onecall";
 
-export const meta: MetaFunction = () => [{ title: "Work in progress screen" }];
+export const meta: MetaFunction = () => [{ title: "Work in progress location view" }];
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   const forecast = sampleOneCall;
@@ -28,7 +28,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   return json({ forecast, gear, userLocation });
 };
 
-export default function CyclingIndex() {
+export default function WipLocation() {
   const { forecast, gear, userLocation } = useLoaderData<typeof loader>();
 
   const [gearList, setGearList] = useState(gear);
@@ -46,7 +46,7 @@ export default function CyclingIndex() {
 
         <Card>
           <div className="flex overflow-x-auto snap-x">
-            <div className="w-2 flex-none snap-start">&nbsp;</div>
+            <div className="flex-none w-2 snap-start">&nbsp;</div>
             {forecast.hourly.map((hour, index) => (
               <button
                 key={index}
@@ -61,7 +61,7 @@ export default function CyclingIndex() {
                 <HourlyList hour={hour} timezone={forecast.timezone} />
               </button>
             ))}
-            <div className="w-2 flex-none snap-start">&nbsp;</div>
+            <div className="flex-none w-2 snap-start">&nbsp;</div>
           </div>
         </Card>
 
