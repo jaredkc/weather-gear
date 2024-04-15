@@ -1,7 +1,6 @@
 import { type MetaFunction } from "@remix-run/node";
 import { useFetcher } from "@remix-run/react";
 import { useState } from "react";
-import { AppFrame } from "~/components/AppFrame";
 import { IconBike } from "~/components/icons/IconBike";
 import { IconRun } from "~/components/icons/IconRun";
 
@@ -26,7 +25,7 @@ export default function Wip() {
     );
   };
   return (
-    <AppFrame showBack>
+    <div>
       <h1 className="text-2xl text-center">Work-in-progress</h1>
 
       <div className="relative inline-flex items-center gap-2 px-3 py-1.5 border border-slate-800 bg-opacity-50 rounded-lg bg-slate-900">
@@ -60,6 +59,6 @@ export default function Wip() {
           <option value="running">Running</option>
         </select>
       </div>
-    </AppFrame>
+    </div>
   );
 }

@@ -11,7 +11,6 @@ import {
   useSubmit,
 } from "@remix-run/react";
 import { useEffect, useRef, useState } from "react";
-import { AppFrame } from "~/components/AppFrame";
 import { Card } from "~/components/Card";
 import { GeoLocation } from "~/components/GeoLocation";
 import { LocationCard } from "~/components/LocationCard";
@@ -53,44 +52,38 @@ export default function Index() {
   }, [query, submit]);
 
   return (
-    <AppFrame>
-      <div className="flex flex-col gap-2">
-        {usersLocations ? (
-          <ListLocationCards sport="cycling" locations={usersLocations} />
-        ) : (
-          <GettingStarted />
-        )}
+    <div className="flex flex-col gap-2">
+      {usersLocations ? (
+        <ListLocationCards sport="cycling" locations={usersLocations} />
+      ) : (
+        <GettingStarted />
+      )}
 
-        <Card>
-          <div className="flex flex-row-reverse gap-2 p-1">
-            <GeoLocation />
-            <Form
-              method="post"
-              ref={formRef}
-              className="flex w-full rounded-lg"
+      <Card>
+        <div className="flex flex-row-reverse gap-2 p-1">
+          <GeoLocation />
+          <Form method="post" ref={formRef} className="flex w-full rounded-lg">
+            <button
+              type="submit"
+              title="Search city or zip code"
+              className="flex items-center justify-center w-10 rounded-sm opacity-75 focus:opacity-100 hover:opacity-100 transition-opacity transition-fast"
             >
-              <button
-                type="submit"
-                title="Search city or zip code"
-                className="flex items-center justify-center w-10 rounded-sm opacity-75 focus:opacity-100 hover:opacity-100 transition-opacity transition-fast"
-              >
-                <IconSearch />
-                <span className="sr-only">Search</span>
-              </button>
-              <input
-                type="text"
-                name="query"
-                placeholder="Search city or zip"
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                className="flex-1 pr-4 py-2 rounded-lg bg-transparent focus:outline-none"
-              />
-            </Form>
-          </div>
-          {locationSearch && <ListSearchLocations locations={locationSearch} />}
-        </Card>
-      </div>
-    </AppFrame>
+              <IconSearch />
+              <span className="sr-only">Search</span>
+            </button>
+            <input
+              type="text"
+              name="query"
+              placeholder="Search city or zip"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              className="flex-1 pr-4 py-2 rounded-lg bg-transparent focus:outline-none"
+            />
+          </Form>
+        </div>
+        {locationSearch && <ListSearchLocations locations={locationSearch} />}
+      </Card>
+    </div>
   );
 }
 

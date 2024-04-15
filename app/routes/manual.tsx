@@ -5,7 +5,6 @@ import {
 } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { useState } from "react";
-import { AppFrame } from "~/components/AppFrame";
 import { Card } from "~/components/Card";
 import { GearList } from "~/components/GearList";
 import { cyclingGear, gearForTemp, runningGear } from "~/gear";
@@ -51,7 +50,7 @@ export default function Index() {
   };
 
   return (
-    <AppFrame showBack>
+    <div>
       <div className="text-7xl text-center heading">{tempValue}°</div>
 
       <div className="my-8">
@@ -78,6 +77,6 @@ export default function Index() {
       <Card>
         <GearList gear={gearList} />
       </Card>
-    </AppFrame>
+    </div>
   );
 }

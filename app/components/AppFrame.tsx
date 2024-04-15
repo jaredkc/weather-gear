@@ -1,4 +1,4 @@
-import { Link, useNavigation } from "@remix-run/react";
+import { Link, useLocation, useNavigation } from "@remix-run/react";
 import { WeatherGearLogo } from "./WeatherGearLogo";
 import { IconChevron } from "./icons";
 import { useEffect, useState } from "react";
@@ -6,17 +6,17 @@ import { useEffect, useState } from "react";
 type Props = {
   children: React.ReactNode;
   navItems?: React.ReactNode;
-  showBack?: boolean;
 };
 
-export const AppFrame = ({ children, navItems, showBack }: Props) => {
+export const AppFrame = ({ children, navItems }: Props) => {
   const navigation = useNavigation();
+  const location = useLocation();
 
   return (
     <div className="px-4" data-component="AppFrame">
       <div className="flex flex-col max-w-sm mx-auto min-h-[100svh]">
         <header className="flex items-center justify-between h-20 text-white">
-          {showBack ? (
+          {location.pathname !== "/" ? (
             <Link
               to="/"
               className="flex items-center gap-1 text-slate-300 hover:text-white"

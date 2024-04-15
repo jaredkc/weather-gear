@@ -20,6 +20,7 @@ import {
 import { getUser } from "~/session.server";
 import twStyles from "~/styles/tailwind.css";
 import appStyles from "~/styles/app.css";
+import { AppFrame } from "./components/AppFrame";
 
 export const links: LinksFunction = () => [
   {
@@ -62,7 +63,7 @@ export const meta: MetaFunction = () => {
     {
       name: "theme-color",
       content: "#0f172a",
-    }
+    },
   ];
 };
 
@@ -81,7 +82,9 @@ export default function App() {
         <Links />
       </head>
       <body className="h-full text-slate-300 font-light">
-        <Outlet />
+        <AppFrame>
+          <Outlet />
+        </AppFrame>
         <div className="overflow-hidden">
           <img
             src="/_static/bg-gradient-1.webp"
