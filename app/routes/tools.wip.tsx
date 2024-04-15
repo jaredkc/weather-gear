@@ -1,8 +1,7 @@
 import { type MetaFunction } from "@remix-run/node";
 import { useFetcher } from "@remix-run/react";
 import { useState } from "react";
-import { IconBike } from "~/components/icons/IconBike";
-import { IconRun } from "~/components/icons/IconRun";
+import { IconBike, IconRun } from "~/components/icons";
 
 export const meta: MetaFunction = () => [{ title: "Work-in-progress" }];
 
