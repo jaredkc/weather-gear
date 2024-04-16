@@ -20,6 +20,15 @@ export type UserLocation = {
   weather: Weather;
 };
 
+/*
+ * User preference is used to store the user's
+ * sport preference and client side date
+ */
+export type UserPreference = {
+  sport: "cycling" | "running";
+  clientDate: number;
+};
+
 /**
  * Convert a forecast to a UserLocation
  */
@@ -66,10 +75,7 @@ export function updateUserLocations(
 /**
  * Check if UserLocation date/time is within the last time period
  */
-export function withinDays(
-  days: number,
-  userLocation: UserLocation,
-): boolean {
+export function withinDays(days: number, userLocation: UserLocation): boolean {
   const now = Math.floor(Date.now() / 1000);
   return now - userLocation.dt < 60 * 60 * days;
 }

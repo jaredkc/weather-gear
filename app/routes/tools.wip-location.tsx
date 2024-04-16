@@ -6,7 +6,6 @@ import {
 import { useLoaderData } from "@remix-run/react";
 import clsx from "clsx";
 import { useState } from "react";
-import { AppFrame } from "~/components/AppFrame";
 import { Card } from "~/components/Card";
 import { GearList } from "~/components/GearList";
 import { HourlyList } from "~/components/HourlyList";
@@ -16,7 +15,9 @@ import { forecastToUserLocation } from "~/models/user-location.server";
 import { sampleGeocoding } from "~/openweathermap/data/sample-geocoding";
 import { sampleOneCall } from "~/openweathermap/data/sample-onecall";
 
-export const meta: MetaFunction = () => [{ title: "Work in progress screen" }];
+export const meta: MetaFunction = () => [
+  { title: "Work in progress location view" },
+];
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   const forecast = sampleOneCall;
@@ -28,7 +29,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   return json({ forecast, gear, userLocation });
 };
 
-export default function CyclingIndex() {
+export default function WipLocation() {
   const { forecast, gear, userLocation } = useLoaderData<typeof loader>();
 
   const [gearList, setGearList] = useState(gear);
@@ -40,35 +41,33 @@ export default function CyclingIndex() {
   };
 
   return (
-    <AppFrame>
-      <div className="flex flex-col gap-2">
-        <LocationCard location={userLocation} />
+    <div className="flex flex-col gap-2">
+      <LocationCard location={userLocation} />
 
-        <Card>
-          <div className="flex overflow-x-auto snap-x">
-            <div className="w-2 flex-none snap-start">&nbsp;</div>
-            {forecast.hourly.map((hour, index) => (
-              <button
-                key={index}
-                onClick={() => handleActiveHour(hour.temp, index)}
-                className={clsx(
-                  "flex-none cursor-pointer snap-start relative rounded-lg transition-all transform duration-200",
-                  index === activeHour
-                    ? "scale-100 opacity-100"
-                    : "scale-90 opacity-50 text-slate-500",
-                )}
-              >
-                <HourlyList hour={hour} timezone={forecast.timezone} />
-              </button>
-            ))}
-            <div className="w-2 flex-none snap-start">&nbsp;</div>
-          </div>
-        </Card>
+      <Card>
+        <div className="flex overflow-x-auto snap-x">
+          <div className="flex-none w-2 snap-start">&nbsp;</div>
+          {forecast.hourly.map((hour, index) => (
+            <button
+              key={index}
+              onClick={() => handleActiveHour(hour.temp, index)}
+              className={clsx(
+                "flex-none cursor-pointer snap-start relative rounded-lg transition-all transform duration-200",
+                index === activeHour
+                  ? "scale-100 opacity-100"
+                  : "scale-90 opacity-50 text-slate-500",
+              )}
+            >
+              <HourlyList hour={hour} timezone={forecast.timezone} />
+            </button>
+          ))}
+          <div className="flex-none w-2 snap-start">&nbsp;</div>
+        </div>
+      </Card>
 
-        <Card>
-          <GearList gear={gearList} />
-        </Card>
-      </div>
-    </AppFrame>
+      <Card>
+        <GearList gear={gearList} />
+      </Card>
+    </div>
   );
 }

@@ -11,7 +11,6 @@ import {
   useSubmit,
 } from "@remix-run/react";
 import { useEffect, useRef, useState } from "react";
-import { AppFrame } from "~/components/AppFrame";
 import { Card } from "~/components/Card";
 import { GeoLocation } from "~/components/GeoLocation";
 import { LocationCard } from "~/components/LocationCard";
@@ -19,12 +18,14 @@ import { IconSearch } from "~/components/icons";
 import type { UserLocation } from "~/models/user-location.server";
 import type { WeatherLocation } from "~/openweathermap/openweathermap-types";
 import { searchLocations } from "~/openweathermap/openweathermap-utils.server";
-import { getUsersLocations } from "~/session.server";
+import { getUsersLocations, getUsersPreference } from "~/session.server";
 import { slugify } from "~/utils";
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   const usersLocations = await getUsersLocations(request);
-  return json({ usersLocations });
+  const usersPreference = await getUsersPreference(request);
+
+  return json({ usersLocations, usersPreference });
 };
 
 export const action = async ({ request }: ActionFunctionArgs) => {
@@ -39,7 +40,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 };
 
 export default function Index() {
-  const { usersLocations } = useLoaderData<typeof loader>();
+  const { usersLocations, usersPreference } = useLoaderData<typeof loader>();
+  const sport = usersPreference?.sport ?? "cycling";
   const locationSearch = useActionData<typeof action>();
   const formRef = useRef<HTMLFormElement>(null);
   const submit = useSubmit();
@@ -53,44 +55,38 @@ export default function Index() {
   }, [query, submit]);
 
   return (
-    <AppFrame>
-      <div className="flex flex-col gap-2">
-        {usersLocations ? (
-          <ListLocationCards locations={usersLocations} />
-        ) : (
-          <GettingStarted />
-        )}
+    <div className="flex flex-col gap-2">
+      {usersLocations ? (
+        <ListLocationCards sport={sport} locations={usersLocations} />
+      ) : (
+        <GettingStarted />
+      )}
 
-        <Card>
-          <div className="flex flex-row-reverse gap-2 p-1">
-            <GeoLocation />
-            <Form
-              method="post"
-              ref={formRef}
-              className="flex w-full rounded-lg"
+      <Card>
+        <div className="flex flex-row-reverse gap-2 p-1">
+          <GeoLocation />
+          <Form method="post" ref={formRef} className="flex w-full rounded-lg">
+            <button
+              type="submit"
+              title="Search city or zip code"
+              className="flex items-center justify-center w-10 rounded-sm opacity-75 focus:opacity-100 hover:opacity-100 transition-opacity transition-fast"
             >
-              <button
-                type="submit"
-                title="Search city or zip code"
-                className="flex items-center justify-center w-10 rounded-sm opacity-75 focus:opacity-100 hover:opacity-100 transition-opacity transition-fast"
-              >
-                <IconSearch />
-                <span className="sr-only">Search</span>
-              </button>
-              <input
-                type="text"
-                name="query"
-                placeholder="Search city or zip"
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                className="flex-1 pr-4 py-2 rounded-lg bg-transparent focus:outline-none"
-              />
-            </Form>
-          </div>
-          {locationSearch && <ListSearchLocations locations={locationSearch} />}
-        </Card>
-      </div>
-    </AppFrame>
+              <IconSearch />
+              <span className="sr-only">Search</span>
+            </button>
+            <input
+              type="text"
+              name="query"
+              placeholder="Search city or zip"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              className="flex-1 pr-4 py-2 rounded-lg bg-transparent focus:outline-none"
+            />
+          </Form>
+        </div>
+        {locationSearch && <ListSearchLocations locations={locationSearch} />}
+      </Card>
+    </div>
   );
 }
 
@@ -104,22 +100,16 @@ function GettingStarted() {
               What to wear while
             </span>
             <span className="text-3xl block leading-8">
-              Cycling{" "}
-              <s className="relative">
-                <span className="opacity-25">&amp; Running</span>
-                <span className="absolute bottom-0 left-0 -mb-1 text-center right-0 text-xs text-slate-300">
-                  coming soon
-                </span>
-              </s>
+              Cycling &amp; Running
             </span>
           </h2>
           <div>
             <img
               src="/_static/weather-icons/02d.svg"
               alt=""
-              width="120"
-              height="120"
-              className="inline-block -mt-12 -mb-4"
+              width="110"
+              height="110"
+              className="inline-block -mt-10 -mb-4"
             />
           </div>
         </div>
@@ -134,11 +124,21 @@ function GettingStarted() {
     </Card>
   );
 }
-function ListLocationCards({ locations }: { locations: UserLocation[] }) {
+
+function ListLocationCards({
+  sport,
+  locations,
+}: {
+  sport: "cycling" | "running";
+  locations: UserLocation[];
+}) {
   return (
     <>
       {locations.map(({ name, lat, lon }, index) => (
-        <Link to={`cycling/${slugify(name)}?lat=${lat}&lon=${lon}`} key={index}>
+        <Link
+          to={`${sport}/${slugify(name)}?lat=${lat}&lon=${lon}`}
+          key={index}
+        >
           <LocationCard location={locations[index]} highlight={index === 0} />
         </Link>
       ))}

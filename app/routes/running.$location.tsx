@@ -11,7 +11,7 @@ import { Card } from "~/components/Card";
 import { GearList } from "~/components/GearList";
 import { HourlyList } from "~/components/HourlyList";
 import { LocationCard } from "~/components/LocationCard";
-import { cyclingGear, gearForTemp } from "~/gear";
+import { runningGear, gearForTemp } from "~/gear";
 import {
   forecastToUserLocation,
   updateUserLocations,
@@ -23,7 +23,7 @@ import { commitSession, getSession } from "~/session.server";
 export const meta: MetaFunction<typeof loader> = ({ data }) => [
   // TODO: better fallbacks for when data is undefined
   {
-    title: `What to wear cycling in ${data?.userLocation.name} when it's
+    title: `What to wear running in ${data?.userLocation.name} when it's
             ${Math.round(data?.forecast.hourly[0].temp || 72)}º
             - WeatherGear.app`,
   },
@@ -43,7 +43,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 
   if ("cod" in forecast) throw new Error(forecast.message);
 
-  const gear = gearForTemp(cyclingGear, forecast.hourly[0].temp);
+  const gear = gearForTemp(runningGear, forecast.hourly[0].temp);
 
   // Update the users session with this new location
   const session = await getSession(request);
@@ -72,7 +72,7 @@ export default function CyclingIndex() {
 
   const handleActiveHour = (temp: number, index: number) => {
     setActiveHour(index);
-    setGearList(gearForTemp(cyclingGear, temp));
+    setGearList(gearForTemp(runningGear, temp));
   };
 
   return (

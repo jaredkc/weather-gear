@@ -5,11 +5,9 @@ import {
 } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { useState } from "react";
-import { AppFrame } from "~/components/AppFrame";
 import { Card } from "~/components/Card";
 import { GearList } from "~/components/GearList";
 import { cyclingGear, gearForTemp, runningGear } from "~/gear";
-import { sampleOneCall } from "~/openweathermap/data/sample-onecall";
 
 export const meta: MetaFunction = () => [
   { title: "Manually set your weather - WeatherGear.app" },
@@ -18,9 +16,8 @@ export const meta: MetaFunction = () => [
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   const temp = 65;
   const gear = gearForTemp(cyclingGear, temp);
-  const forecast = sampleOneCall;
 
-  return json({ forecast, gear, temp });
+  return json({ gear, temp });
 };
 
 export default function Index() {
@@ -53,7 +50,7 @@ export default function Index() {
   };
 
   return (
-    <AppFrame showBack>
+    <div>
       <div className="text-7xl text-center heading">{tempValue}°</div>
 
       <div className="my-8">
@@ -80,6 +77,6 @@ export default function Index() {
       <Card>
         <GearList gear={gearList} />
       </Card>
-    </AppFrame>
+    </div>
   );
 }

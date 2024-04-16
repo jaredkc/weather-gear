@@ -1,7 +1,10 @@
 import { createCookieSessionStorage, redirect } from "@remix-run/node";
 import invariant from "tiny-invariant";
 
-import type { UserLocation } from "~/models/user-location.server";
+import type {
+  UserLocation,
+  UserPreference,
+} from "~/models/user-location.server";
 import type { User } from "~/models/user.server";
 import { getUserById } from "~/models/user.server";
 
@@ -32,8 +35,17 @@ export async function getUsersLocations(
   request: Request,
 ): Promise<UserLocation[] | undefined> {
   const session = await getSession(request);
-  const userId = session.get(LOCATIONS_SESSION_KEY);
-  return userId;
+  const locations = session.get(LOCATIONS_SESSION_KEY);
+  return locations;
+}
+
+export async function getUsersPreference(
+  request: Request,
+): Promise<UserPreference | undefined> {
+  const session = await getSession(request);
+  const sport = session.get("sport");
+  const clientDate = session.get("clientDate");
+  return { sport, clientDate };
 }
 
 export async function getUserId(

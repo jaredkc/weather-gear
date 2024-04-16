@@ -81,8 +81,8 @@ export function getWeatherIcon(icon: string): string {
 }
 
 /**
- * Handlize a string ("Park City" -> "park-city")
- * "Millcreek Township" -> "millcreek-township"
+ * Handlize a string
+ * - "Salt Lake City" -> "salt-lake-city"
  */
 export function slugify(str: string): string {
   return str
@@ -92,7 +92,8 @@ export function slugify(str: string): string {
 }
 
 /**
- * Slug to Title ("park-city" -> "Park City")
+ * Slug to Title
+ * - "salt-lake-city" -> "Salt Lake City"
  */
 export function slugToTitle(slug: string): string {
   return slug
