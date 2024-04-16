@@ -1,17 +1,26 @@
-import { type MetaFunction } from "@remix-run/node";
-import { useFetcher } from "@remix-run/react";
-import { useState } from "react";
+import {
+  json,
+  type LoaderFunctionArgs,
+  type MetaFunction,
+} from "@remix-run/node";
+import { useFetcher, useLoaderData } from "@remix-run/react";
 import { IconBike, IconRun } from "~/components/icons";
+import { getUsersPreference } from "~/session.server";
 
 export const meta: MetaFunction = () => [{ title: "Work-in-progress" }];
 
+export const loader = async ({ params, request }: LoaderFunctionArgs) => {
+  const usersPreference = await getUsersPreference(request);
+  return json({ usersPreference });
+};
+
 export default function Wip() {
+  const { usersPreference } = useLoaderData<typeof loader>();
+  const sport = usersPreference?.sport || "cycling";
   const fetcher = useFetcher();
-  const [sport, setSport] = useState("cycling");
 
   const setUserPreference = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newValue = event.target.value;
-    setSport(newValue);
     fetcher.submit(
       {
         sport: newValue,
@@ -23,6 +32,7 @@ export default function Wip() {
       },
     );
   };
+
   return (
     <div>
       <h1 className="text-2xl text-center">Work-in-progress</h1>
@@ -52,6 +62,7 @@ export default function Wip() {
           id="sport"
           name="sport"
           className="absolute inset-0 w-full h-full opacity-0 appearance-none"
+          value={sport}
           onChange={setUserPreference}
         >
           <option value="cycling">Cycling</option>
