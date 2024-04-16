@@ -18,12 +18,14 @@ import { IconSearch } from "~/components/icons";
 import type { UserLocation } from "~/models/user-location.server";
 import type { WeatherLocation } from "~/openweathermap/openweathermap-types";
 import { searchLocations } from "~/openweathermap/openweathermap-utils.server";
-import { getUsersLocations } from "~/session.server";
+import { getUsersLocations, getUsersPreference } from "~/session.server";
 import { slugify } from "~/utils";
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   const usersLocations = await getUsersLocations(request);
-  return json({ usersLocations });
+  const usersPreference = await getUsersPreference(request);
+
+  return json({ usersLocations, usersPreference });
 };
 
 export const action = async ({ request }: ActionFunctionArgs) => {
@@ -38,7 +40,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 };
 
 export default function Index() {
-  const { usersLocations } = useLoaderData<typeof loader>();
+  const { usersLocations, usersPreference } = useLoaderData<typeof loader>();
+  const sport = usersPreference?.sport ?? "cycling";
   const locationSearch = useActionData<typeof action>();
   const formRef = useRef<HTMLFormElement>(null);
   const submit = useSubmit();
@@ -54,7 +57,7 @@ export default function Index() {
   return (
     <div className="flex flex-col gap-2">
       {usersLocations ? (
-        <ListLocationCards sport="cycling" locations={usersLocations} />
+        <ListLocationCards sport={sport} locations={usersLocations} />
       ) : (
         <GettingStarted />
       )}
@@ -97,22 +100,16 @@ function GettingStarted() {
               What to wear while
             </span>
             <span className="text-3xl block leading-8">
-              Cycling{" "}
-              <s className="relative">
-                <span className="opacity-25">&amp; Running</span>
-                <span className="absolute bottom-0 left-0 -mb-1 text-center right-0 text-xs text-slate-300">
-                  coming soon
-                </span>
-              </s>
+              Cycling &amp; Running
             </span>
           </h2>
           <div>
             <img
               src="/_static/weather-icons/02d.svg"
               alt=""
-              width="120"
-              height="120"
-              className="inline-block -mt-12 -mb-4"
+              width="110"
+              height="110"
+              className="inline-block -mt-10 -mb-4"
             />
           </div>
         </div>

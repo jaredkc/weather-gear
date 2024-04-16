@@ -2,13 +2,15 @@ import { Link, useLocation, useNavigation } from "@remix-run/react";
 import { WeatherGearLogo } from "./WeatherGearLogo";
 import { IconChevron } from "./icons";
 import { useEffect, useState } from "react";
+import { type UserPreference } from "~/models/user-location.server";
+import { SportSelect } from "./SportSelect";
 
 type Props = {
   children: React.ReactNode;
-  navItems?: React.ReactNode;
+  sport: UserPreference["sport"];
 };
 
-export const AppFrame = ({ children, navItems }: Props) => {
+export const AppFrame = ({ children, sport }: Props) => {
   const navigation = useNavigation();
   const location = useLocation();
 
@@ -29,12 +31,12 @@ export const AppFrame = ({ children, navItems }: Props) => {
           ) : (
             <WeatherGearLogo />
           )}
-          {navItems}
+          {location.pathname === "/" && (<SportSelect sport={sport} />)}
         </header>
         <main className="grow">{children}</main>
         <footer className="flex items-center justify-between py-8 text-xs text-slate-500">
           <span>A work-in-progress by Jared Cornwall</span>
-          <span>Updated 04.13.2024</span>
+          <span>Updated 04.15.2024</span>
         </footer>
       </div>
       {navigation.state !== "idle" && <Loading />}

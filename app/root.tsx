@@ -14,10 +14,11 @@ import {
   Scripts,
   ScrollRestoration,
   isRouteErrorResponse,
+  useLoaderData,
   useRouteError,
 } from "@remix-run/react";
 
-import { getUser } from "~/session.server";
+import { getUsersPreference } from "~/session.server";
 import twStyles from "~/styles/tailwind.css";
 import appStyles from "~/styles/app.css";
 import { AppFrame } from "./components/AppFrame";
@@ -68,10 +69,14 @@ export const meta: MetaFunction = () => {
 };
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  return json({ user: await getUser(request) });
+  const usersPreference = await getUsersPreference(request);
+  return json({ usersPreference });
 };
 
 export default function App() {
+  const { usersPreference } = useLoaderData<typeof loader>();
+  const sport = usersPreference?.sport || "cycling";
+
   return (
     <html lang="en" className="h-full bg-slate-900">
       <head>
@@ -82,7 +87,7 @@ export default function App() {
         <Links />
       </head>
       <body className="h-full text-slate-300 font-light">
-        <AppFrame>
+        <AppFrame sport={sport}>
           <Outlet />
         </AppFrame>
         <div className="overflow-hidden">

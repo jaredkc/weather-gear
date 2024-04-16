@@ -6,6 +6,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
   const sport = formData.get("sport") as string;
   const clientDate = formData.get("clientDate") as string;
+  // console.log({ sport, clientDate });
 
   invariant(sport, "Sport not found");
   invariant(clientDate, "Date not found");
@@ -13,8 +14,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const session = await getSession(request);
   session.set("sport", sport);
   session.set("clientDate", clientDate);
-
-  console.log({ sport, clientDate });
 
   return json(
     { sport, clientDate },
