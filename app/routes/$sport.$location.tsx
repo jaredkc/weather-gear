@@ -11,7 +11,7 @@ import { Card } from "~/components/Card";
 import { GearList } from "~/components/GearList";
 import { HourlyList } from "~/components/HourlyList";
 import { LocationCard } from "~/components/LocationCard";
-import { cyclingGear, gearForTemp } from "~/gear";
+import { cyclingGear, gearForTemp, runningGear } from "~/gear";
 import {
   forecastToUserLocation,
   updateUserLocations,
@@ -31,6 +31,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => [
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
+  const sport = params.sport;
   const location = params.location;
   const lat = url.searchParams.get("lat");
   const lon = url.searchParams.get("lon");
@@ -43,7 +44,8 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 
   if ("cod" in forecast) throw new Error(forecast.message);
 
-  const gear = gearForTemp(cyclingGear, forecast.hourly[0].temp);
+  const sportGear = sport === "cycling" ? cyclingGear : runningGear;
+  const gear = gearForTemp(sportGear, forecast.hourly[0].temp);
 
   // Update the users session with this new location
   const session = await getSession(request);
@@ -78,7 +80,6 @@ export default function CyclingIndex() {
   return (
     <div className="flex flex-col gap-2">
       <LocationCard location={userLocation} highlight />
-
       <Card>
         <div className="flex overflow-x-auto snap-x">
           <div className="w-2 flex-none snap-start">&nbsp;</div>
