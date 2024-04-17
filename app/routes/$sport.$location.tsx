@@ -23,7 +23,7 @@ import { commitSession, getSession } from "~/session.server";
 export const meta: MetaFunction<typeof loader> = ({ data }) => [
   // TODO: better fallbacks for when data is undefined
   {
-    title: `What to wear cycling in ${data?.userLocation.name} when it's
+    title: `What to wear ${data?.sport} in ${data?.userLocation.name} when it's
             ${Math.round(data?.forecast.hourly[0].temp || 72)}º
             - WeatherGear.app`,
   },
@@ -55,7 +55,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   session.set("locations", updatedLocations);
 
   return json(
-    { forecast, gear, userLocation },
+    { sport, forecast, gear, userLocation },
     {
       headers: {
         "Set-Cookie": await commitSession(session, {
