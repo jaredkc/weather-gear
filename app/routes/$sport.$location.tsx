@@ -24,8 +24,15 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => [
   // TODO: better fallbacks for when data is undefined
   {
     title: `What to wear ${data?.sport} in ${data?.userLocation.name} when it's
-            ${Math.round(data?.forecast.hourly[0].temp || 72)}º
-            - WeatherGear.app`,
+            ${Math.round(data?.forecast.hourly[0].temp || 72)}º`,
+  },
+  {
+    name: "description",
+    content: `Know what to wear while ${data?.sport} for the current weather conditions`,
+  },
+  {
+    name: "theme-color",
+    content: "#0f172a",
   },
 ];
 

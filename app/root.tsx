@@ -55,7 +55,7 @@ export const links: LinksFunction = () => [
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "WeatherGear.app - What to wear while cycling and running" },
+    { title: "What to wear while cycling and running" },
     {
       name: "description",
       content:

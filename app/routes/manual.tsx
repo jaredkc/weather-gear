@@ -10,7 +10,16 @@ import { GearList } from "~/components/GearList";
 import { cyclingGear, gearForTemp, runningGear } from "~/gear";
 
 export const meta: MetaFunction = () => [
-  { title: "Manually set your weather - WeatherGear.app" },
+  { title: "What to wear while cycling and running, set your conditions" },
+  {
+    name: "description",
+    content:
+      "Set your temperature and see what to wear while cycling and running",
+  },
+  {
+    name: "theme-color",
+    content: "#0f172a",
+  },
 ];
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
