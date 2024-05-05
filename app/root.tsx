@@ -17,11 +17,14 @@ import {
   useLoaderData,
   useRouteError,
 } from "@remix-run/react";
-
+import { useEffect } from "react";
 import { getUsersPreference } from "~/session.server";
-import twStyles from "~/styles/tailwind.css";
 import appStyles from "~/styles/app.css";
+import twStyles from "~/styles/tailwind.css";
 import { AppFrame } from "./components/AppFrame";
+
+import clarityPkg from "react-microsoft-clarity";
+const { clarity } = clarityPkg;
 
 export const links: LinksFunction = () => [
   {
@@ -76,6 +79,10 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export default function App() {
   const { usersPreference } = useLoaderData<typeof loader>();
   const sport = usersPreference?.sport || "cycling";
+
+  useEffect(() => {
+    clarity.init("m7dd8rhe9q");
+  }, []);
 
   return (
     <html lang="en" className="h-full bg-slate-900">
