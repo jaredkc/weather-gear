@@ -31,12 +31,15 @@ export const AppFrame = ({ children, sport }: Props) => {
           ) : (
             <WeatherGearLogo />
           )}
-          {location.pathname === "/" && (<SportSelect sport={sport} />)}
+          {location.pathname === "/" && <SportSelect sport={sport} />}
         </header>
         <main className="grow">{children}</main>
         <footer className="flex items-center justify-between py-8 text-xs text-slate-500">
-          <span>A work-in-progress by Jared Cornwall</span>
-          <span>Updated 04.15.2024</span>
+          <div className="flex gap-4">
+            <Link to="/manual" className="hover:text-slate-300">Manual Mode</Link>
+            <Link to="/about" className="hover:text-slate-300">About</Link>
+          </div>
+          <span>App updated 05.05.2024</span>
         </footer>
       </div>
       {navigation.state !== "idle" && <Loading />}
