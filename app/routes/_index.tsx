@@ -69,7 +69,7 @@ export default function Index() {
             <button
               type="submit"
               title="Search city or zip code"
-              className="flex items-center justify-center w-10 rounded-sm opacity-75 focus:opacity-100 hover:opacity-100 transition-opacity transition-fast"
+              className="flex items-center justify-center w-10 transition-opacity rounded-sm opacity-75 focus:opacity-100 hover:opacity-100 transition-fast"
             >
               <IconSearch />
               <span className="sr-only">Search</span>
@@ -80,7 +80,7 @@ export default function Index() {
               placeholder="Search city or zip"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
-              className="flex-1 pr-4 py-2 rounded-lg bg-transparent focus:outline-none"
+              className="flex-1 py-2 pr-4 bg-transparent rounded-lg focus:outline-none"
             />
           </Form>
         </div>
@@ -95,14 +95,14 @@ function GettingStarted() {
     <Card>
       <div className="p-4">
         <div className="flex justify-between">
-          <h2>
-            <span className="text-sm uppercase tracking-widest">
+          <h1>
+            <span className="text-sm tracking-widest uppercase">
               What to wear while
             </span>
-            <span className="text-3xl block leading-8">
+            <span className="block text-3xl leading-8">
               Cycling &amp; Running
             </span>
-          </h2>
+          </h1>
           <div>
             <img
               src="/_static/weather-icons/02d.svg"
@@ -117,7 +117,7 @@ function GettingStarted() {
           Know what to wear for the current weather conditions. Search for a
           location to get started.
         </p>
-        <p className="text-sm mt-3">
+        <p className="mt-3 text-sm">
           This is a work-in-progress, be sure to check back for updates.
         </p>
       </div>
@@ -150,7 +150,7 @@ function ListSearchLocations({ locations }: { locations: WeatherLocation[] }) {
   return (
     <ul className="pb-3 text-sm">
       {locations.length === 0 && (
-        <li className="py-3 px-4 opacity-75">No locations found</li>
+        <li className="px-4 py-3 opacity-75">No locations found</li>
       )}
       {locations.map(({ name, lat, lon, state }, index) => (
         <li key={index}>
@@ -158,11 +158,11 @@ function ListSearchLocations({ locations }: { locations: WeatherLocation[] }) {
             to={`/cycling/${slugify(name)}?lat=${lat.toFixed(
               4,
             )}&lon=${lon.toFixed(4)}`}
-            className="block py-3 px-4"
+            className="block px-4 py-3"
             unstable_viewTransition
           >
             {name}
-            <span className="opacity-50 px-1">&middot;</span>
+            <span className="px-1 opacity-50">&middot;</span>
             <span className="opacity-75">{state}</span>
           </Link>
         </li>
