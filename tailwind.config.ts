@@ -2,6 +2,14 @@ import type { Config } from "tailwindcss";
 
 export default {
   content: ["./app/**/*.{js,jsx,ts,tsx}"],
+  safelist: [
+    {
+      pattern: /from-(blue|cyan|lime|yellow|orange|red)-500/,
+    },
+    {
+      pattern: /to-(blue|cyan|lime|yellow|orange|red)-500/,
+    },
+  ],
   theme: {
     fontFamily: {
       sans: [
