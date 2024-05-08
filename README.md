@@ -2,7 +2,11 @@
 
 Know how to gear up when cycling or running based on the weather.
 
-## Open Weather API
+## Open Weather Map API
+
+Used to get the weather data for the app. The API key is stored in the `.env` file. Types, utility functions, and sample data are located in the `app/openweathermap` directory.
+
+Relevant docs:
 
 - [One Call API 3.0](https://openweathermap.org/api/one-call-3)
 - [Geocoding API](https://openweathermap.org/api/geocoding-api)
