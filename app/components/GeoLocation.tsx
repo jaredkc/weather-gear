@@ -1,14 +1,15 @@
 import { useNavigate } from "@remix-run/react";
 import { useState } from "react";
+import type { UserSport } from "~/models/user-location.server";
 import { IconLocation } from "./icons";
 
-export const GeoLocation = () => {
+export const GeoLocation = ({sport}: {sport: UserSport}) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
   function handleSuccess(data: GeolocationPosition) {
     const { latitude, longitude } = data.coords;
-    navigate(`/cycling?lat=${latitude.toFixed(4)}&lon=${longitude.toFixed(4)}`, {
+    navigate(`/${sport}/geolocation?lat=${latitude.toFixed(4)}&lon=${longitude.toFixed(4)}`, {
       unstable_viewTransition: true,
     });
   }

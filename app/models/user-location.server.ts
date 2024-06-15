@@ -20,12 +20,17 @@ export type UserLocation = {
   weather: Weather;
 };
 
+/**
+ * Available sports
+ */
+export type UserSport = "cycling" | "running";
+
 /*
  * User preference is used to store the user's
  * sport preference and client side date
  */
 export type UserPreference = {
-  sport: "cycling" | "running";
+  sport: UserSport;
   clientDate: number;
 };
 

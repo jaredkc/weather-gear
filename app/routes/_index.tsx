@@ -15,7 +15,7 @@ import { Card } from "~/components/Card";
 import { GeoLocation } from "~/components/GeoLocation";
 import { LocationCard } from "~/components/LocationCard";
 import { IconSearch } from "~/components/icons";
-import type { UserLocation } from "~/models/user-location.server";
+import type { UserLocation, UserSport } from "~/models/user-location.server";
 import type { WeatherLocation } from "~/openweathermap/openweathermap-types";
 import { searchLocations } from "~/openweathermap/openweathermap-utils.server";
 import { getUsersLocations, getUsersPreference } from "~/session.server";
@@ -64,7 +64,7 @@ export default function Index() {
 
       <Card>
         <div className="flex flex-row-reverse gap-2 p-1">
-          <GeoLocation />
+          <GeoLocation sport={sport} />
           <Form method="post" ref={formRef} className="flex w-full rounded-lg">
             <button
               type="submit"
@@ -129,7 +129,7 @@ function ListLocationCards({
   sport,
   locations,
 }: {
-  sport: "cycling" | "running";
+  sport: UserSport;
   locations: UserLocation[];
 }) {
   return (

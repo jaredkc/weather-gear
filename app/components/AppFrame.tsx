@@ -2,12 +2,12 @@ import { Link, useLocation, useNavigation } from "@remix-run/react";
 import { WeatherGearLogo } from "./WeatherGearLogo";
 import { IconChevron } from "./icons";
 import { useEffect, useState } from "react";
-import { type UserPreference } from "~/models/user-location.server";
+import { type UserSport } from "~/models/user-location.server";
 import { SportSelect } from "./SportSelect";
 
 type Props = {
   children: React.ReactNode;
-  sport: UserPreference["sport"];
+  sport: UserSport;
 };
 
 export const AppFrame = ({ children, sport }: Props) => {

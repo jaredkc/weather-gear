@@ -1,9 +1,9 @@
 import { useFetcher } from "@remix-run/react";
 import { IconBike, IconRun } from "~/components/icons";
-import { type UserPreference } from "~/models/user-location.server";
+import { type UserSport } from "~/models/user-location.server";
 
 type Props = {
-  sport: UserPreference["sport"];
+  sport: UserSport;
 };
 
 export const SportSelect = ({ sport = "cycling" }: Props) => {
