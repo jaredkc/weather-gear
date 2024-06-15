@@ -1,6 +1,6 @@
 import type { Hourly } from "~/openweathermap/openweathermap-types";
-import { getWeatherIcon } from "~/utils";
 import { IconTemperature, IconWind } from "./icons";
+import { WeatherIcons } from "./WeatherIcons";
 
 type Props = {
   hour: Hourly;
@@ -9,7 +9,6 @@ type Props = {
 
 export const HourlyList = ({ hour, timezone }: Props) => {
   const { dt, temp, weather, wind_speed } = hour;
-  const iconUrl = getWeatherIcon(weather[0].icon);
 
   const convertTime = (dt: number) => {
     return new Date(dt * 1000).toLocaleTimeString("en-US", {
@@ -25,13 +24,7 @@ export const HourlyList = ({ hour, timezone }: Props) => {
         <span className="sr-only">What to wear at </span>
         {convertTime(dt)}
       </div>
-      <img
-        src={iconUrl}
-        alt={weather[0].description}
-        width={64}
-        height={64}
-        className="inline-block"
-      />
+      <WeatherIcons icon={weather[0].icon} />
       <div className="flex items-center justify-center gap-3">
         <div className="flex items-center gap-1">
           <span className="text-cyan-400">

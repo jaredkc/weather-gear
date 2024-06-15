@@ -6,7 +6,7 @@ type Props = {
   size: number;
 };
 
-export const WeatherIcon = ({ weather, size }: Props) => {
+export const WeatherImgIcon = ({ weather, size }: Props) => {
   const iconUrl = getWeatherIcon(weather.icon);
   return (
     <div>

@@ -1,8 +1,8 @@
 import { Card } from "./Card";
-import { WeatherIcon } from "./WeatherIcon";
 import { slugToTitle } from "~/utils";
 import type { UserLocation } from "~/models/user-location.server";
 import clsx from "clsx";
+import { WeatherIcons } from "./WeatherIcons";
 
 type Props = {
   location: UserLocation;
@@ -55,7 +55,7 @@ export const LocationCard = ({ location, highlight }: Props) => {
             </p>
           </div>
           <div>
-            <WeatherIcon weather={weather} size={96} />
+            <WeatherIcons icon={weather.icon} size={96} />
           </div>
         </div>
       </Card>
