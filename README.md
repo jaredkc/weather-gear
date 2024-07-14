@@ -42,23 +42,7 @@ npx create-remix@latest --template remix-run/grunge-stack
 - Linting with [ESLint](https://eslint.org)
 - Static Types with [TypeScript](https://typescriptlang.org)
 
-## Development
-
-- This step only applies if you've opted out of having the CLI install dependencies for you:
-
-  ```sh
-  npx remix init
-  ```
-
-- Start dev server:
-
-  ```sh
-  npm run dev
-  ```
-
-This starts your app in development mode, rebuilding assets on file changes.
-
-### Upgrade Remix
+## Upgrade Remix
 
 A CLI utility to update/list all of your Remix dependencies together.
 
