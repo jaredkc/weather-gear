@@ -159,7 +159,6 @@ function ListSearchLocations({ locations }: { locations: WeatherLocation[] }) {
               4,
             )}&lon=${lon.toFixed(4)}`}
             className="block px-4 py-3"
-            unstable_viewTransition
           >
             {name}
             <span className="px-1 opacity-50">&middot;</span>
