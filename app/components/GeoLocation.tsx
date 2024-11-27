@@ -9,9 +9,7 @@ export const GeoLocation = ({sport}: {sport: UserSport}) => {
 
   function handleSuccess(data: GeolocationPosition) {
     const { latitude, longitude } = data.coords;
-    navigate(`/${sport}/geolocation?lat=${latitude.toFixed(4)}&lon=${longitude.toFixed(4)}`, {
-      unstable_viewTransition: true,
-    });
+    navigate(`/${sport}/geolocation?lat=${latitude.toFixed(4)}&lon=${longitude.toFixed(4)}`);
   }
 
   function handleError(data: GeolocationPositionError) {
