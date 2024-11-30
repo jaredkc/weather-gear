@@ -33,10 +33,10 @@ export const LocationCard = ({ location, highlight }: Props) => {
   return (
     <div data-component="LocationCard">
       <Card highlight={highlight}>
-        <div className="flex gap-4 justify-between items-center px-4 py-2">
+        <div className="flex items-center justify-between px-4 py-2 gap-4">
           <div className="flex flex-col gap-1">
             <h2 className="text-2xl">{slugToTitle(name)}</h2>
-            <div className="text-sm flex gap-2 items-center">
+            <div className="flex items-center text-sm gap-2">
               <span className="sr-only">Low and high temperature:</span>
               <span>{Math.round(temp.min)}°</span>
               <div
@@ -49,7 +49,7 @@ export const LocationCard = ({ location, highlight }: Props) => {
               />
               <span>{Math.round(temp.max)}°</span>
             </div>
-            <p title="Last updated" className="text-xs opacity-50 mt-2">
+            <p title="Last updated" className="mt-2 text-xs opacity-50">
               <span className="sr-only">Weather last updated:</span>{" "}
               {getLocaleDateString(new Date(dt * 1000))}
             </p>

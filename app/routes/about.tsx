@@ -17,7 +17,7 @@ export default function Wip() {
   return (
     <div>
       <h1 className="text-2xl text-center">About WeatherGear</h1>
-      <div className="flex flex-col gap-4 mt-6">
+      <div className="flex flex-col mt-6 gap-4">
         <p>
           A simple app that helps you know what to wear while cycling and
           running in the current weather conditions.

@@ -7,7 +7,7 @@ export default function WeatherIcons() {
     <div>
       <h1 className="text-2xl text-center">Weather Icons</h1>
 
-      <div className="mt-12 grid grid-cols-2 gap-4 text-center">
+      <div className="mt-12 text-center grid grid-cols-2 gap-4">
         <div><img src="/_static/weather-icons/01d.svg" alt="" width="120" height="120" className="inline-block" /></div>
         <div><img src="/_static/weather-icons/01n.svg" alt="" width="120" height="120" className="inline-block" /></div>
 

@@ -93,7 +93,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="h-full text-slate-300 font-light">
+      <body className="h-full font-light text-slate-300">
         <AppFrame sport={sport}>
           <Outlet />
         </AppFrame>
@@ -176,7 +176,7 @@ export function ErrorBoundary() {
 function ShowErrorResponse(error: ErrorResponse) {
   return (
     <div>
-      <h1 className="text-3xl mb-4">
+      <h1 className="mb-4 text-3xl">
         {error.status} {error.statusText}
       </h1>
       <p>{error.data}</p>
@@ -187,7 +187,7 @@ function ShowErrorResponse(error: ErrorResponse) {
 function ShowError(error: Error) {
   return (
     <div>
-      <h1 className="text-3xl mb-4">Oh Snap!</h1>
+      <h1 className="mb-4 text-3xl">Oh Snap!</h1>
       <p>{error.message}</p>
     </div>
   );
