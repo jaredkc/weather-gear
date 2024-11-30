@@ -1,5 +1,6 @@
 export { IconBike } from "./IconBike";
 export { IconChevron } from "./IconChevron";
+export { IconList } from "./IconList";
 export { IconLocation } from "./IconLocation";
 export { IconMenu } from "./IconMenu";
 export { IconRun } from "./IconRun";
