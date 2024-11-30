@@ -86,6 +86,16 @@ export function withinDays(days: number, userLocation: UserLocation): boolean {
 }
 
 /**
+ * Delete a UserLocation from the locations array
+ */
+export function deleteUserLocation(
+  locations: UserLocation[],
+  locationId: string,
+): UserLocation[] {
+  return locations.filter((location) => location.id !== locationId);
+}
+
+/**
  * Sample locations for testing
  */
 export const sampleLocations: UserLocation[] = [

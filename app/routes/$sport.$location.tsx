@@ -2,8 +2,10 @@ import {
   json,
   type LoaderFunctionArgs,
   type MetaFunction,
+  type ActionFunctionArgs,
+  redirect,
 } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData, useFetcher } from "@remix-run/react";
 import clsx from "clsx";
 import { useState } from "react";
 import invariant from "tiny-invariant";
@@ -15,6 +17,7 @@ import { cyclingGear, gearForTemp, runningGear } from "~/gear";
 import {
   forecastToUserLocation,
   updateUserLocations,
+  deleteUserLocation,
   type UserLocation,
 } from "~/models/user-location.server";
 import { getForecast } from "~/openweathermap/openweathermap-utils.server";
@@ -73,8 +76,30 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   );
 };
 
+export const action = async ({ request }: ActionFunctionArgs) => {
+  const formData = await request.formData();
+  const intent = formData.get("intent");
+  const locationId = formData.get("locationId") as string;
+
+  if (intent === "delete") {
+    const session = await getSession(request);
+    const locations: UserLocation[] = session.get("locations") || [];
+    const updatedLocations = deleteUserLocation(locations, locationId);
+    session.set("locations", updatedLocations);
+
+    return redirect("/", {
+      headers: {
+        "Set-Cookie": await commitSession(session),
+      },
+    });
+  }
+
+  return null;
+};
+
 export default function CyclingIndex() {
   const { forecast, gear, userLocation } = useLoaderData<typeof loader>();
+  const fetcher = useFetcher();
 
   const [gearList, setGearList] = useState(gear);
   const [activeHour, setActiveHour] = useState(0);
@@ -89,7 +114,7 @@ export default function CyclingIndex() {
       <LocationCard location={userLocation} highlight />
       <Card>
         <div className="flex overflow-x-auto snap-x">
-          <div className="w-2 flex-none snap-start">&nbsp;</div>
+          <div className="flex-none w-2 snap-start">&nbsp;</div>
           {forecast.hourly.map((hour, index) => (
             <button
               key={index}
@@ -104,13 +129,25 @@ export default function CyclingIndex() {
               <HourlyList hour={hour} timezone={forecast.timezone} />
             </button>
           ))}
-          <div className="w-2 flex-none snap-start">&nbsp;</div>
+          <div className="flex-none w-2 snap-start">&nbsp;</div>
         </div>
       </Card>
 
       <Card>
         <GearList gear={gearList} />
       </Card>
+
+      <fetcher.Form method="post" className="text-center">
+        <input type="hidden" name="locationId" value={userLocation.id} />
+        <button
+          type="submit"
+          name="intent"
+          value="delete"
+          className="p-4 text-xs tracking-widest uppercase text-slate-500 hover:text-red-400"
+        >
+          Remove location
+        </button>
+      </fetcher.Form>
     </div>
   );
 }
