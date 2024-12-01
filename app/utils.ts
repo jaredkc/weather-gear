@@ -1,3 +1,5 @@
+import type { UserLocation, UserSport } from "./models/user-location.server";
+
 /**
  * Custom Weather Icons
  *
@@ -28,4 +30,18 @@ export function slugToTitle(slug: string): string {
     .split("-")
     .map((word) => word[0].toUpperCase() + word.slice(1))
     .join(" ");
+}
+
+/**
+ * Format link for sport and location
+ * Example return: `/cycling/salt-lake-city?lat=40.7608&lon=-111.8910`
+ */
+export function sportLocationPath(
+  sport: UserSport = "cycling",
+  location: UserLocation,
+): string {
+  const { name, lat, lon } = location;
+  return `/${sport}/${slugify(name)}?lat=${lat.toFixed(4)}&lon=${lon.toFixed(
+    4,
+  )}`;
 }
