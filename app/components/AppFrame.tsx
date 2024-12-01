@@ -39,7 +39,7 @@ export const AppFrame = ({ children, sport }: Props) => {
             <Link to="/manual" className="hover:text-slate-300">Manual Mode</Link>
             <Link to="/about" className="hover:text-slate-300">About</Link>
           </div>
-          <span>App updated 11.20.2024</span>
+          <span>App updated 11.30.2024</span>
         </footer>
       </div>
       {navigation.state !== "idle" && <Loading />}
