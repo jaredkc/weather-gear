@@ -63,13 +63,13 @@ export default function Index() {
       )}
 
       <Card>
-        <div className="flex flex-row-reverse p-1 gap-2">
+        <div className="flex flex-row-reverse gap-2 p-1">
           <GeoLocation sport={sport} />
           <Form method="post" ref={formRef} className="flex w-full rounded-lg">
             <button
               type="submit"
               title="Search city or zip code"
-              className="flex items-center justify-center w-10 rounded-sm opacity-75 transition-opacity focus:opacity-100 hover:opacity-100 transition-fast"
+              className="flex items-center justify-center w-10 transition-opacity rounded-sm opacity-75 focus:opacity-100 hover:opacity-100 transition-fast"
             >
               <IconSearch />
               <span className="sr-only">Search</span>
@@ -138,6 +138,7 @@ function ListLocationCards({
         <Link
           to={`${sport}/${slugify(name)}?lat=${lat}&lon=${lon}`}
           key={index}
+          prefetch="intent"
         >
           <LocationCard location={locations[index]} highlight={index === 0} />
         </Link>
