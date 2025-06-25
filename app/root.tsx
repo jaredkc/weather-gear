@@ -115,11 +115,6 @@ export default function App() {
         </div>
         <ScrollRestoration />
         <Scripts />
-        <script
-          defer
-          data-domain="weathergear.app"
-          src="https://plausible.io/js/script.js"
-        />
         <LiveReload />
       </body>
     </html>
