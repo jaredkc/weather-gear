@@ -2,7 +2,7 @@
 weather-gear-ad92
 
 @aws
-runtime nodejs20.x
+runtime nodejs22.x
 timeout 15
 # concurrency 1
 # memory 1152
